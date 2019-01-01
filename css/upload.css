@@ -1,0 +1,212 @@
+@charset "UTF-8";
+
+.progressWrapper {
+	overflow: hidden;
+}
+li .progressContainer {
+	padding: 14px 4px;
+	margin: 0 4px;
+	background-color: transparent;
+	overflow: hidden;
+	position: relative;
+}
+td .progressContainer {
+	padding: 0 16px 0 0;
+	position: absolute;
+	top: 8px;
+	left: 4px;
+	width: 90%;
+}
+td .upload-filename {
+	position: absolute;
+	top: 7px;
+	left: 4px;
+}
+
+/* error */
+li .red {
+	color: #f00;
+	background: url(../images/common/close.png) no-repeat right top;
+	cursor: pointer;
+}
+td .red {
+	color: #f00;
+	background: url(../images/common/close.png) no-repeat left 50%;
+	padding-left: 16px;
+	cursor: pointer;
+}
+
+/* current */
+.green {
+	color: #fff;
+}
+
+/* complete */
+.blue {
+	color: #fff;
+}
+
+/* prepare */
+.white {
+	color: #fff;
+}
+
+.cancelled {
+	color: #ff8c00;
+}
+
+.progressName {
+	font-size: 8pt;
+	font-weight: 700;
+	color: #444;
+	width: 100px;
+	height: 14px;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.progressBar,
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+	font-size: 0;
+	width: 0%;
+	height: 2px;
+	background-color: #22a8f6;
+	border-bottom: #1298e6 1px solid;
+	margin-top: 2px;
+}
+.animate {
+	transition-property: width;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+	transition-delay: 0;
+}
+
+.progressBar {
+	background-color: #ccc;
+}
+
+.progressBarComplete {
+	width: 100%;
+	background-color: green;
+	visibility: hidden;
+}
+.progressBarError {
+	display: none;
+}
+.progressBarStatus {
+	font-size: 10px;
+	text-align: left;
+}
+a.progressCancel {
+	font-size: 0;
+	display: block;
+	height: 12px;
+	width: 12px;
+	background-image: url(../images/common/blank.gif);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	float: right;
+}
+a.progressCancel:hover {
+	background-position: 0px 0px;
+}
+
+/* dialog */
+#confirmDialog {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 100000;
+}
+#confirmDialog .box {
+	border: 1px solid #666;
+	padding: 4px 4px 25px 4px;
+	background: url(../images/common/warning.png) 80px 13px no-repeat #fff;
+	overflow: hidden;
+}
+#confirmDialog .container {
+	margin: 0 auto;
+	width:  380px;
+	top: 35%;
+	position: relative;
+	box-shadow: 4px 5px 8px -2px rgba(0,0,0,0.3), 0 2px 20px -7px rgba(0,0,0,0.4);
+}
+#confirmDialog .containerHeader {
+	background-color: #505050;
+	height: 17px;
+}
+#confirmDialog .buttons {
+	margin: 0 auto;
+	text-align: center;
+}
+#confirmDialog a.button {
+	padding: 7px 16px;
+	margin: 0 4px;
+	line-height: 17px;
+	background-color: #444;
+	color: #fff;
+	cursor: pointer;
+}
+#confirmDialog a.button:hover {
+	background-color: #666;
+}
+#confirmDialog .message {
+	padding: 15px 25px 30px 120px;
+	line-height: 20px;
+	word-break: break-all;
+}
+
+/* fade in */
+.bframe_pane .pre-fadein {
+	opacity: 0;
+}
+.bframe_pane .fadein {
+	opacity: 0;
+}
+.bframe_pane .fadein {
+	animation-name: fadein;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
+	-webkit-animation-name: fadein;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-fill-mode: forwards;
+}
+@keyframes fadein {
+	from	{opacity: 0}
+	to		{opacity: 1}
+}
+@-webkit-keyframes fadein {
+	from	{opacity: 0}
+	to		{opacity: 1}
+}
+
+/* fade out */
+.bframe_pane .fadeout {
+	animation-name: fadeout;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
+	-webkit-animation-name: fadeout;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-fill-mode: forwards;
+}
+.bframe_pane .fadeout2 {
+	animation-name: fadeout;
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
+	-webkit-animation-name: fadeout;
+	-webkit-animation-duration: 0.3s;
+	-webkit-animation-fill-mode: forwards;
+}
+@keyframes fadeout {
+	0%		{opacity: 1}
+	100%	{opacity: 0}
+}
+@-webkit-keyframes fadeout {
+	0%		{opacity: 1}
+	100%	{opacity: 0}
+}

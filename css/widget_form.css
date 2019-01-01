@@ -1,0 +1,205 @@
+@charset "UTF-8";
+
+html, body {
+	background-color: #444;
+}
+div#contents_container {
+	margin-top: 0;
+	overflow: hidden;
+}
+div#contents {
+	overflow: hidden;
+	background-color: #3a3a3a;
+}
+div.main_container {
+	margin: 0 8px 0 0;
+	padding: 0;
+	background-color: #555;
+	overflow: hidden;
+}
+
+/* tab control */
+ul.tabcontrol {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	background-color: #444;
+	border-top: 1px solid #444;
+	border-bottom: 1px solid #444;
+	overflow: visible;
+	height: 28px;
+	min-width: 1000px;
+}
+ul.tabcontrol li {
+	float: left;
+	height: 28px;
+	width: 100px;
+	margin: -1px 0 0 0;
+	padding: 0;
+	border-top: 1px solid #444;
+	border-right: 1px solid #444;
+	border-bottom: 1px solid #444;
+	background-color: #444;
+	overflow: hidden;
+}
+ul.tabcontrol li.view-mode {
+	margin-left: 100px;
+	border: none;
+	height: 29px;
+	width: 114px;
+}
+ul.tabcontrol li.view-mode span {
+	padding: 6px 10px 3px;
+	display: block;
+	float: left;
+	background-color: #555;
+	border-top: 1px solid #555;
+	border-right: 1px solid #666;
+	border-bottom: 1px solid #555;
+	cursor: pointer;
+}
+ul.tabcontrol li.view-mode span:last-child {
+	border-right: 1px solid #555;
+}
+#range {
+	display: none;
+}
+ul.tabcontrol li.selected {
+	background-color: #555;
+	border-top: 1px solid #555;
+	border-right: 1px solid #444;
+	border-bottom: 1px solid #555;
+}
+ul.tabcontrol li:hover:not(:last-child) {
+	background-color: #555;
+	border-top: 1px solid #555;
+	border-right: 1px solid #444;
+}
+ul.tabcontrol li a:visited,
+ul.tabcontrol li a {
+	padding-left: 10px;
+	text-shadow: -1px -1px #333;
+	display: block;
+	text-align: left;
+	line-height: 28px;
+	color: #aaa;
+	text-decoration: none;
+}
+ul.tabcontrol li a:hover {
+	text-shadow: 1px 1px #333;
+	background-color: #555;
+	color: #fff;
+	text-decoration: none;
+}
+ul.tabcontrol li.selected a {
+	color: #fff;
+	text-shadow: -1px -1px #333;
+}
+ul.tabcontrol li.register {
+	border: none;
+	height: 26px;
+	margin-left: 50px;
+	padding-top: 1px;
+	width: 300px;
+	text-align: left;
+	border-top: 1px solid #444;
+	overflow: hidden;
+	color: #fff;
+}
+
+/* button */
+div.input_container {
+	width: 140px;
+	float: left;
+}
+span.register-button {
+	display: inline-block;
+	text-align: center;
+	margin: 0;
+	padding: 4px 0;
+	width: 140px;
+	background-color: #666;
+	border: 1px solid #666;
+	color: #fff;
+	text-shadow: -1px -1px #555;
+
+	cursor: pointer;
+}
+span.register-button:hover {
+	background-color: #777;
+	border: 1px solid #777;
+	color: #fff;
+	text-shadow: 1px 1px #555;
+}
+span.register-button img {
+	vertical-align: -3px;
+	margin-right: 8px;
+}
+div.message_container {
+	float: left;
+	margin-left: 10px;
+}
+span#message {
+	display: table-cell;
+	vertical-align: middle;
+	height: 26px;
+}
+div.register {
+	background-color: #555;
+	margin-right: 8px;
+	padding: 8px 8px;
+	color: #fff;
+	border-top: #666 1px solid;
+	border-bottom: #3a3a3a 3px solid;
+	overflow: hidden;
+	clear: both;
+}
+
+/* editor */
+div.editor_container {
+	clear: both;
+	margin: 0;
+	background-color: #555;
+	padding: 7px 8px 8px 8px;
+}
+div#preview {
+	background-color: #fff;
+}
+iframe#preview_frame {
+	width: 100%;
+}
+div.text_editor {
+	margin: 0;
+	padding: 0;
+	background-color: #000;
+	width: 100%;
+	overflow:hidden;
+	border-bottom: 1px #777 solid;
+	position: relative;
+}
+div.text_editor textarea {
+	border: none;
+	margin: 0;
+	padding: 0px;
+	width: 100%;
+	height: 300px;
+}
+div#config {
+	margin: 0;
+	padding-bottom: 5px;
+	text-align: center;
+	background-color: #555;
+	overflow: auto;
+}
+div#config textarea {
+	font-size: 12px;
+}
+div#config textarea.external_css,
+div#config textarea.external_js {
+	height: 80px;
+}
+div.visual_editor {
+	background-color: #444;
+	border-top: 1px solid #3a3a3a;
+	border-bottom: 1px solid #777;
+}

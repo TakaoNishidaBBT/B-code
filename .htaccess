@@ -1,0 +1,14 @@
+RewriteEngine on
+RewriteBase /bcode/
+
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+#Header always set X-Content-Type-Options "nosniff"
+
+php_value upload_max_filesize 1G
+php_value post_max_size 1G

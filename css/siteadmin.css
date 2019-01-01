@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+html, body {
+	background-color: #fff;
+	-moz-user-select: auto;
+	-ms-user-select: auto;
+	-webkit-user-select: auto;
+	user-select: auto;
+}
+h2.settings {
+	margin: 0;
+	padding-left: 10px;
+	font-size: 15px;
+	background-color: #8d8e5b;
+	color: #fff;
+	color: #fff;
+	line-height: 33px;
+}
+h2.settings span {
+	font-size: 11px;
+	font-weight: normal;
+	margin-left: 10px;
+	line-height: 24px;
+}
+input#backToList {
+	width: 140px;
+}
+input.register-button {
+	padding: 2px 4px;
+	border-top: 1px solid #80a090;
+	border-right: 1px solid #206030;
+	border-bottom: 1px solid #206030;
+	border-left: 1px solid #80a090;
+	background-color: #406050;
+	color: #fff;
+	width: auto;
+	overflow: visible;
+}
+input.register-button:hover, input.register-buttonHover {
+	padding: 2px 4px;
+	border-top: 1px solid #80a090;
+	border-right: 1px solid #306040;
+	border-bottom: 1px solid #306040;
+	border-left: 1px solid #80a090;
+	background-color: #0e9b27;
+	cursor: pointer;
+	color: #fff;
+	width: auto;
+	overflow: visible;
+}
+span.notice {
+	margin-left: 10px;
+}

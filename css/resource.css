@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+html, body {
+	background-color: #444;
+}
+h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 15px;
+	color: #fff;
+	background-color: #555;
+	border-top: 1px solid #5e5e5e;
+	line-height: 33px;
+}
+h2 span.accent {
+	display: block;
+	float: left;
+	margin: 4px 8px 0 5px;
+	width:2px;
+	height:20px;
+	background: #555;
+	border-top: 1px solid #606060;
+	border-left: 1px solid #606060;
+	border-right: 1px solid #444;
+	border-bottom: 1px solid #444;
+}
+h2 span {
+	font-size: 11px;
+	font-weight: normal;
+	margin-left: 10px;
+	line-height: 24px;
+}
+div.header {
+	clear: both;
+	margin: 0;
+	background-color: #3a3a3a;
+	height: 10px;
+}
+div.footer {
+	clear: both;
+	margin: 0;
+	background-color: #3a3a3a;
+	border-bottom: 1px solid #333;
+	height: 10px;
+}
+iframe.tree {
+	display:block;
+	float:left;
+	margin: 0;
+	border: none;
+}
+iframe.form {
+	display:block;
+	float:left;
+	margin: 0;
+	border: none;
+}
+div.bframe_tree_container {
+	display:block;
+	float:left;
+	margin: 0;
+	width: 15%;
+}
+div.splitter {
+	float:left;
+	margin: 0;
+	width: 8px;
+	background: #3a3a3a url(../images/common/splitter.gif) no-repeat 1px center;
+	visibility: hidden;
+}
+div.bframe_splitter_pane {
+	overflow: hidden;
+	background-color: #fff;
+}
+div#resource_pane {
+	overflow: hidden;
+	background-color: #3a3a3a;
+}
+div.upload_control {
+	margin: 0;
+}
+div.upload_control {
+	margin: 0;
+}
+div#bframe_pane {
+	overflow: auto;
+	margin: 0;
+	padding: 30px 0 0 30px;
+	height: 100%;
+	box-sizing: border-box;
+}
+div#bframe_pane ul {
+	margin: 0;
+	padding: 0;
+}
+
+/* resource_control */
+ul.resource_control {
+	margin: 0 8px 4px 0;
+	padding: 0 0 0 30px;
+	list-style-type: none;
+	background-color: #444;
+	overflow: visible;
+	height: 30px;
+	min-width: 280px;
+}
+ul.resource_control li {
+	float: left;
+	height: 30px;
+	width: 170px;
+	margin: 0 10px 0 0;
+	padding: 0;
+	overflow: hidden;
+}
+ul.resource_control li a {
+	text-decoration: none;
+}
+span.upload-button,
+span:visited.upload-button,
+span:link.upload-button,
+span:active.upload-button {
+	display: block;
+	margin: 0;
+	line-height: 28px;
+	width: 140px;
+	background-color: #666;
+	border-top: 1px solid #666;
+	border-left: 1px solid #666;
+	border-right: 1px solid #666;
+	border-bottom: 1px solid #666;
+	color: #eee;
+	text-align: center;
+	text-shadow: -1px -1px #555;
+	cursor: pointer;
+}
+span:hover.upload-button {
+	background-color: #777;
+	border-top: 1px solid #777;
+	border-left: 1px solid #777;
+	border-right: 1px solid #777;
+	border-bottom: 1px solid #777;
+	color: #fff;
+	text-shadow: 1px 1px #555;
+}
+span.upload-button img {
+	vertical-align: -3px;
+	margin-right: 6px;
+}
+ul.resource_control li.view {
+	float: right;
+	padding: 7px 0;
+	width: 50px;
+	text-align: center;
+	margin: 0;
+	box-sizing: border-box;
+	height: 30px;
+	cursor: pointer;
+}
+ul.resource_control li.view:hover {
+	background-color: #555;
+}
+ul.resource_control li.current,
+ul.resource_control li.current:hover {
+	background-color: #666;
+}
+span.message {
+	color: #204030;
+}
+span#bframe_pane_disp_change {
+	display: block;
+	line-height: 26px;
+}
+div.pane_container {
+	margin: 0 8px 0 0;
+	height: 100%;
+	padding: 0;
+	background-color: #444;
+}
+#bframe_tree_upload_overlay:hover {
+	cursor: wait;
+}

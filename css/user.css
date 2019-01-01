@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+html, body {
+	background-color: #fff;
+	-moz-user-select: auto;
+	-ms-user-select: auto;
+	-webkit-user-select: auto;
+	user-select: auto;
+}
+h2.user {
+	margin: 0;
+	padding-left: 10px;
+	font-size: 15px;
+	background-color: #779767;
+	color: #fff;
+	color: #fff;
+	line-height: 33px;
+}
+h2.user span {
+	font-size: 11px;
+	font-weight: normal;
+	margin-left: 10px;
+	line-height: 24px;
+}
+
+div.list-header {
+	background-color: #ececec;
+	margin: 0;
+	height: 52px;
+}
+span.user-id {
+	margin-right: 4px;
+}
