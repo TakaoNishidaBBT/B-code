@@ -4852,8 +4852,7 @@
 			if(node.id == current_node.id() && tab_control.isFolderOpen()) return;
 
 			if(node_type.value == 'file' && property.editor_mode == 'true') {
-//				selectResource(node.id, 'temporary');
-				selectResource(node.id, 'permanent');
+				selectResource(node.id, 'temporary');
 			}
 
 			if(node_type.value != 'folder' && node.id.substr(1) != 'root' && node.id.substr(1) != 'trash') {
