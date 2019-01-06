@@ -46,6 +46,15 @@ div.login-user ul li {
 	font-size: 12px;
 	font-weight: normal;
 }
+div.login-user ul li.settings {
+	padding: 3px;
+}
+div.login-user ul li.settings a {
+	opacity: 0.5;
+}
+div.login-user ul li.settings a:hover {
+	opacity: 1;
+}
 dl.login-user {
 	margin: 0;
 	padding: 0;

@@ -51,6 +51,8 @@
 										=> '完全に削除します。よろしいですか？',
 		"Another user has updated this record\nAre you sure you want to overwrite?"
 										=> "他のユーザに更新されています。\n上書きしますか？",
+		"Error. \nNo such file or directory"
+										=> "Error. \nファイルまたはディレクトリが存在しません",
 		'Saved'							=> '保存しました',
 		'Failed to save'				=> '保存に失敗しました',
 		'Already exists'				=> '既に存在しています',

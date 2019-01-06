@@ -1,21 +1,18 @@
-/files
 /bs-admin-files/
-/bs-admin/archive
-/bs-admin/cache
-/bs-admin/config
-/bs-admin/log
-/bs-admin/db
-/bs-admin/user
+/archive
+/cache
+/config
+/log
+/user
 
 # git update-index --skip-worktree .htaccess
 # git update-index --skip-worktree bs-admin-files/.htaccess
 # git update-index --skip-worktree bs-admin-files/files/.gitkeep
 # git update-index --skip-worktree bs-admin-files/thumbs/.gitkeep
-# git update-index --skip-worktree bs-admin/.htaccess
-# git update-index --skip-worktree bs-admin/.htpassword
-# git update-index --skip-worktree bs-admin/config/lang_config.php
-# git update-index --skip-worktree bs-admin/db/db_connect.php
-# git update-index --skip-worktree bs-admin/user/users.php
+# git update-index --skip-worktree .htaccess
+# git update-index --skip-worktree .htpassword
+# git update-index --skip-worktree config/lang_config.php
+# git update-index --skip-worktree users.php
 # git update-index --skip-worktree files/.gitkeep
 
 # git update-index --no-skip-worktree [file-name]

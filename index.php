@@ -9,17 +9,6 @@
 
 	require_once('global/b_global_function.php');
 
-	// Set TERMINAL_ID
-	if($_REQUEST['terminal_id']) {
-		define('TERMINAL_ID', $_REQUEST['terminal_id']);
-	}
-	else {
-		define('TERMINAL_ID', __getRandomText(12));
-	}
-
-	// Set DISPATCH_URL
-	define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID);
-
 	// Set directory information
 	$doc_root = str_replace('\\' , '/', realpath($_SERVER['DOCUMENT_ROOT']));
 	if(substr($doc_root, -1) != '/') $doc_root.= '/';
@@ -34,7 +23,7 @@
 
 	// Start admin session
 	$ses = new B_Session;
-	$ses->start('nocache', $current . '-admin-session', $current_path);
+	$ses->start('nocache', 'bcode-admin-session', $current_path);
 
 	require_once('./config/config.php');
 
@@ -78,5 +67,16 @@
 			}
 		}
 	}
+
+	// Set TERMINAL_ID
+	if($_REQUEST['terminal_id']) {
+		define('TERMINAL_ID', $_REQUEST['terminal_id']);
+	}
+	else {
+		define('TERMINAL_ID', __getRandomText(12));
+	}
+
+	// Set DISPATCH_URL
+	define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID);
 
 	require_once('./controller/controller.php');

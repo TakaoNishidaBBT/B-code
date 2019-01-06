@@ -28,16 +28,18 @@
 		var self = target;
 		var param = target.getAttribute('data-param');
 		var margin = 0;
+		var offset = {};
 
 		if(param) {
 			var m = bframe.getParam('margin', param);
 			if(m) margin = m;
+			var o = bframe.getParam('offset', param);
+			if(o) offset.top = o;
 		}
 
 		if(self.tagName.toLowerCase() == 'iframe') {
-			var offset = bframe.getFrameOffset(self.contentWindow, '');
+			if(!o) offset = bframe.getFrameOffset(self.contentWindow, '');
 		}
-
 		bframe.addEventListener(target, 'load' , adjustWindow);
 		bframe.resize_handler.registerCallBackFunction(adjustWindow);
 		bframe.resize_handler.onResize();

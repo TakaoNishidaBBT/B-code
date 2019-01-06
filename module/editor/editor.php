@@ -9,6 +9,8 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
+			$this->dir = B_FILE_ROOT_DIR;
+
 			require_once('./config/editor_config.php');
 
 			$this->editor = new B_Element($editor_config);
@@ -40,6 +42,9 @@
 					break;
 				}
 
+				$obj = $this->editor->getElementByName('node_id');
+				if($obj) $obj->value = $this->request['node_id'];
+
 				$obj = $this->editor->getElementByName('file_path');
 				if($obj) $obj->value = $file_path;
 
@@ -54,7 +59,15 @@
 		}
 
 		function register() {
-			if(file_exists($this->post['file_path']) && $this->post['mode'] == 'confirm' && filemtime($this->post['file_path']) > $this->post['update_datetime']) {
+			$status = true;
+			$file_path = B_Util::getPath($this->dir , $this->post['node_id']);
+
+			if(!file_exists($file_path)) {
+				$status = false;
+				$mode = 'alert';
+				$message = __("Error. \nNo such file or directory");
+			}
+			else if($this->post['mode'] == 'confirm' && filemtime($file_path) > $this->post['update_datetime']) {
 				$mode = 'confirm';
 				$message = __("Another user has updated this file\nAre you sure you want to overwrite?");
 			}
@@ -65,12 +78,12 @@
 				else {
 					$contents = mb_convert_encoding($this->post['contents'], $this->post['encoding'], 'UTF-8');
 				}
-				file_put_contents($this->post['file_path'], $contents, LOCK_EX);
+				file_put_contents($file_path, $contents, LOCK_EX);
 
 				$message = __('Saved');
 			}
 
-			$response['status'] = true;
+			$response['status'] = $status;
 			$response['mode'] = $mode;
 			$response['message_obj'] = 'message';
 			$response['message'] = $message;

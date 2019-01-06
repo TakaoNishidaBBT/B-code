@@ -7,8 +7,8 @@
 */
 	require_once('./module/common/B_AdminModule.php');
 
-	$controller = new B_Controller;
 	$auth = new B_AdminAuth;
+	$controller = new B_Controller;
 
 	try {
 		if(!isset($_REQUEST['terminal_id']) || !$auth->checkUserAuth()) {

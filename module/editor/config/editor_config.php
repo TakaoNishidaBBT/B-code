@@ -6,7 +6,7 @@
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
 */
 $editor_config = array(
-	array('class' => 'B_Hidden', 'name' => 'file_path'),
+	array('class' => 'B_Hidden', 'name' => 'node_id'),
 	array('class' => 'B_Hidden', 'name' => 'update_datetime'),
 	array(
 		'start_html'	=> '<div class="editor_container bframe_adjustwindow" data-param="margin:0">',

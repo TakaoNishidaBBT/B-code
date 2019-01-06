@@ -307,7 +307,6 @@
 
 		function save() {
 			bframe.fireEvent(register_button, 'click');
-			bstudio.resetEditFlag();
 			undo_depth = ace_editor.getSession().getUndoManager().undoDepth();
 		}
 	}

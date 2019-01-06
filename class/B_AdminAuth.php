@@ -21,6 +21,7 @@
 					return true;
 				}
 			}
+/*
 			$sql = " select user_id, user_name, pwd, user_auth, language from " . B_DB_PREFIX . "user";
 			$sql.= " where user_status = '1' and user_id = binary '%USER_ID%' and pwd = binary '%PWD%'";
 
@@ -36,6 +37,7 @@
 				$_SESSION['language'] = $row['language'];
 				return true;
 			}
+*/
 			return false;
 		}
 

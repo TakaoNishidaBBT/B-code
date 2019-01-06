@@ -32,3 +32,8 @@
 		}
 	});
 
+	// class auto loader
+	register_shutdown_function(function() {
+//		$log = new B_Log(B_LOG_FILE);
+//		$log->write('shutdown_function', $_SESSION);
+	});

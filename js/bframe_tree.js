@@ -438,8 +438,10 @@
 					context_menu.show();
 				}
 			}
-			if(editor_overlay) {
-				editor_overlay.style.display = 'block';
+
+			if(property.editor_mode == 'true') {
+				if(editor_overlay) editor_overlay.style.display = 'block';
+				tab_control.select(selected_node.id());
 			}
 
 			trash_context_menu.hide();
@@ -1531,6 +1533,10 @@
 				httpObj = createXMLHttpRequest(showNode);
 				eventHandler(httpObj, property.module, property.file, property.method.saveName, 'POST', param);
 				response_wait = true;
+
+				if(property.editor_mode == 'true') {
+					tab_control.changeFileName(input.value.trim());
+				}
 			}
 		}
 
@@ -2208,11 +2214,17 @@
 			var start_position;
 			var drag_start_scrollLeft;
 			var last_position;
+			var name_changed;
 
 			this.open = function(node_id='', mode) {
+				if(name_changed) {
+					name_changed = false;
+					return;
+				}
+
 				if(node_id) {
 					// change node_id to inside tree
-					node_id = 't'+node_id.substr(1);
+					node_id = node_id.substr(1);
 				}
 
 				var obj = exists(node_id);
@@ -2230,7 +2242,7 @@
 
 				closeAll(obj, exist);
 				obj.show(mode);
-				select(node_id);
+				select('t' + node_id);
 				if(!node_id) { // folder
 					var file_name = document.getElementById('nm' + current_node.id()).value;
 					obj.setFilename(file_name);
@@ -2239,6 +2251,52 @@
 				setOrder();
 				scrollTo(obj);
 				current_index = getVisibleIndex() + 1;
+			}
+
+			this.select = function(node_id) {
+				node_id = node_id.substr(1);
+
+				var node_type = document.getElementById('ntt' + node_id);
+				if(node_type && node_type.value == 'folder') node_id = '';
+
+				var obj = exists(node_id);
+
+				if(obj) {
+					closeAll(obj, true);
+					obj.show();
+					current_index = getVisibleIndex() + 1;
+				}
+			}
+
+			this.changeFileName = function(value) {
+				if(current_edit_node) {
+					var node_id = current_edit_node.id.substr(1);
+					var node_type = document.getElementById('ntt' + node_id);
+
+					if(node_type && node_type.value == 'folder') {
+						var obj = exists('');
+						if(obj) obj.changeFileName(value);
+					}
+					else {
+						var obj = exists(node_id);
+						if(obj) {
+							var i = getTabIndex(obj);
+							tabs[i].node_id = '/' + obj.changeFileName(value);
+						}
+					}
+
+					node_id = current_edit_node.id.substr(1);
+					for(var i=1; i < tabs.length; i++) {
+						if(tabs[i].node_id.indexOf(node_id) != -1) {
+							var arr = node_id.split('/');
+							arr[arr.length-1] = value;
+							new_value = arr.join('/');
+							tabs[i].node_id = '/' + tabs[i].obj.replaceFilePath(node_id.substr(1), new_value.substr(1));
+
+						}
+					}
+				}
+				name_changed = true;
 			}
 
 			function exists(node_id) {
@@ -2262,9 +2320,10 @@
 							'&node_id='+encodeURIComponent(node_id.substr(1));
 
 				iframe.id = 'ed' + node_id;
+				iframe.name = 'ed' + node_id;
 				iframe.src = src;
 				iframe.opener = window;
-				iframe.setAttribute('data-param', 'margin:99');
+				iframe.setAttribute('data-param', 'margin:99,offset:0');
 				iframe.classList.add('bframe_adjustparent');
 				editor_container.appendChild(iframe);
 
@@ -2368,7 +2427,7 @@
 				for(var i=0; i < tabs.length; i++) {
 					if(tabs[i].obj.isChild(evtSrc)) {
 						tabs[i].obj.show();
-						select(tabs[i].node_id);
+						select('t' + tabs[i].node_id);
 						scrollTo(tabs[i].obj);
 						current_index = i+1;
 					}
@@ -2653,11 +2712,15 @@
 				drag_start = false;
 			}
 
+			function getTabIndex(obj) {
+				for(var i=0; i < tabs.length; i++) {
+					if(tabs[i].obj == obj) return i;
+				}
+			}
+
 			function getIndex(element) {
 				for(var i=0; i < tabs.length; i++) {
-					if(tabs[i].obj.element() == element) {
-						return i;
-					}
+					if(tabs[i].obj.element() == element) return i;
 				}
 			}
 
@@ -2738,7 +2801,7 @@
 
 				this.add = function(node_id, mode) {
 					editor = document.getElementById('ed' + node_id);
-					var file_name = document.getElementById('nm' + node_id).value;
+					var file_name = document.getElementById('nmt' + node_id).value;
 					fname.innerHTML = file_name;
 					a.title = node_id.substr(1);
 					fname.classList.add(mode);
@@ -2752,11 +2815,24 @@
 					editor_container.removeChild(editor);
 				}
 
+				this.changeFileName = function(value) {
+					fname.innerHTML = value;
+					if(editor) {
+						var iframe = bframe.getFrameByName(window, editor.name);
+						return iframe.bstudio.changeFileName(value);
+					}
+				}
+
+				this.replaceFilePath = function(before, after) {
+					var iframe = bframe.getFrameByName(window, editor.name);
+					return iframe.bstudio.replaceFilePath(before, after);
+				}
+
 				this.isChild = function(obj) {
 					return bframe.isChild(li, obj);
 				}
 
-				this.show = function(mode) {
+				this.show = function(mode=null) {
 					li.classList.add('selected');					
 					a.classList.add('selected');
 					visible = true;

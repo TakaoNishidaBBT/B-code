@@ -33,6 +33,7 @@
 					</dl>
 				</li>
 				<li><a href="<?php echo DISPATCH_URL ?>&amp;module=index&amp;page=logout" target="_top" ><?php echo __('Log out'); ?></a></li>
+				<li class="settings"><a href="<?php echo DISPATCH_URL ?>&amp;module=editor&amp;page=settings" target="_top" ><img src="images/common/gear_white.png" alt="<?php echo __('Settings'); ?>" /></a></li>
 			</ul>
 		</div>
 	</div>
