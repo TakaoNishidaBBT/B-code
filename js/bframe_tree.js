@@ -499,6 +499,7 @@
 				context_menu.disableElement('deleteNode');
 				context_menu.disableElement('editName');
 				context_menu.enableElement('createNode');
+				context_menu.enableElement('upload');
 				context_menu.enableElement('download');
 				context_menu.disableElement('open_property');
 				break;
@@ -527,6 +528,7 @@
 				context_menu.disableElement('pasteAriasNode');
 			}
 			var node = selected_node.object();
+
 			if(node.node_class == 'leaf') {
 				context_menu.disableElement('pasteNode');
 				context_menu.disableElement('pasteAriasNode');
@@ -663,7 +665,7 @@
 						if(response['icon']) progress.setIcon(response['icon']);
 						break;
 
-					case 'complete':
+					case 'finished':
 						if(response['progress']) var animate = ' animate';
 						progress.setProgress(response['progress'], animate);
 						progress.setStatus(Math.round(response['progress']) + '%');
@@ -3560,19 +3562,11 @@
 			function dragover(event) {
 				event.preventDefault();
 			}
-/*
-			function selectFiles(event) {
-				if(upload_queue[index]) return false;
 
-				bframe.fireEvent(upload_file, 'click');
-				bframe.stopPropagation(event);
-			}
-*/
 			function selectFiles() {
 				if(upload_queue[index]) return false;
 
 				bframe.fireEvent(upload_file, 'click');
-//				bframe.stopPropagation(event);
 			}
 			this.selectFiles = selectFiles;
 
@@ -3637,6 +3631,8 @@
 					overlay.style.width = 0;
 					overlay.style.height = 0;
 					uploading = false;
+
+					getNodeList(current_node.id());
 
 					bframe.fireEvent(window, 'resize');
 

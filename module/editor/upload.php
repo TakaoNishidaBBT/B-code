@@ -182,7 +182,6 @@
 					if($status) {
 						chmod(B_Util::getPath(B_FILE_ROOT_DIR, $this->path) . $file['basename'], 0777);
 						$this->removeThumbnail($this->path, $file['basename']);
-//						$root = new B_FileNode(B_FILE_ROOT_DIR, $this->path, null, null, 'all');
 						$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename']), null, null, 1);
 						$this->refreshThumbnailCache($node);
 						$response['node_info'][] = $node->getNodeList('', '', $this->path);

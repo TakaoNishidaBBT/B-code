@@ -536,11 +536,10 @@
 					$this->node[$key]->createthumbnail($data, $index, $except_array, $callback);
 				}
 			}
-			else if($this->node_type != 'folder' && $this->node_type != 'root') {
-				$ret = $this->_createthumbnail($data, $index);
-			}
-			if($ret && $callback) {
-				$this->callBack($callback);
+			if($this->node_type != 'root') {
+				if($this->_createthumbnail($data, $index)) {
+					if($callback) $this->callBack($callback);
+				}
 			}
 		}
 
@@ -568,14 +567,18 @@
 
 		function getThumbnailImgPath($path) {
 			$file_info = pathinfo($path);
-			if(strtolower($file_info['extension']) != 'svg') {
-				$thumb_prefix = B_THUMB_PREFIX;
-			}
-			if($file_info['dirname'] != '.' && $file_info['dirname'] != '\\') {
-				return B_Util::getPath(B_Util::getPath(B_FILE_ROOT_URL, $file_info['dirname']), $thumb_prefix . $file_info['basename']);
+			if(strtolower($file_info['extension']) == 'svg') {
+				$root = '/' . B_FILE_ROOT_URL;
 			}
 			else {
-				return B_Util::getPath(B_FILE_ROOT_URL, $thumb_prefix . $file_info['basename']);
+				$thumb_prefix = B_THUMB_PREFIX;
+				$root = B_FILE_ROOT_URL;
+			}
+			if($file_info['dirname'] != '.' && $file_info['dirname'] != '\\') {
+				return B_Util::getPath(B_Util::getPath($root, $file_info['dirname']), $thumb_prefix . $file_info['basename']);
+			}
+			else {
+				return B_Util::getPath($root, $thumb_prefix . $file_info['basename']);
 			}
 		}
 
