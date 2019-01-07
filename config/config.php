@@ -75,6 +75,9 @@
 	define('B_FILE_INFO_THUMB', B_CACHE_DIR . 'file_info_thumb.txt');
 	define('B_FILE_INFO_THUMB_SEMAPHORE', B_CACHE_DIR . 'file_info_thumb_semaphore.txt');
 
+	// Zip File Upload Extract Directory
+	define('B_RESOURCE_EXTRACT_DIR', B_ADMIN_FILES_DIR . 'extract/');
+
 	// ffmpeg
 	if(substr(PHP_OS, 0, 3) === 'WIN') {
 		define('FFMPEG', B_ADMIN_DIR . 'class/ffmpeg/ffmpeg_for_windows.exe');

@@ -27,7 +27,7 @@
 				$this->parent = $parent;
 			}
 			else if(!$this->isRoot()) {
-				$this->parent = new B_FileNode($this->dir, dirname($this->path), null, null);
+				$this->parent = new B_FileNode($this->dir, str_replace('\\', '/', dirname($this->path)), null, null);
 				$this->parent->addNodes($this);
 			}
 			$this->level = $level;
