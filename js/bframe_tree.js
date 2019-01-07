@@ -3632,8 +3632,6 @@
 					overlay.style.height = 0;
 					uploading = false;
 
-					getNodeList(current_node.id());
-
 					bframe.fireEvent(window, 'resize');
 
 					return;
@@ -3950,7 +3948,7 @@
 
 					if(disp_type == 'thumbnail') {
 						for(var i=0; i<node_info.length; i++) {
-							if(node_info[i].node_type == 'folder') {
+							if(node_info[i].node_type == 'folder' || property.editor_mode == 'true') {
 								li = _createNodeObject(node_info[i], 'tree', false);
 								for(var n=tree.firstChild; n; n=n.nextSibling) {
 									if(node_info[i].path.toLowerCase() == bframe.searchNodeByName(n, 'path').value.toLowerCase()) {
@@ -3995,7 +3993,7 @@
 					}
 					else {
 						for(var i=0; i<node_info.length; i++) {
-							if(node_info[i].node_type == 'folder') {
+							if(node_info[i].node_type == 'folder' || property.editor_mode == 'true') {
 								li = _createNodeObject(node_info[i], 'tree', false);
 								for(var n=tree.firstChild; n; n=n.nextSibling) {
 									if(node_info[i].path.toLowerCase() == bframe.searchNodeByName(n, 'path').value.toLowerCase()) {
