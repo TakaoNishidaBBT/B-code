@@ -17,9 +17,11 @@
 	}
 
 	bstudio.registerEditor = function(fname, module, page, method, mode, nocheck) {
-		if(window.opener) {
-			bframe.ajaxSubmit.removeCallBackFunctionAfter(window.opener.bstudio.reloadTree);
-			bframe.ajaxSubmit.registerCallBackFunctionAfter(window.opener.bstudio.reloadTree);
+		var opener = window.frameElement.opener;
+console.log('bstudio.registerEditor', opener);
+		if(typeof opener.bframe_tree !== 'undefined') {
+			bframe.ajaxSubmit.removeCallBackFunctionAfter(opener.bframe_tree.reloadTree);
+			bframe.ajaxSubmit.registerCallBackFunctionAfter(opener.bframe_tree.reloadTree);
 		}
 		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.resetEditFlag);
 		bframe.ajaxSubmit.submit(fname, module, page, method, mode, nocheck);

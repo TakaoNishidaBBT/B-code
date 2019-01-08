@@ -19,7 +19,6 @@ $tree_config = array(
 			'editable'		=> 'true',
 			'sort'			=> 'auto',
 			'root_name'		=> 'root',
-			'trash_name'	=> 'trash box',
 			'root_path'		=> B_FILE_ROOT_URL,
 			'root_url'		=> B_FILE_ROOT_DIR,
 			'thumb_path'	=> B_FILE_ROOT_URL,

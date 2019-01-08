@@ -49,6 +49,8 @@
 		var drag_control;
 		var file_upload;
 
+		var reload_status;
+
 		var context_menu = new bframe.contextMenu(10000);
 		var context_menu_frame = window;
 		var context_menu_element = {};
@@ -752,17 +754,24 @@
 				root_ul.className = 'root';
 				target.appendChild(root_ul);
 
-				if(property.root_name) {
-					node_info[0].node_name = property.root_name;
-				}
-				_showNode(root_ul, node_info[0]);
-
-				// create trash tree
-				if(node_info[1]) {
-					if(property.trash_name) {
-						node_info[1].node_name = property.trash_name;
+				if(property.editor_mode == 'true') {
+					for(let i=0; i<node_info.length; i++) {
+						_showNode(root_ul, node_info[i]);
 					}
-					_showNode(root_ul, node_info[1], true);
+				}
+				else {
+					if(property.root_name) {
+						node_info[0].node_name = property.root_name;
+					}
+					_showNode(root_ul, node_info[0]);
+
+					// create trash tree
+					if(node_info[1]) {
+						if(property.trash_name) {
+							node_info[1].node_name = property.trash_name;
+						}
+						_showNode(root_ul, node_info[1], true);
+					}
 				}
 
 				// set selected node
@@ -832,7 +841,10 @@
 				}
 
 				scrollToLatest();
-				if(property.editor_mode == 'true') tab_control.open();
+				if(property.editor_mode == 'true' && !reload_status) {
+					tab_control.open();
+				}
+				reload_status = false;
 
 				bframe.fireEvent(window, 'resize');
 			}
@@ -1284,6 +1296,8 @@
 		}
 
 		function reloadTree() {
+console.log('reloadTree');
+			reload_status = true;
 			getNodeList(current_node.id());
 		}
 		this.reloadTree = reloadTree;
@@ -2319,7 +2333,7 @@
 							'&page='+property.editor.file+
 							'&method='+property.editor.method+
 							'&terminal_id='+terminal_id+
-							'&node_id='+encodeURIComponent(node_id.substr(1));
+							'&node_id='+encodeURIComponent(node_id);
 
 				iframe.id = 'ed' + node_id;
 				iframe.name = 'ed' + node_id;

@@ -31,8 +31,11 @@
 			if(!$fp_semaphore = fopen(B_FILE_INFO_THUMB_SEMAPHORE, 'x')) return;
 
 			// create thumb-nails
-			$node = new B_FileNode(B_FILE_ROOT_DIR, 'root', null, null, 'all');
-			$this->total_create_nodes = $node->nodeCount(); 
+			foreach($this->session['project'] as $path => $value) {
+				$node = new B_FileNode(B_FILE_ROOT_DIR, $path, null, null, 'all');
+				$this->total_create_nodes += $node->nodeCount();
+				$nodes[] = $node;
+			}
 
 			if(20 < $this->total_create_nodes) {
 				// send progress
@@ -62,7 +65,9 @@
 
 			if($this->show_progress) $callback = array('obj' => $this, 'method' => '_createThumbnail_callback');
 			$index = 0;
-			$node->createThumbnail($data, $index, null, $callback);
+			foreach($nodes as $node) {
+				$node->createThumbnail($data, $index, null, $callback);
+			}
 
 			// write serialized data into cache file
 			$fp = fopen(B_FILE_INFO_THUMB, 'w');

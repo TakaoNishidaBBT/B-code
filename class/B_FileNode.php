@@ -12,22 +12,21 @@
 	class B_FileNode {
 		function __construct($dir, $path, $open_nodes=null, $parent=null, $expand_level=0, $level=0, $thumb_info=null) {
 			if(!$path) return;
-
+$this->log = new B_Log(B_LOG_FILE);
 			$this->dir = $dir;
 			$this->path = $path == 'root' ? '' : $path;
 			$this->node_id = $path == '/' ? 'root' : $path;
 
 			$this->fullpath = B_Util::getPath($dir, $this->path);
-			$i = strrpos($this->fullpath, '/');
-			if($i) {
-				$this->file_name = substr($this->fullpath, $i+1);
-			}
+
+			$this->file_name = basename($this->fullpath);
 
 			if($parent) {
 				$this->parent = $parent;
 			}
 			else if(!$this->isRoot()) {
-				$this->parent = new B_FileNode($this->dir, str_replace('\\', '/', dirname($this->path)), null, null);
+				$dir = dirname($this->path) == '.' ? '' : dirname($this->path);
+				$this->parent = new B_FileNode($this->dir, str_replace('\\', '/', $dir), null, null);
 				$this->parent->addNodes($this);
 			}
 			$this->level = $level;
@@ -390,7 +389,7 @@
 				}
 			}
 			if(is_dir($this->fullpath)) {
-				usleep(1000);
+				usleep(2000);
 				rmdir($this->fullpath);
 			}
 			else if(file_exists($this->fullpath)) {
@@ -568,17 +567,21 @@
 		function getThumbnailImgPath($path) {
 			$file_info = pathinfo($path);
 			if(strtolower($file_info['extension']) == 'svg') {
-				$root = '/' . B_FILE_ROOT_URL;
+				if($file_info['dirname'] != '.' && $file_info['dirname'] != '\\') {
+					return B_Util::getPath(B_Util::getPath(B_FILE_ROOT_URL, $file_info['dirname']), $thumb_prefix . $file_info['basename']);
+				}
+				else {
+					return B_Util::getPath(B_FILE_ROOT_URL, $thumb_prefix . $file_info['basename']);
+				}
 			}
 			else {
 				$thumb_prefix = B_THUMB_PREFIX;
-				$root = B_FILE_ROOT_URL;
-			}
-			if($file_info['dirname'] != '.' && $file_info['dirname'] != '\\') {
-				return B_Util::getPath(B_Util::getPath($root, $file_info['dirname']), $thumb_prefix . $file_info['basename']);
-			}
-			else {
-				return B_Util::getPath($root, $thumb_prefix . $file_info['basename']);
+				if($file_info['dirname'] != '.' && $file_info['dirname'] != '\\') {
+					return B_Util::getPath($file_info['dirname'], $thumb_prefix . $file_info['basename']);
+				}
+				else {
+					return $thumb_prefix . $file_info['basename'];
+				}
 			}
 		}
 

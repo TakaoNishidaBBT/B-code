@@ -27,6 +27,12 @@
 			$this->status = true;
 			if(!$this->session['sort_order']) $this->session['sort_order'] = 'asc';
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
+
+			$this->session['project'] = '';
+			$this->session['project']['target/'] = true;
+			$this->session['project']['target2/'] = true;
+			$this->session['project']['target3/'] = true;
+			$this->session['project']['target2/test/'] = true;
 		}
 
 		function openCurrentNode($node_id) {
@@ -55,9 +61,9 @@
 			if($this->request['node_id']) {
 				$this->session['open_nodes'][$this->request['node_id']] = true;
 			}
-			if(!$this->session['current_node']) {
-				$this->session['current_node'] = 'root';
-			}
+//			if(!$this->session['current_node']) {
+//				$this->session['current_node'] = 'root';
+//			}
 			if(isset($this->request['display_mode'])) {
 				$this->session['display_mode'] = $this->request['display_mode'];
 			}
@@ -547,7 +553,7 @@
 		function preview() {
 			if($this->request['node_id'] && $this->request['node_id'] != 'null') {
 				// Redircet to top page
-				$path = '/' . B_Util::getPath(B_FILE_ROOT_URL, $this->request['node_id']);
+				$path = B_Util::getPath(B_FILE_ROOT_URL, $this->request['node_id']);
 				header("Location:$path");
 			}
 
@@ -565,7 +571,7 @@
 			if($this->message) {
 				$response['message'] = $this->message;
 			}
-
+/*
 			$root_node = new B_FileNode($this->dir, '/', $this->session['open_nodes'], null, 1);
 			$current_node = $root_node->getNodeById($this->session['current_node']);
 			if(!$current_node) {
@@ -573,12 +579,28 @@
 				$this->session['current_node'] = 'root';
 			}
 
-			if($this->session['sort_key']) {
+*/
+$this->log->write('project', $this->session['project']);
+			foreach($this->session['project'] as $path => $value) {
+$this->log->write('$path', $path);
+				$root_node = new B_FileNode($this->dir, $path, $this->session['open_nodes'], null, 1);
+				$list[] = $root_node->getNodeList($node_id, $category);
+				if(!$this->session['current_node']) $this->session['current_node'] = $path;
+$this->log->write('current_node', $this->session['current_node']);
+				// set current node
+				if(!$current_node) 	$current_node = $root_node->getNodeById($this->session['current_node']);
+//				if(!$current_node) {
+//					$current_node = $root_node;
+//					$this->session['current_node'] = 'root';
+//				}
+
+			}
+
+
+			if($current_node && $this->session['sort_key']) {
 				$current_node->setSortKey($this->session['sort_key']);
 				$current_node->setSortOrder($this->session['sort_order']);
 			}
-
-			$list[] = $root_node->getNodeList($node_id, $category);
 
 			$response['current_node'] = $this->session['current_node'];
 
@@ -592,7 +614,7 @@
 				$response['sort_key'] = $this->session['sort_key'];
 				$response['sort_order'] = $this->session['sort_order'];
 			}
-
+$this->log->write('$response', $response);
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);
 		}
