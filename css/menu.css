@@ -2,29 +2,15 @@
 
 /* title-header */
 div#title-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	margin: 0;
 	background: #bbb;
 	height: 34px;
 	line-height: 32px;
 	color: #fff;
 	background-color: #444;
-	min-width: 700px;
-}
-h1 {
-	float: left;
-	margin: 8px 0 0 0;
-	line-height: 24px;
-	padding-left: 10px;
-	font-size: 15px;
-
-	color: #5e5e5e;
-	text-shadow: -1px -1px #333;
-	font-weight: bold;
-	font-family: Arial,Meiryo,Helvetica,Verdana;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
 div.login-user {
 	float:right;
@@ -117,6 +103,8 @@ div.pull_down_menu a:hover {
 }
 div.pull_down_menu ul li.title {
 	width: 90px;
+	padding-top: 3px;
+	margin-right: 30px;
 }
 div.pull_down_menu ul span.title {
 	color: #5e5e5e;

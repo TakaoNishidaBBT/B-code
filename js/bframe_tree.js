@@ -833,7 +833,6 @@
 				// create node and set edit mode
 				if(new_node) {
 					editName();
-					new_node = false;
 				}
 
 				if(response.message) {
@@ -841,9 +840,11 @@
 				}
 
 				scrollToLatest();
-				if(property.editor_mode == 'true' && !reload_status) {
+				if(property.editor_mode == 'true' && !new_node && !reload_status) {
 					tab_control.open();
 				}
+
+				new_node = false;
 				reload_status = false;
 
 				bframe.fireEvent(window, 'resize');
@@ -1296,7 +1297,6 @@
 		}
 
 		function reloadTree() {
-console.log('reloadTree');
 			reload_status = true;
 			getNodeList(current_node.id());
 		}
@@ -1523,10 +1523,8 @@ console.log('reloadTree');
 
 		function _saveName(event) {
 			if(!current_edit_node) return;
-
 			var span = bframe.searchNodeByName(current_edit_node, 'node_span');
 			var input = bframe.searchNodeByName(current_edit_node, 'node_input');
-
 			if(current_edit_save_value == input.value.trim()) {
 				span.firstChild.nodeValue = shortenText(current_edit_save_value);
 				current_edit_save_value = '';
@@ -2232,7 +2230,7 @@ console.log('reloadTree');
 			var last_position;
 			var name_changed;
 
-			this.open = function(node_id='', mode) {
+			this.open = function(node_id='', mode='') {
 				if(name_changed) {
 					name_changed = false;
 					return;
@@ -2288,8 +2286,7 @@ console.log('reloadTree');
 				if(current_edit_node) {
 					var node_id = current_edit_node.id.substr(1);
 					var node_type = document.getElementById('ntt' + node_id);
-
-					if(node_type && node_type.value == 'folder') {
+					if(current_edit_node.id == current_node.id() && node_type && node_type.value == 'folder') {
 						var obj = exists('');
 						if(obj) obj.changeFileName(value);
 					}
@@ -2849,7 +2846,7 @@ console.log('reloadTree');
 				}
 
 				this.show = function(mode=null) {
-					li.classList.add('selected');					
+					li.classList.add('selected');
 					a.classList.add('selected');
 					visible = true;
 					li.style.zIndex = '9999';
@@ -2868,8 +2865,8 @@ console.log('reloadTree');
 				}
 
 				this.hide = function() {
-					li.classList.remove('selected');					
-					a.classList.remove('selected');					
+					li.classList.remove('selected');
+					a.classList.remove('selected');
 					visible = false;
 					li.style.zIndex = z;
 

@@ -15,34 +15,10 @@ $menu_config = array(
 			'start_html'	=> '<li class="title">',
 			'end_html'		=> '</li>',
 			array(
-				'start_html'	=> '<a href="' . B_SITE_BASE . '" title="' . __('Open published page') . '" onclick="window.open(this.href); return false;">',
-				'end_html'		=> '</a>',
-				array(
-					'start_html'	=> '<span class="title">',
-					'end_html'		=> '</span>',
-					'value'			=> 'B-studio',
-				),
+				'start_html'	=> '<span class="title">',
+				'end_html'		=> '</span>',
+				'value'			=> 'B-code',
 			),
-		),
-		array(
-			'auth_filter'	=> 'super_admin/admin',
-			'start_html'	=> '<li>',
-			'end_html'		=> '</li>',
-			'class'			=> 'B_Link',
-			'value'			=> '<img src="images/menu/contents.png" alt="contents"/>' . __('Contents'),
-			'specialchars'	=> 'none',
-			'link'			=> DISPATCH_URL . '&amp;module=contents&amp;page=index&amp;method=init',
-			'target'		=> 'main',
-		),
-		array(
-			'auth_filter'	=> 'super_admin/admin',
-			'start_html'	=> '<li>',
-			'end_html'		=> '</li>',
-			'class'			=> 'B_Link',
-			'value'			=> '<img src="images/menu/template.png" alt="templates"/>' . __('Templates'),
-			'specialchars'	=> 'none',
-			'link'			=> DISPATCH_URL . '&amp;module=template&amp;page=index&amp;method=init',
-			'target'		=> 'main',
 		),
 		array(
 			'auth_filter'	=> 'super_admin/admin',
@@ -52,7 +28,7 @@ $menu_config = array(
 				'class'			=> 'B_Link',
 				'attr'			=> 'class="bframe_menu"',
 				'id'			=> 'resource',
-				'value'			=> '<img src="images/menu/resource.png" alt="resources"/>' . __('Resources'),
+				'value'			=> '<img src="images/menu/resource.png" alt="resources"/>' . __('File'),
 				'specialchars'	=> 'none',
 				'script'		=>
 				array(
@@ -61,58 +37,9 @@ $menu_config = array(
 						'context_menu'	=>
 						array(
 							array(
-								'menu'		=> __('Resource Manager'),
-								'param'		=> DISPATCH_URL . '&module=resource&page=tree&mode=open,main',
-								'func'		=> 'openUrl',
-							),
-							array(
-								'menu'		=> __('Widgets'),
-								'param'		=> DISPATCH_URL . '&module=widget&page=index&method=init,main',
-								'func'		=> 'openUrl',
-							),
-						),
-						'context_menu_mark'		=> '　▼',
-						'context_menu_frame'	=> 'top',
-						'context_menu_width'	=> '120',
-					),
-				),
-			),
-		),
-		array(
-			'auth_filter'	=> 'super_admin/admin/editor',
-			'start_html'	=> '<li>',
-			'end_html'		=> '</li>',
-			array(
-				'class'			=> 'B_Link',
-				'attr'			=> 'class="bframe_menu"',
-				'id'			=> 'post_menu',
-				'value'			=> '<img src="images/menu/article.png" alt="posts"/>' . __('Posts'),
-				'specialchars'	=> 'none',
-				'script'		=>
-				array(
-					'bframe_menu'	=>
-					array(
-						'context_menu'	=>
-						array(
-							array(
-								'menu'		=> __('Article'),
-								'param'		=> DISPATCH_URL . '&module=article&page=list&method=init,main',
-								'func'		=> 'openUrl',
-							),
-							array(
-								'menu'		=> __('Article2'),
-								'param'		=> DISPATCH_URL . '&module=article2&page=list&method=init,main',
-								'func'		=> 'openUrl',
-							),
-							array(
-								'menu'		=> __('Article3'),
-								'param'		=> DISPATCH_URL . '&module=article3&page=list&method=init,main',
-								'func'		=> 'openUrl',
-							),
-							array(
-								'menu'		=> __('File Manager'),
-								'param'		=> DISPATCH_URL . '&module=filemanager&page=tree&mode=open,main',
-								'func'		=> 'openUrl',
+								'menu'		=> __('Add Project Folder'),
+								'param'		=> DISPATCH_URL . '&module=project&page=tree,Add Project Folder,360,460',
+								'func'		=> 'popup',
 							),
 						),
 						'context_menu_mark'		=> '　▼',
@@ -141,16 +68,6 @@ $menu_config = array(
 							array(
 								'menu'		=> __('Basic Settings'),
 								'param'		=> DISPATCH_URL . '&module=settings&page=form&method=select,main',
-								'func'		=> 'openUrl',
-							),
-							array(
-								'menu'		=> __('Versions'),
-								'param'		=> DISPATCH_URL . '&module=version&page=list&method=init,main',
-								'func'		=> 'openUrl',
-							),
-							array(
-								'menu'		=> __('Mail Settings'),
-								'param'		=> DISPATCH_URL . '&module=mail_settings&page=list&method=init,main',
 								'func'		=> 'openUrl',
 							),
 							array(
@@ -193,11 +110,6 @@ $menu_config = array(
 								'func'		=> 'openUrl',
 							),
 							array(
-								'menu'		=> __('Versions'),
-								'param'		=> DISPATCH_URL . '&module=version&page=list&method=init,main',
-								'func'		=> 'openUrl',
-							),
-							array(
 								'menu'		=> __('Users'),
 								'param'		=> DISPATCH_URL . '&module=user&page=list&method=init,main',
 								'func'		=> 'openUrl',
@@ -235,19 +147,6 @@ $menu_config = array(
 						'context_menu_mark'		=> '　▼',
 						'context_menu_frame'	=> 'top',
 					),
-				),
-			),
-		),
-		array(
-			'start_html'	=> '<li class="new_tab">',
-			'end_html'		=> '</li>',
-			array(
-				'start_html'	=> '<a href="" title="' . __('Open another admin page') . '" onclick="window.open(this.href); return false;">',
-				'end_html'		=> '</a>',
-				array(
-					'start_html'	=> '<span class="add">',
-					'end_html'		=> '</span>',
-					'value'			=> '+',
 				),
 			),
 		),

@@ -45,6 +45,10 @@
 			body.setBorder(value);
 		}
 
+		this.geWidth = function() {
+			return body.getWidth();
+		}
+
 		this.setMaxWidth = function(value) {
 			body.setMaxWidth(value);
 		}
@@ -109,6 +113,10 @@
 			body.position(p);
 		}
 
+		this.positionAbsoluteRight = function(p) {
+			body.positionRight(p);
+		}
+
 		this.size = function(size, force)  {
 			body.size(size, force);
 		}
@@ -159,6 +167,15 @@
 			this.position = function(position) {
 				element.style.top = position.top + 'px';
 				element.style.left = position.left + 'px';
+				element.style.right = '';
+
+				if(scroll) scroll.position();
+			}
+
+			this.positionRight = function(position) {
+				element.style.top = position.top + 'px';
+				element.style.left = '';
+				element.style.right = position.right + 'px';
 
 				if(scroll) scroll.position();
 			}
@@ -194,6 +211,10 @@
 
 			this.overflowY = function(value) {
 				element.style.overflowY = value;
+			}
+
+			this.getWidth = function() {
+				return element.style.width;
 			}
 
 			this.setMaxWidth = function(value) {

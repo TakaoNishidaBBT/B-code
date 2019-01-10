@@ -56,7 +56,6 @@ $this->log = new B_Log(B_LOG_FILE);
 
 				return;
 			}
-
 			if($this->node_id == 'root') {
 				$this->node_type = 'root';
 			}

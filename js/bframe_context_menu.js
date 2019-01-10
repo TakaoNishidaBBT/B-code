@@ -577,6 +577,12 @@
 			popup.positionAbsolute(position);
 		}
 
+		this.positionAbsoluteRight = function(position) {
+			menu_position = position;
+			position.top += offsetHeight;
+			popup.positionAbsoluteRight(position);
+		}
+
 		this.show = function() {
 			self.hide();
 			filter();

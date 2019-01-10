@@ -12,13 +12,38 @@
 	// class bstudio
 	// 
 	// -------------------------------------------------------------------------
+	bstudio.activateModalWindow = function(a, w, h, func) {
+		var p = 'width:' + w + ',height:' + h;
+		a.setAttribute('data-param', p);
+
+		top.bframe.modalWindow.activate(a, window);
+		if(func) top.bframe.modalWindow.registerCallBackFunction(func);
+	}
+
+	bstudio.openProject = function() {
+		var nodes = bframe_tree.getCurrentNodes();
+console.log('nodes', nodes, nodes[0].id.substr(1));
+		var input = document.getElementById('node_id');
+		input.value = nodes[0].id.substr(1);
+console.log('input', input);
+console.log('bframe.ajaxSubmit', bframe.ajaxSubmit);
+		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio._openProject);
+		bframe.ajaxSubmit.submit('F1', 'project', 'tree', 'open', '', true);
+	}
+
+	bstudio._openProject = function() {
+console.log('_openProject');
+		var frame = bframe.getFrameByName(top, 'main');
+		if(typeof frame.bframe_tree !== 'undefined') frame.bframe_tree.reload();
+		window.frameElement.deactivate();
+	}
+
 	bstudio.reloadTree = function() {
 		if(typeof bframe_tree !== 'undefined') bframe_tree.reload();
 	}
 
 	bstudio.registerEditor = function(fname, module, page, method, mode, nocheck) {
 		var opener = window.frameElement.opener;
-console.log('bstudio.registerEditor', opener);
 		if(typeof opener.bframe_tree !== 'undefined') {
 			bframe.ajaxSubmit.removeCallBackFunctionAfter(opener.bframe_tree.reloadTree);
 			bframe.ajaxSubmit.registerCallBackFunctionAfter(opener.bframe_tree.reloadTree);

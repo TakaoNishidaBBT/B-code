@@ -163,9 +163,28 @@
 			if(bframe.isObject(property)) {
 				menu_container.closeAll();
 				var position = bframe.getElementPosition(target);
-				position.left += (context_menu_frame_offset.left + document.body.scrollLeft);
-				position.top += (context_menu_frame_offset.top + document.body.scrollTop) + 1;
-				context_menu.positionAbsolute(position);
+				if(property.context_menu_adjust == 'right') {
+					position.left += (context_menu_frame_offset.left + document.body.scrollLeft);
+					position.top += (context_menu_frame_offset.top + document.body.scrollTop) + 1;
+					position.right = context_menu_frame.innerWidth - position.left - position.width;
+
+					if(property.context_menu_margin) {
+						if(property.context_menu_margin.top) position.top += parseInt(property.context_menu_margin.top);
+						if(property.context_menu_margin.right) position.right += parseInt(property.context_menu_margin.right);
+					}
+					context_menu.positionAbsoluteRight(position);
+				}
+				else {
+					position.left += (context_menu_frame_offset.left + document.body.scrollLeft);
+					position.top += (context_menu_frame_offset.top + document.body.scrollTop) + 1;
+
+					if(property.context_menu_margin) {
+						if(property.context_menu_margin.top) position.top += parseInt(property.context_menu_margin.top);
+						if(property.context_menu_margin.left) position.left += parseInt(property.context_menu_margin.left);
+					}
+
+					context_menu.positionAbsolute(position);
+				}
 
 				context_menu.show();
 				bframe.addEventListener(document, 'mousewheel', bframe.cancelEvent);
@@ -187,6 +206,19 @@
 			if(p.length == 2) {
 				var rel = bframe.getFrameByName(top, p[1]);
 				rel.location.href = p[0].replace(/&amp;/, '&');
+			}
+			menu_container.closeAll();
+		}
+
+		popup = function(param) {
+			p = param.split(',');
+			if(p.length == 4) {
+				var a = document.createElement('a');
+				var rel = bframe.getFrameByName(top, p[1]);
+				a.href = p[0].replace(/&amp;/, '&');
+				a.title = p[1];
+
+				bstudio.activateModalWindow(a, p[2], p[3]);
 			}
 			menu_container.closeAll();
 		}

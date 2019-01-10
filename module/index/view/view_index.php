@@ -19,11 +19,12 @@
 <script src="js/bframe_menu.js"></script>
 <script src="js/bframe_adjustwindow.js"></script>
 <script src="js/bframe_modal_window.js"></script>
+<script src="js/bstudio.js"></script>
 <title><?php echo $this->title ?></title></head>
 <body>
 	<script>if(window != top) top.location.href='.'</script>
 	<div id="title-header">
-		<h1>B-code</h1>
+		<?php echo $this->menu->gethtml(); ?>
 		<div class="login-user">
 			<ul>
 				<li>
@@ -33,12 +34,8 @@
 					</dl>
 				</li>
 				<li><a href="<?php echo DISPATCH_URL ?>&amp;module=index&amp;page=logout" target="_top" ><?php echo __('Log out'); ?></a></li>
-				<li class="settings"><a href="<?php echo DISPATCH_URL ?>&amp;module=editor&amp;page=settings" target="_top" ><img src="images/common/gear_white.png" alt="<?php echo __('Settings'); ?>" /></a></li>
 			</ul>
 		</div>
 	</div>
-<!--
-	<?php echo $this->menu->gethtml(); ?>
--->
 	<iframe id="main" name="main" class="bframe_adjustwindow" src="<?php echo $this->initial_page; ?>"></iframe>
 </body>
