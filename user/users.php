@@ -10,7 +10,7 @@
 			'user_name'	=> 'Site Admin',
 			'user_id'	=> 'admin',
 			'pwd'		=> '21232f297a57a5a743894a0e4a801fc3',
-			'language'	=> 'ja',
+			'language'	=> 'en',
 			'user_auth'	=> 'super_admin',
 		)
 	);

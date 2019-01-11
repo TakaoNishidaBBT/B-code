@@ -6,7 +6,7 @@
 		<input type="hidden" id="node_id" name="node_id" value="" />
 		<div class="control">
 			<input type="button" class="cancel-button" value="Cancel" onclick="window.frameElement.deactivate();" />
-			<input type="button" class="register-button" value="Open" onclick="bstudio.openProject()" />
+			<input type="button" class="register-button" value="Open" onclick="bstudio.addProject()" />
 		</div>
 	</form>
 </body>

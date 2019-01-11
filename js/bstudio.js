@@ -20,21 +20,18 @@
 		if(func) top.bframe.modalWindow.registerCallBackFunction(func);
 	}
 
-	bstudio.openProject = function() {
+	bstudio.addProject = function() {
 		var nodes = bframe_tree.getCurrentNodes();
-console.log('nodes', nodes, nodes[0].id.substr(1));
 		var input = document.getElementById('node_id');
+
 		input.value = nodes[0].id.substr(1);
-console.log('input', input);
-console.log('bframe.ajaxSubmit', bframe.ajaxSubmit);
-		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio._openProject);
-		bframe.ajaxSubmit.submit('F1', 'project', 'tree', 'open', '', true);
+		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio._addProject);
+		bframe.ajaxSubmit.submit('F1', 'project', 'tree', 'add', '', true);
 	}
 
-	bstudio._openProject = function() {
-console.log('_openProject');
+	bstudio._addProject = function(response) {
 		var frame = bframe.getFrameByName(top, 'main');
-		if(typeof frame.bframe_tree !== 'undefined') frame.bframe_tree.reload();
+		if(typeof frame.bframe_tree !== 'undefined') frame.bframe_tree.addProject(response);
 		window.frameElement.deactivate();
 	}
 

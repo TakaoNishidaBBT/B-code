@@ -47,6 +47,13 @@ $this->log->write('global_session', $this->global_session);
 			}
 		}
 
+		function select() {
+			$this->session['selected_node'] = $this->request['node_id'];
+			$this->response($this->session['selected_node'], 'select');
+
+			exit;
+		}
+
 		function getNodeList() {
 			$this->session['selected_node'] = '';
 
@@ -69,6 +76,7 @@ $this->log->write('global_session', $this->global_session);
 			if(isset($this->request['display_mode'])) {
 				$this->session['display_mode'] = $this->request['display_mode'];
 			}
+$this->log->write('editor getNodeList', $this->session);
 			$this->response($this->session['current_node'], 'select');
 
 			exit;

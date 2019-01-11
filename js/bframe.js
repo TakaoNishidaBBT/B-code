@@ -194,10 +194,8 @@
 
 			if(httpObj.readyState == 4 && httpObj.status == 200 && bframe.response_wait) {
 				try {
-console.log('httpObj.responseText', httpObj.responseText);
 					bframe.response_wait = false;
 					response = eval('('+httpObj.responseText+')');
-console.log('response', response);
 				}
 				catch(e) {
 					var message = 'session timeout';

@@ -15,8 +15,9 @@ $tree_config = array(
 		array(
 			'module'		=> $this->module,
 			'file'			=> 'tree',
-			'editable'		=> 'false',
-			'selectable'	=> 'true',
+			'editable'		=> 'true',
+			'selectable'	=> 'false',
+			'folderselect'	=> 'true',
 			'sort'			=> 'auto',
 			'root_name'		=> __('Document Root'),
 			'method'		=>
@@ -38,6 +39,7 @@ $tree_config = array(
 			),
 			'relation'	=>
 			array(
+/*
 				'open_property'	=>
 				array(
 					'url'		=> DISPATCH_URL . '&module=' . $this->module . '&page=property&method=select',
@@ -45,6 +47,7 @@ $tree_config = array(
 					'title'		=> __('Properties'),
 					'func'		=> 'reloadTree',
 				),
+*/
 			),
 
 			'icon'		=>

@@ -50,6 +50,7 @@
 		var file_upload;
 
 		var reload_status;
+		var add_project;
 
 		var context_menu = new bframe.contextMenu(10000);
 		var context_menu_frame = window;
@@ -730,6 +731,7 @@
 					response_wait = false;
 					return;
 				}
+
 				// set current node
 				if(response.current_node) {
 					current_node.set('t'+response.current_node);
@@ -846,6 +848,7 @@
 
 				new_node = false;
 				reload_status = false;
+				add_project = false;
 
 				bframe.fireEvent(window, 'resize');
 			}
@@ -861,15 +864,19 @@
 			li.appendChild(ul);
 
 			if(node_info.children) {
-				for(var i=0; i < node_info.children.length; i++) {
-					if(pane && property.editor_mode != 'true' && node_info.children[i].node_type == 'file') {
-						continue;
+console.log('add_project', add_project, node_info.node_id, current_node.id().substr(1));
+				if(!add_project || (add_project && current_node.id() && node_info.node_id != current_node.id().substr(1))) {
+					for(var i=0; i < node_info.children.length; i++) {
+						if(pane && property.editor_mode != 'true' && node_info.children[i].node_type == 'file') {
+							continue;
+						}
+						_showNode(ul, node_info.children[i], trash);
 					}
-					_showNode(ul, node_info.children[i], trash);
 				}
 			}
 
 			// create pane
+//console.log('current_node.id()', current_node.id(), node_info.node_id, current_node.id().substr(1));
 			if(pane && current_node.id() && node_info.node_id == current_node.id().substr(1)) {
 				// create div
 				pane_div = document.createElement('div');
@@ -942,17 +949,14 @@
 		}
 
 		function closeNode(node_id) {
-			var param;
+			var mode;
 
-			param = 'terminal_id='+terminal_id+'&node_id='+encodeURIComponent(node_id.substr(1));
-			httpObj = createXMLHttpRequest(closeNodeResponse);
-			eventHandler(httpObj, property.module, property.file, property.method.closeNode, 'POST', param);
-			response_wait = true;
 			if(current_node.id()) {
 				var node = document.getElementById(node_id);
 				if(bframe.searchNodeById(node, current_node.id())) {
 					selected_node.set(node_id);
 					selected_node.setColor('current');
+					mode = 'current';
 				}
 			}
 			var node_type = document.getElementById('nt' + node_id);
@@ -961,7 +965,15 @@
 				icon.src = property.icon[node_type.value].src;
 			}
 
+			var param = 'terminal_id='+terminal_id+'&node_id='+encodeURIComponent(node_id.substr(1));
+			if(mode) param += '&mode=' + mode;
+
+			httpObj = createXMLHttpRequest(closeNodeResponse);
+			eventHandler(httpObj, property.module, property.file, property.method.closeNode, 'POST', param);
+
 			bframe.fireEvent(window, 'resize');
+
+			response_wait = true;
 		}
 
 		function closeNodeResponse() {
@@ -1302,6 +1314,12 @@
 		}
 		this.reloadTree = reloadTree;
 
+		function addProject(response) {
+			add_project = true;
+			getNodeList('t' + response.node_id, 'addProject');
+		}
+		this.addProject = addProject;
+
 		function setCutStatus() {
 			if(!clipboard.target) return;
 
@@ -1567,11 +1585,13 @@
 		this.createNode = createNode;
 
 		function select(node_id) {
+console.log('select', node_id);
 			if((node_id == current_node.id() && node_id != selected_node.id())) {
 				selected_node.set(node_id);
 				selected_node.setColor('selected');
 			}
 			else {
+console.log('property.relation', property.relation.selectNode);
 				if(property.relation && property.relation.selectNode) {
 					var rel = bframe.getFrameByName(top, property.relation.selectNode.frame);
 					current_node.setNodeIdBeforeUnload(node_id);
@@ -4347,7 +4367,12 @@
 				a.ondblclick = selectResourceNode;
 				if((pane && config.folder_count > 0 ) || (config.node_count > 0)) {
 					if(config.children) {
-						control.src = property.icon.minus.src;
+						if(!add_project || (add_project && current_node.id() && config.node_id != current_node.id().substr(1))) {
+							control.src = property.icon.minus.src;
+						}
+						else {
+							control.src = property.icon.plus.src;
+						}
 					}
 					else {
 						control.src = property.icon.plus.src;
@@ -4838,7 +4863,6 @@
 			if(e.button == 2) return;
 			var node = getEventNode(event);
 			var node_type = document.getElementById('nt' + node.id);
-
 			if(property.selectable == 'true') {
 				if(node_type.value != 'folder' && node.id.substr(1) != 'root' && node.id.substr(1) != 'trash') {
 					if(current_node.id() && current_node.place() == 'tree' && (e.ctrlKey || e.metaKey)) {
@@ -4854,7 +4878,7 @@
 			}
 			bframe.stopPropagation(event);
 
-			if(node.id == current_node.id() && tab_control.isFolderOpen()) return;
+			if(node.id == current_node.id() && tab_control && tab_control.isFolderOpen()) return;
 
 			if(node_type.value == 'file' && property.editor_mode == 'true') {
 				selectResource(node.id, 'temporary');
@@ -4866,6 +4890,9 @@
 			var control = document.getElementById('c' + node.id);
 			if(pane) {
 				current_node.set('t' + node.id.substr(1));
+				getNodeList(node.id);
+			}
+			else if(property.folderselect == 'true') {
 				getNodeList(node.id);
 			}
 			else if(control && bframe.getFileName(control.src) == bframe.getFileName(property.icon.plus.src)) {

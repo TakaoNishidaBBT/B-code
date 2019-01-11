@@ -6,13 +6,13 @@
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
 */
 	// -------------------------------------------------------------------------
-	// class B_FileNode
+	// class B_DirNode
 	// 
 	// -------------------------------------------------------------------------
-	class B_FileNode {
+	class B_DirNode {
 		function __construct($dir, $path, $open_nodes=null, $parent=null, $expand_level=0, $level=0, $thumb_info=null) {
 			if(!$path) return;
-$this->log = new B_Log(B_LOG_FILE);
+//$this->log = new B_Log(B_LOG_FILE);
 			$this->dir = $dir;
 			$this->path = $path == 'root' ? '' : $path;
 			$this->node_id = $path == '/' ? 'root' : $path;
@@ -20,19 +20,19 @@ $this->log = new B_Log(B_LOG_FILE);
 			$this->fullpath = B_Util::getPath($dir, $this->path);
 
 			$this->file_name = basename($this->fullpath);
-$this->log->write('$this->fullpath', $this->fullpath, microtime());
-
+/*
 			if($parent) {
 				$this->parent = $parent;
 			}
 			else if(!$this->isRoot()) {
 				$dir = dirname($this->path) == '.' ? '' : dirname($this->path);
-				$this->parent = new B_FileNode($this->dir, str_replace('\\', '/', $dir), null, null);
+				$this->parent = new B_DirNode($this->dir, str_replace('\\', '/', $dir), null, null);
 				$this->parent->addNodes($this);
 			}
+*/
 			$this->level = $level;
 			$this->node_count = 0;
-
+/*
 			if(!$thumb_info	&& file_exists(B_FILE_INFO_THUMB)) {
 				$serializedString = file_get_contents(B_FILE_INFO_THUMB);
 			    $thumb_info = unserialize($serializedString);
@@ -40,30 +40,23 @@ $this->log->write('$this->fullpath', $this->fullpath, microtime());
 			$this->thumb_info = $thumb_info;
 			$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
 			$this->thumb = $this->thumb_info[$this->thumbnail_image_path];
-
+*/
 			if(!file_exists($this->fullpath)) return;
 
 			$this->update_datetime_u = filemtime($this->fullpath);
 			$this->update_datetime_t = date('Y/m/d H:i', filemtime($this->fullpath));
-			if(!is_dir($this->fullpath)) {
-				$this->file_size = filesize($this->fullpath);
-				$this->node_type = 'file';
-				$this->node_class = 'leaf';
-				$image_size = B_Util::getimagesize($this->fullpath);
-				if(is_array($image_size)) {
-					$this->image_size = $image_size[0] * $image_size[1];
-					$this->human_image_size = $image_size[0] . 'x' . $image_size[1];
-				}
 
+			if(!is_dir($this->fullpath)) {
 				return;
 			}
+
+			$this->node_class = 'folder';
 			if($this->node_id == 'root') {
 				$this->node_type = 'root';
 			}
 			else {
 				$this->node_type = 'folder';
 			}
-			$this->node_class = 'folder';
 
 			$handle = opendir($this->fullpath);
 
@@ -75,8 +68,11 @@ $this->log->write('$this->fullpath', $this->fullpath, microtime());
 				if(is_dir(B_Util::getPath($this->fullpath, $file_name))) {
 					$this->folder_count++;
 				}
+				else {
+					continue;
+				}
 				if((is_array($open_nodes) && $open_nodes[$this->node_id]) || ($expand_level === 'all' || $level < $expand_level)) {
-					$object = new B_FileNode($this->dir, B_Util::getPath($this->path, $file_name), $open_nodes, $this, $expand_level, $level+1, $thumb_info);
+					$object = new B_DirNode($this->dir, B_Util::getPath($this->path, $file_name), $open_nodes, $this, $expand_level, $level+1, $thumb_info);
 					$this->addNodes($object);
 				}
 			}

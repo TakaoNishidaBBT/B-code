@@ -142,6 +142,7 @@
 				case 'B_Node':
 				case 'B_VNode':
 				case 'B_FileNode':
+				case 'B_DirNode':
 					if($value->id == $this->request['id']) {
 						return json_encode($value->script[$this->request['class']]);
 					}
