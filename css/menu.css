@@ -66,8 +66,6 @@ dl.login-user dd  strong {
 /* pull down menu */
 div.pull_down_menu {
 	overflow: hidden;
-	height: 36px;
-	background-color: #4c4c4c;
 }
 div.pull_down_menu ul {
 	margin: 0;
@@ -77,7 +75,6 @@ div.pull_down_menu ul {
 }
 div.pull_down_menu ul li {
 	float: left;
-	height: 36px;
 	margin: 0;
 	width: 120px;
 	text-align: center;
@@ -96,7 +93,6 @@ div.pull_down_menu a:visited {
 	text-shadow: -1px -1px #666;
 	display: block;
 	text-align: center;
-	line-height: 36px;
 }
 div.pull_down_menu a:hover {
 	text-shadow: -1px -1px #006699;
