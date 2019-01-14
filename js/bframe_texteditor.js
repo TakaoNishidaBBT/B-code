@@ -140,6 +140,13 @@
 			ace_editor.getSession().setUseSoftTabs(false);
 			ace_editor.getSession().on('change', setEditFlag);
 
+			var completion = require('ace/ext/language_tools');
+			ace_editor.setOptions({
+			         enableBasicAutocompletion: true,
+			         enableLiveAutocompletion: true,
+			         enableSnippets: true,
+			     });
+
 			ace_editor.setScrollSpeed(2);
 			ace_editor.commands.addCommand(command);
 

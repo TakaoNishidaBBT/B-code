@@ -29,12 +29,10 @@
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
 
 //			$this->global_session['open_project'] = '';
-//			$this->global_session['open_project']['target/'] = true;
+			$this->global_session['open_project']['target/'] = true;
 //			$this->global_session['open_project']['target2/'] = true;
 //			$this->global_session['open_project']['target3/'] = true;
 //			$this->global_session['open_project']['target2/test/'] = true;
-
-$this->log->write('global_session', $this->global_session);
 		}
 
 		function openCurrentNode($node_id) {
@@ -76,7 +74,7 @@ $this->log->write('global_session', $this->global_session);
 			if(isset($this->request['display_mode'])) {
 				$this->session['display_mode'] = $this->request['display_mode'];
 			}
-$this->log->write('editor getNodeList', $this->session);
+//$this->log->write('editor getNodeList', $this->session);
 			$this->response($this->session['current_node'], 'select');
 
 			exit;
@@ -192,7 +190,6 @@ $this->log->write('editor getNodeList', $this->session);
 
 			case 'cut':
 				foreach($this->request['source_node_id'] as $node_id) {
-					$this->log->write($node_id, dirname($node_id));
 					$source = new B_FileNode($this->dir, $node_id, null, null, 'all');
 
 					if(!file_exists($source->fullpath)) {
@@ -223,7 +220,6 @@ $this->log->write('editor getNodeList', $this->session);
 						if($this->session['current_node'] == $node_id) {
 							$this->session['current_node'] = $source->node_id;
 						}
-						$this->refreshThumbnailCache($source);
 					}
 					else {
 						$this->status = false;
@@ -292,7 +288,6 @@ $this->log->write('editor getNodeList', $this->session);
 							if($node->isMyChild(B_Util::getPath($this->dir, $this->session['current_node']))) {
 								$this->session['current_node'] = $node->parentPath();
 							}
-							$this->refreshThumbnailCache($node);
 						}
 						else {
 							$this->status = false;
@@ -329,7 +324,6 @@ $this->log->write('editor getNodeList', $this->session);
 						}
 						$this->session['open_nodes'][$this->request['node_id']] = false;
 						$this->session['open_nodes'][$new_node_id] = true;
-						$this->refreshThumbnailCache($node);
 					}
 					else {
 						$this->message = __('The name could not be changed');
@@ -367,25 +361,6 @@ $this->log->write('editor getNodeList', $this->session);
 				return false;
 			}
 			return true;
-		}
-
-		function refreshThumbnailCache($node) {
-			if(file_exists(B_FILE_INFO_THUMB_SEMAPHORE)) return;
-
-			if(file_exists(B_FILE_INFO_THUMB)) {
-				$data = unserialize(file_get_contents(B_FILE_INFO_THUMB));
-			}
-			else {
-				if(!$node->isRoot()) {
-					$node = new B_FileNode($this->dir, 'root', null, null, 'all');
-				}
-			}
-
-			$max = $node->getMaxThumbnailNo();
-			$node->createthumbnail($data, $max);
-			$fp = fopen(B_FILE_INFO_THUMB, 'w+');
-			fwrite($fp, serialize($data));
-			fclose($fp);
 		}
 
 		function download() {
@@ -571,12 +546,6 @@ $this->log->write('editor getNodeList', $this->session);
 		}
 
 		function response($node_id, $category) {
-			// If thumb-nail cache file not exists
-			if(!file_exists(B_FILE_INFO_THUMB)) {
-				if($this->createThumbnailCacheFile()) {
-					exit;
-				}
-			}
 			$response['status'] = $this->status;
 			if($this->message) {
 				$response['message'] = $this->message;
@@ -616,7 +585,6 @@ $this->log->write('editor getNodeList', $this->session);
 					$response['sort_order'] = $this->session['sort_order'];
 				}
 			}
-//$this->log->write('$response', $response);
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);
 		}

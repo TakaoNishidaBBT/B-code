@@ -864,7 +864,6 @@
 			li.appendChild(ul);
 
 			if(node_info.children) {
-console.log('add_project', add_project, node_info.node_id, current_node.id().substr(1));
 				if(!add_project || (add_project && current_node.id() && node_info.node_id != current_node.id().substr(1))) {
 					for(var i=0; i < node_info.children.length; i++) {
 						if(pane && property.editor_mode != 'true' && node_info.children[i].node_type == 'file') {
@@ -876,7 +875,6 @@ console.log('add_project', add_project, node_info.node_id, current_node.id().sub
 			}
 
 			// create pane
-//console.log('current_node.id()', current_node.id(), node_info.node_id, current_node.id().substr(1));
 			if(pane && current_node.id() && node_info.node_id == current_node.id().substr(1)) {
 				// create div
 				pane_div = document.createElement('div');
@@ -1585,13 +1583,11 @@ console.log('add_project', add_project, node_info.node_id, current_node.id().sub
 		this.createNode = createNode;
 
 		function select(node_id) {
-console.log('select', node_id);
 			if((node_id == current_node.id() && node_id != selected_node.id())) {
 				selected_node.set(node_id);
 				selected_node.setColor('selected');
 			}
 			else {
-console.log('property.relation', property.relation.selectNode);
 				if(property.relation && property.relation.selectNode) {
 					var rel = bframe.getFrameByName(top, property.relation.selectNode.frame);
 					current_node.setNodeIdBeforeUnload(node_id);

@@ -27,6 +27,10 @@
 			$this->global_session['open_project'][$node_id] = true;
 			$this->global_session['editor'][$node_id] = true;
 
+			$node = new B_FileNode($this->dir, $node_id, null, null, 'all');
+//			$node->createthumbnail(null, array('obj' => $this, 'method' => 'createThumbnail_callback'));
+			$node->createthumbnail();
+
 			header('Content-Type: application/x-javascript charset=utf-8');
 			$response['status'] = true;
 			$response['node_id'] = $node_id;
@@ -553,12 +557,6 @@
 		}
 
 		function response($node_id, $category) {
-			// If thumb-nail cache file not exists
-			if(!file_exists(B_FILE_INFO_THUMB)) {
-				if($this->createThumbnailCacheFile()) {
-					exit;
-				}
-			}
 			$response['status'] = $this->status;
 			if($this->message) {
 				$response['message'] = $this->message;

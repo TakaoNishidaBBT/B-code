@@ -93,7 +93,7 @@
 			try {
 				// Set path
 				if($this->global_session[$this->session['relation']]['current_node'] != 'root') {
-					$this->path = $this->global_session[$this->session['relation']]['current_node'] . '/';
+					$this->path = $this->global_session[$this->session['relation']]['current_node'];
 				}
 
 				// Get file info
@@ -106,7 +106,7 @@
 					// Continue whether a client disconnect or not
 					ignore_user_abort(true);
 
-					$zip_file = B_RESOURCE_WORK_DIR . $file['basename'];
+					$zip_file = B_ADMIN_FILES_DIR . $file['basename'];
 					$status = move_uploaded_file($_FILES['Filedata']['tmp_name'], $zip_file);
 
 					// Check Contents of zip file
@@ -128,12 +128,12 @@
 
 						$zip = new ZipArchive();
 						$zip->open($zip_file);
-						$zip->extractTo(B_RESOURCE_EXTRACT_DIR);
+						$zip->extractTo(B_FILE_EXTRACT_DIR);
 						$zip->close();
 						unlink($zip_file);
 
 						// Controll extracted files
-						$node = new B_FileNode(B_RESOURCE_EXTRACT_DIR, '/', null, null, 'all');
+						$node = new B_FileNode(B_FILE_EXTRACT_DIR, '/', null, null, 'all');
 
 						// except file or folder
 						$this->except = array_flip(array('__MACOSX', '.DS_Store', '._' . $file['file_name']));
@@ -160,10 +160,10 @@
 
 						usleep(300000);
 
-						$root = new B_FileNode(B_FILE_ROOT_DIR, '/', null, null, 'all');
+						$node = new B_FileNode(B_FILE_ROOT_DIR, $this->path, null, null, 'all');
 						$this->createTumbnail_files = 0;
 						$this->progress = 0;
-						$this->refreshThumbnailCache($root, array('obj' => $this, 'method' => 'createThumbnail_callback'));
+						$node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
 
 						foreach($this->registered_archive_node as $path) {
 							$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $path), null, null, 0);
@@ -181,9 +181,8 @@
 					$status = move_uploaded_file($_FILES['Filedata']['tmp_name'], B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename'])));
 					if($status) {
 						chmod(B_Util::getPath(B_FILE_ROOT_DIR, $this->path) . $file['basename'], 0777);
-						$this->removeThumbnail($this->path, $file['basename']);
 						$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename']), null, null, 1);
-						$this->refreshThumbnailCache($node);
+						$node->createthumbnail($this->except);
 						$response['node_info'][] = $node->getNodeList('', '', $this->path);
 					}
 				}
@@ -309,36 +308,5 @@
 			}
 			flush();
 			ob_flush();
-		}
-
-		function removeThumbnail($path, $filename) {
-			$thumb = B_CURRENT_ROOT . B_Util::getPath(B_UPLOAD_FILES, $path) . B_THUMB_PREFIX . $filename;
-			if(file_exists(B_FILE_INFO_THUMB)) {
-				$serializedString = file_get_contents(B_FILE_INFO_THUMB);
-				$thumb_info = unserialize($serializedString);
-				$thumb_file = $thumb_info[$thumb];
-				if($thumb_file && file_exists(B_UPLOAD_THUMBDIR . $thumb_file)) {
-					unlink(B_UPLOAD_THUMBDIR . $thumb_file);
-				}
-			}
-		}
-
-		function refreshThumbnailCache($node, $callback=null) {
-			if(file_exists(B_FILE_INFO_THUMB_SEMAPHORE)) return;
-
-			if(file_exists(B_FILE_INFO_THUMB)) {
-			    $data = unserialize(file_get_contents(B_FILE_INFO_THUMB));
-			}
-			else {
-				if(!$node->isRoot()) {
-					$node = new B_FileNode($this->dir, 'root', null, null, 'all');
-				}
-			}
-
-			$max = $node->getMaxThumbnailNo();
-			$node->createthumbnail($data, $max, $this->except, $callback);
-			$fp = fopen(B_FILE_INFO_THUMB, 'w+');
-			fwrite($fp, serialize($data));
-			fclose($fp);
 		}
 	}

@@ -116,6 +116,7 @@
 			$this->html_header->appendProperty('script', '<script src="js/bframe_selectbox.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/ace/ace.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/ace/ext-split.js"></script>');
+			$this->html_header->appendProperty('script', '<script src="js/ace/ext-language_tools.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/ace/theme-twilight.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/ace/mode-html.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/ace/mode-css.js"></script>');

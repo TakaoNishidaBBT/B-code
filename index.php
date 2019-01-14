@@ -26,7 +26,7 @@
 	$ses->start('nocache', 'bcode-admin-session', $current_path);
 
 	require_once('./config/config.php');
-
+$log = new B_Log(B_LOG_FILE);
 	// Check logedin
 	$auth = new B_AdminAuth;
 	$ret = $auth->getUserInfo($user_id, $user_name, $user_auth, $language);
@@ -39,32 +39,29 @@
 		$url = preg_replace('/\?.*/', '', $url);
 		$url = urldecode($url);
 		$_REQUEST['url'] = $url;
-
-		if(file_exists(B_FILE_INFO_THUMB)) {
-			$serializedString = file_get_contents(B_FILE_INFO_THUMB);
-			$info = unserialize($serializedString);
-			if($info[$url]) {
-				switch($file['extension']) {
-				case 'avi':
-				case 'flv':
-				case 'mov':
-				case 'mp4':
-				case 'mpg':
-				case 'mpeg':
-				case 'wmv':
-					header('Content-Type: image/jpg');
-					break;
-				default:
-					header('Content-Type: image/' . strtolower($file['extension']));
-					break;
-				}
-				readfile(B_UPLOAD_THUMBDIR . $info[$url]);
-				exit;
+		$thumbnail = B_UPLOAD_THUMBDIR . str_replace('/', '-', $url);
+$log->write('$thumbnail', $thumbnail);
+		if(file_exists($thumbnail)) {
+			switch($file['extension']) {
+			case 'avi':
+			case 'flv':
+			case 'mov':
+			case 'mp4':
+			case 'mpg':
+			case 'mpeg':
+			case 'wmv':
+				header('Content-Type: image/jpg');
+				break;
+			default:
+				header('Content-Type: image/' . strtolower($file['extension']));
+				break;
 			}
-			else {
-				header('HTTP/1.1 404 Not Found');
-				exit;
-			}
+			readfile($thumbnail);
+			exit;
+		}
+		else {
+			header('HTTP/1.1 404 Not Found');
+			exit;
 		}
 	}
 
