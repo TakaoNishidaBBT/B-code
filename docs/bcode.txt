@@ -1,0 +1,226 @@
+■ACEエディター
+
+【ソース修正点】
+
+1.theme-twilight.jsを修正
+
+2.tabの表示を修正
+
+line：16042
+
+    this.$computeTabString = function() {
+        var tabSize = this.session.getTabSize();
+        this.tabSize = tabSize;
+        var tabStr = this.$tabStrings = [0];
+        for (var i = 1; i < tabSize + 1; i++) {
+            if (this.showInvisibles) {
+                var span = this.dom.createElement("span");
+                span.className = "ace_invisible ace_invisible_tab";
+// added by T.Nishida 2019/01/14
+//                span.textContent = lang.stringRepeat(this.TAB_CHAR, i);
+                span.textContent = this.TAB_CHAR + lang.stringRepeat("\xa0", this.tabSize - 1);
+                tabStr.push(span);
+            } else {
+                tabStr.push(this.dom.createTextNode(lang.stringRepeat(" ", i), this.element));
+            }
+        }
+        if (this.displayIndentGuides) {
+            this.$indentGuideRe =  /\s\S| \t|\t |\s$/;
+            var className = "ace_indent-guide";
+            var spaceClass = "";
+            var tabClass = "";
+            if (this.showInvisibles) {
+                className += " ace_invisible";
+                spaceClass = " ace_invisible_space";
+                tabClass = " ace_invisible_tab";
+                var spaceContent = lang.stringRepeat(this.SPACE_CHAR, this.tabSize);
+// added by T.Nishida 2019/01/14
+//                var tabContent = lang.stringRepeat(this.TAB_CHAR, this.tabSize);
+                var tabContent = this.TAB_CHAR + lang.stringRepeat("\xa0", this.tabSize - 1);
+            } else {
+                var spaceContent = lang.stringRepeat(" ", this.tabSize);
+                var tabContent = spaceContent;
+            }
+
+            var span = this.dom.createElement("span");
+            span.className = className + spaceClass;
+            span.textContent = spaceContent;
+            this.$tabStrings[" "] = span;
+            
+            var span = this.dom.createElement("span");
+            span.className = className + tabClass;
+            span.textContent = tabContent;
+            this.$tabStrings["\t"] = span;
+        }
+    };
+
+
+
+3.全角文字判定のバグ
+
+line：11134
+
+    function isFullWidth(c) {
+               c >= 0x2010 && c <= 0x2E80 ||	// 2329 -> 2010  232A -> 2E80 T.Nishida
+
+
+line：16248
+    this.$renderToken = function(parent, screenColumn, token, value) {
+        var self = this;
+        var re = /(\t)|( +)|([\x00-\x1f\x80-\xa0\xad\u1680\u180E\u2000-\u200f\u2028\u2029\u202F\u205F\uFEFF\uFFF9-\uFFFC]+)|(\u3000)|([\u1100-\u115F\u11A3-\u11A7\u11FA-\u11FF\u2010-\u2E80\u2E80-\u2E99\u2E9B-\u2EF3\u2F00-\u2FD5\u2FF0-\u2FFB\u3001-\u303E\u3041-\u3096\u3099-\u30FF\u3105-\u312D\u3131-\u318E\u3190-\u31BA\u31C0-\u31E3\u31F0-\u321E\u3220-\u3247\u3250-\u32FE\u3300-\u4DBF\u4E00-\uA48C\uA490-\uA4C6\uA960-\uA97C\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFAFF\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE66\uFE68-\uFE6B\uFF01-\uFF60\uFFE0-\uFFE6]|[\uD800-\uDBFF][\uDC00-\uDFFF])/g;
+
+
+
+4.autoCompletionの表示順を昇順に修正
+
+ファイル：ext-language_tools.js
+
+line：1705
+
+        matches = matches.sort(function(a, b) {
+// 2019.01.15 updated T.Nishida
+//          return b.exactMatch - a.exactMatch || b.$score - a.$score 
+//              || (a.caption || a.value) < (b.caption || b.value);
+            return b.exactMatch - a.exactMatch || b.$score - a.$score 
+                || (a.caption || a.value) > (b.caption || b.value);
+        });
+
+
+
+5. undoバッファのサイズを取得できるようにfunctionを追加
+
+line：14856
+
+// 2018.12.28 added By Takao Nishida
+	this.undoDepth = function() {
+		return this.$undoStack.length;
+	};
+
+
+
+6. スクロールバーをbframe_scrollに変更
+
+line：1179
+
+exports.scrollbarWidth = function(document) {
+    var inner = exports.createElement("ace_inner");
+    inner.style.width = "100%";
+    inner.style.minWidth = "0px";
+    inner.style.height = "200px";
+    inner.style.display = "block";
+
+    var outer = exports.createElement("ace_outer");
+    var style = outer.style;
+
+    style.position = "absolute";
+    style.left = "-10000px";
+    style.overflow = "hidden";
+    style.width = "200px";
+    style.minWidth = "0px";
+    style.height = "150px";
+    style.display = "block";
+
+    outer.appendChild(inner);
+
+    var body = document.documentElement;
+    body.appendChild(outer);
+
+    var noScrollbar = inner.offsetWidth;
+
+    style.overflow = "scroll";
+    var withScrollbar = inner.offsetWidth;
+
+    if (noScrollbar == withScrollbar) {
+        withScrollbar = outer.clientWidth;
+    }
+
+    body.removeChild(outer);
+
+	// 2019.01.15 added By Takao Nishida
+	if(bframe.scroll) return 5;
+
+    return noScrollbar-withScrollbar;
+};
+
+
+line：17937
+
+// updated 2019/01/15 by T.Nishida
+			if(bframe.scroll) {
+				var right = 0;
+			}
+			else {
+	            var right = this.scrollBarV.getWidth() + "px";
+			}
+
+
+line：17296
+	background-color: #141414　を追加
+
+.ace_scrollbar {\
+contain: strict;\
+position: absolute;\
+right: 0;\
+bottom: 0;\
+z-index: 6;\
+background-color: #141414;\
+}\
+
+line：16787
+
+var ScrollBar = function(parent) {
+    this.element = dom.createElement("div");
+    this.element.className = "ace_scrollbar ace_scrollbar" + this.classSuffix;
+
+    this.inner = dom.createElement("div");
+    this.inner.className = "ace_scrollbar-inner";
+    this.element.appendChild(this.inner);
+
+    parent.appendChild(this.element);
+
+    this.setVisible(false);
+    this.skipEvent = false;
+
+    event.addListener(this.element, "scroll", this.onScroll.bind(this));
+    event.addListener(this.element, "mousedown", event.preventDefault);
+
+	// 2019/01/15 updated by T.Nishida
+	if(bframe.scroll) new bframe.scroll(this.element, 'ace');
+};
+
+
+line：16823
+
+// 2019/01/15 updated by T.Nishida
+    this.inner.style.width =
+    this.element.style.width = (this.width || 15) + 5 + "px";
+    this.element.style.width = 0;
+    this.$minWidth = 0;
+};
+
+
+line：16850
+
+    this.setScrollHeight = function(height) {
+        this.scrollHeight = height;
+        if (height > MAX_SCROLL_H) {
+            this.coeff = MAX_SCROLL_H / height;
+            height = MAX_SCROLL_H;
+        } else if (this.coeff != 1) {
+            this.coeff = 1;
+        }
+        this.inner.style.height = height + "px";
+
+		// 2019/01/15 updated by T.Nishida
+		bframe.fireEvent(this.element, 'resize')
+    };
+
+line：16880
+
+// 2019/01/15 updated by T.Nishida
+    this.inner.style.height =
+    this.element.style.height = (this.height || 15) + 5 + "px";
+    this.element.style.height = 0;
+};
+
+

@@ -1703,8 +1703,11 @@ var FilteredList = function(array, filterText) {
         this.filterText = str;
         matches = this.filterCompletions(matches, this.filterText);
         matches = matches.sort(function(a, b) {
+// 2019.01.15 updated T.Nishida
+//          return b.exactMatch - a.exactMatch || b.$score - a.$score 
+//              || (a.caption || a.value) < (b.caption || b.value);
             return b.exactMatch - a.exactMatch || b.$score - a.$score 
-                || (a.caption || a.value) < (b.caption || b.value);
+                || (a.caption || a.value) > (b.caption || b.value);
         });
         var prev = null;
         matches = matches.filter(function(item){

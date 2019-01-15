@@ -113,6 +113,10 @@ color: #E9E002\
 .ace-twilight .ace_markup.ace_underline {\
 text-decoration: underline\
 }\
+.ace-twilight .ace_text-input.ace_composition {\
+background: transparent;\
+color: #fff;\
+}\
 .ace-twilight .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWMQERH5zzBz5sz/AA5EBAYqeZXWAAAAAElFTkSuQmCC) right repeat-y\
 }";

@@ -11138,7 +11138,8 @@ EditSession.$uid = 0;
         return c >= 0x1100 && c <= 0x115F ||
                c >= 0x11A3 && c <= 0x11A7 ||
                c >= 0x11FA && c <= 0x11FF ||
-               c >= 0x2329 && c <= 0x232A ||
+//             c >= 0x2329 && c <= 0x232A ||
+               c >= 0x2010 && c <= 0x2E80 ||	// 2329 -> 2010  232A -> 2E80 T.Nishida
                c >= 0x2E80 && c <= 0x2E99 ||
                c >= 0x2E9B && c <= 0x2EF3 ||
                c >= 0x2F00 && c <= 0x2FD5 ||
@@ -14852,6 +14853,10 @@ var UndoManager = function() {
     this.canUndo = function() {
         return this.$undoStack.length > 0;
     };
+// 2018.12.28 added By Takao Nishida
+	this.undoDepth = function() {
+		return this.$undoStack.length;
+	};
     this.canRedo = function() {
         return this.$redoStack.length > 0;
     };
@@ -16242,7 +16247,7 @@ var Text = function(parentEl) {
 
     this.$renderToken = function(parent, screenColumn, token, value) {
         var self = this;
-        var re = /(\t)|( +)|([\x00-\x1f\x80-\xa0\xad\u1680\u180E\u2000-\u200f\u2028\u2029\u202F\u205F\uFEFF\uFFF9-\uFFFC]+)|(\u3000)|([\u1100-\u115F\u11A3-\u11A7\u11FA-\u11FF\u2329-\u232A\u2E80-\u2E99\u2E9B-\u2EF3\u2F00-\u2FD5\u2FF0-\u2FFB\u3001-\u303E\u3041-\u3096\u3099-\u30FF\u3105-\u312D\u3131-\u318E\u3190-\u31BA\u31C0-\u31E3\u31F0-\u321E\u3220-\u3247\u3250-\u32FE\u3300-\u4DBF\u4E00-\uA48C\uA490-\uA4C6\uA960-\uA97C\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFAFF\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE66\uFE68-\uFE6B\uFF01-\uFF60\uFFE0-\uFFE6]|[\uD800-\uDBFF][\uDC00-\uDFFF])/g;
+        var re = /(\t)|( +)|([\x00-\x1f\x80-\xa0\xad\u1680\u180E\u2000-\u200f\u2028\u2029\u202F\u205F\uFEFF\uFFF9-\uFFFC]+)|(\u3000)|([\u1100-\u115F\u11A3-\u11A7\u11FA-\u11FF\u2010-\u2E80\u2E80-\u2E99\u2E9B-\u2EF3\u2F00-\u2FD5\u2FF0-\u2FFB\u3001-\u303E\u3041-\u3096\u3099-\u30FF\u3105-\u312D\u3131-\u318E\u3190-\u31BA\u31C0-\u31E3\u31F0-\u321E\u3220-\u3247\u3250-\u32FE\u3300-\u4DBF\u4E00-\uA48C\uA490-\uA4C6\uA960-\uA97C\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFAFF\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE66\uFE68-\uFE6B\uFF01-\uFF60\uFFE0-\uFFE6]|[\uD800-\uDBFF][\uDC00-\uDFFF])/g;
         
         var valueFragment = this.dom.createFragment(this.element);
 
@@ -16794,6 +16799,9 @@ var ScrollBar = function(parent) {
 
     event.addListener(this.element, "scroll", this.onScroll.bind(this));
     event.addListener(this.element, "mousedown", event.preventDefault);
+
+	// 2019/01/15 updated by T.Nishida
+	if(bframe.scroll) new bframe.scroll(this.element, 'ace');
 };
 
 (function() {
@@ -16811,8 +16819,11 @@ var VScrollBar = function(parent, renderer) {
     this.scrollHeight = 0;
     renderer.$scrollbarWidth = 
     this.width = dom.scrollbarWidth(parent.ownerDocument);
+
+// 2019/01/15 updated by T.Nishida
     this.inner.style.width =
     this.element.style.width = (this.width || 15) + 5 + "px";
+    this.element.style.width = 0;
     this.$minWidth = 0;
 };
 
@@ -16848,6 +16859,9 @@ oop.inherits(VScrollBar, ScrollBar);
             this.coeff = 1;
         }
         this.inner.style.height = height + "px";
+
+		// 2018/02/07 updated by T.Nishida
+		bframe.fireEvent(this.element, 'resize')
     };
     this.setScrollTop = function(scrollTop) {
         if (this.scrollTop != scrollTop) {
@@ -16862,8 +16876,11 @@ var HScrollBar = function(parent, renderer) {
     ScrollBar.call(this, parent);
     this.scrollLeft = 0;
     this.height = renderer.$scrollbarWidth;
+
+// 2019/01/15 updated by T.Nishida
     this.inner.style.height =
     this.element.style.height = (this.height || 15) + 5 + "px";
+    this.element.style.height = 0;
 };
 
 oop.inherits(HScrollBar, ScrollBar);
@@ -17921,7 +17938,13 @@ var VirtualRenderer = function(container, theme) {
             size.scrollerWidth = Math.max(0, width - gutterWidth - this.scrollBarV.getWidth() - this.margin.h);
             dom.setStyle(this.$gutter.style, "left", this.margin.left + "px");
             
-            var right = this.scrollBarV.getWidth() + "px";
+// updated 2019/01/15 by T.Nishida
+			if(bframe.scroll) {
+				var right = 0;
+			}
+			else {
+	            var right = this.scrollBarV.getWidth() + "px";
+			}
             dom.setStyle(this.scrollBarH.element.style, "right", right);
             dom.setStyle(this.scroller.style, "right", right);
             dom.setStyle(this.scroller.style, "bottom", this.scrollBarH.getHeight());

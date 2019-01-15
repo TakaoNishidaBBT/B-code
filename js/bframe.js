@@ -312,15 +312,7 @@
 	}
 
 	bframe.checkClassName = function(class_name, obj) {
-		if(obj.className) {
-			var arr = obj.className.split(' ');
-			for(var j=0; j<arr.length; j++) {
-				if(arr[j] == class_name) {
-					return true;
-				}
-			}
-		}
-		return false;
+		if(obj.classList) return obj.classList.contains(class_name);
 	}
 
 	bframe.appendClass = function(class_name, obj) {
