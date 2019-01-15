@@ -16823,7 +16823,7 @@ var VScrollBar = function(parent, renderer) {
 // 2019/01/15 updated by T.Nishida
     this.inner.style.width =
     this.element.style.width = (this.width || 15) + 5 + "px";
-    this.element.style.width = 0;
+    if(bframe && bframe.scroll && bframe.getOS() == 'windows') this.element.style.width = 0;
     this.$minWidth = 0;
 };
 
@@ -16880,7 +16880,7 @@ var HScrollBar = function(parent, renderer) {
 // 2019/01/15 updated by T.Nishida
     this.inner.style.height =
     this.element.style.height = (this.height || 15) + 5 + "px";
-    this.element.style.height = 0;
+	if(bframe && bframe.scroll && bframe.getOS() == 'windows') this.element.style.height = 0;
 };
 
 oop.inherits(HScrollBar, ScrollBar);
