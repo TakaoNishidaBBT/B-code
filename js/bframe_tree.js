@@ -4889,7 +4889,7 @@
 				getNodeList(node.id);
 			}
 			else if(property.folderselect == 'true') {
-				getNodeList(node.id);
+				currentObject(node.id);
 			}
 			else if(control && bframe.getFileName(control.src) == bframe.getFileName(property.icon.plus.src)) {
 				getNodeList(node.id);

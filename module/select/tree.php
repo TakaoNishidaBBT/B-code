@@ -10,7 +10,12 @@
 			parent::__construct(__FILE__);
 
 			$this->dir = B_FILE_ROOT_DIR;
-$this->log->write('project_tree');
+
+			if($this->request['directory']) {
+				$this->openCurrentNode($this->request['directory']);
+				$this->session['current_node'] = $this->request['directory'];
+			}
+
 			require_once('./config/tree_config.php');
 			$this->tree_config = $tree_config;
 			$this->tree = new B_DirNode($this->dir, '');
@@ -22,28 +27,10 @@ $this->log->write('project_tree');
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
 		}
 
-		function add() {
-			$node_id = $this->request['node_id'];
-			$this->global_session['open_project'][$node_id] = true;
-			$this->global_session['editor'][$node_id] = true;
-
-			$node = new B_FileNode($this->dir, $node_id, null, null, 'all');
-//			$node->createthumbnail(null, array('obj' => $this, 'method' => 'createThumbnail_callback'));
-			$node->createthumbnail();
-
-			header('Content-Type: application/x-javascript charset=utf-8');
-			$response['status'] = true;
-			$response['node_id'] = $node_id;
-
-			echo json_encode($response);
-
-			exit;
-		}
-
 		function openCurrentNode($node_id) {
 			$dir = explode('/', $node_id);
 
-			for($i=0; $i<count($dir); $i++) {
+			for($i=0; $i<count($dir)-1; $i++) {
 				if(!$dir[$i]) continue;
 				$path.= '/' . $dir[$i];
 				$this->session['open_nodes'][$path] = true;

@@ -111,7 +111,7 @@ $form_config = array(
 					'name'			=> 'open_select',
 					'class'			=> 'B_Link',
 					'link'			=> 'index.php',
-					'attr'			=> 'title="' . __('Directory') . '" class="settings-button" onclick="top.bframe.modalWindow.activate(this, window); return false;" data-param="width:350,height:400"',
+					'attr'			=> 'title="' . __('Directory') . '" class="settings-button" onclick="top.bframe.modalWindow.activate(this, window, \'directory\'); return false;" data-param="width:350,height:400"',
 					'fixedparam'	=>
 					array(
 						'terminal_id'	=> TERMINAL_ID,
