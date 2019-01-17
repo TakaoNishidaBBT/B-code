@@ -9,7 +9,8 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			$this->dir = B_FILE_ROOT_DIR;
+			$this->dir = B_Util::getPath(B_FILE_ROOT_DIR, $this->session['project_dir']) . '/';
+			if(substr($this->dir, 0, 1) != '/') $this->dir .= '/';
 
 			require_once('./config/editor_config.php');
 
@@ -18,7 +19,7 @@
 
 		function open() {
 			if($this->request['node_id']) {
-				$file_path = B_Util::getPath(B_FILE_ROOT_DIR , $this->request['node_id']);
+				$file_path = B_Util::getPath($this->dir , $this->request['node_id']);
 				$info = pathinfo($file_path);
 				$update_datetime = filemtime($file_path);
 				$obj = $this->editor->getElementByName('contents');

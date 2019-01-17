@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+body {
+	background-color: #fff;
+}
+
+h1 {
+	margin: 0;
+	padding-left: 10px;
+	background: #bbb;
+	height: 32px;
+	line-height: 32px;
+	font-size: 15px;
+	color: #fff;
+	background-color: #444;
+	text-align: center;
+}
+
+div.main {
+	width: 60%;
+	min-width: 400px;
+	height: 190px;
+	margin: 40px auto;
+	padding: 0;
+	color: #fff;
+	font-family: "メイリオ","Meryo","ＭＳ Ｐゴシック","MS PGothic","Hiragino Kaku Gothic Pro","ヒラギノ角ゴ Pro W3","Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+}

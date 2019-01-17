@@ -104,6 +104,12 @@
 	// Built-in User File
 	require_once(B_CURRENT_DIR . 'user/users.php');
 
+	// User Data File
+	define('B_USER_DATA', B_CURRENT_DIR . 'config/user_data.txt');
+
+	// Project Data File
+	define('B_PROJECT_DATA', B_CURRENT_DIR . 'config/project_data.txt');
+
 	// PHP Display Errors
 	ini_set('display_errors','Off');
 	ini_set('log_errors','On');

@@ -22,6 +22,20 @@
 		return $texts[$text] ? $texts[$text] : $text;
 	}
 
+	function __project($url) {
+		$current_dir = dirname(str_replace('\\', '/', __DIR__));
+
+		$dir_array = explode('/', $url);
+
+		$handle = opendir($current_dir);
+		while(false !== ($file_name = readdir($handle))){
+			if($file_name == '.' || $file_name == '..') continue;
+
+			if($dir_array[0] == $file_name) return;
+		}
+		return $dir_array[0];
+	}
+
 	// class auto loader
 	spl_autoload_register(function($class_name) {
 		$admin_dir = dirname(str_replace('\\' , '/', __DIR__));

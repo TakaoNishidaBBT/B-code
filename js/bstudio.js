@@ -20,19 +20,40 @@
 		if(func) top.bframe.modalWindow.registerCallBackFunction(func);
 	}
 
-	bstudio.addProject = function() {
+	bstudio.setDirectory = function() {
 		var nodes = bframe_tree.getCurrentNodes();
-		var input = document.getElementById('node_id');
+		var node_id = nodes[0].id.substr(1);
+//console.log('node_id', node_id);
+//		if(node_id == 'root') return;
 
-		input.value = nodes[0].id.substr(1);
-		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio._addProject);
-		bframe.ajaxSubmit.submit('F1', 'project', 'tree', 'add', '', true);
+		bstudio.insertValue(window.frameElement.opener, 'directory', node_id);
+		window.frameElement.deactivate();
 	}
 
-	bstudio._addProject = function(response) {
-		var frame = bframe.getFrameByName(top, 'main');
-		if(typeof frame.bframe_tree !== 'undefined') frame.bframe_tree.addProject(response);
-		window.frameElement.deactivate();
+	bstudio.insertValue = function(opener, target_id, target_value) {
+		opener.bstudio._insertValue(target_id, target_value);
+	}
+
+	bstudio._insertValue = function(target_id, target_value) {
+		var target = document.getElementById(target_id);
+		if(!target) return;
+
+		target.value = target_value;
+	}
+
+	bstudio.clearText = function(target_id1, target_id2) {
+		var target1 = document.getElementById(target_id1);
+		if(target1 && target1.value) {
+			target1.value = '';
+			if(bframe.fireEvent) bframe.fireEvent(target1, 'change');
+		}
+		if(target_id2) {
+			var target2 = document.getElementById(target_id2);
+			if(target2 && target2.value) {
+				target2.value = '';
+				if(bframe.fireEvent) bframe.fireEvent(target2, 'change');
+			}
+		}
 	}
 
 	bstudio.reloadTree = function() {

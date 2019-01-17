@@ -5,12 +5,12 @@
  *
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
 */
-	class project_tree extends B_AdminModule {
+	class select_tree extends B_AdminModule {
 		function __construct() {
 			parent::__construct(__FILE__);
 
 			$this->dir = B_FILE_ROOT_DIR;
-
+$this->log->write('project_tree');
 			require_once('./config/tree_config.php');
 			$this->tree_config = $tree_config;
 			$this->tree = new B_DirNode($this->dir, '');
@@ -599,6 +599,7 @@
 		}
 
 		function view() {
+$this->log->write('view');
 			// Start buffering
 			ob_start();
 
@@ -610,7 +611,7 @@
 			// Send HTTP header
 			$this->sendHttpHeader();
 
-			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/project.css">');
+			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/select.css">');
 			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/upload.css">');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_tree.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_dialog.js"></script>');

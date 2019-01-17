@@ -31,29 +31,21 @@
 		function admin() {
 			// Set session for each TERMINAL_ID
 			$_SESSION['terminal_id'] = TERMINAL_ID;
-			$_SESSION[TERMINAL_ID] = array();
+			if(!is_array($_SESSION[TERMINAL_ID])) $_SESSION[TERMINAL_ID] = array();
 
 			// bframe_message
 			$this->bframe_message = new B_Element($this->bframe_message_config, $this->user_auth);
 
-			// Menu
-			require_once('./config/menu_config.php');
-			$this->menu = new B_Element($menu_config, $this->user_auth);
 			$this->user_name = htmlspecialchars($this->user_name, ENT_QUOTES, B_CHARSET);
+			if($_REQUEST['project']) {
+				$this->initial_page = DISPATCH_URL . '&amp;module=editor&amp;page=tree&amp;project=' . $_REQUEST['project'];
+			}
+			else {
+				// Menu
+				require_once('./config/menu_config.php');
+				$this->menu = new B_Element($menu_config, $this->user_auth);
 
-			switch($this->user_auth) {
-			case 'super_admin':
-			case 'admin':
-				$this->initial_page = DISPATCH_URL . '&amp;module=editor&amp;page=tree';
-				break;
-
-			case 'editor':
-				$this->initial_page = DISPATCH_URL . '&amp;module=article&amp;page=list';
-				break;
-
-			default:
-				$this->initial_page = DISPATCH_URL . '&amp;module=preview&amp;page=form';
-				break;
+				$this->initial_page = DISPATCH_URL . '&amp;module=project&amp;page=list';
 			}
 
 			$this->view_file = './view/view_index.php';

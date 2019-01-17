@@ -26,7 +26,7 @@
 	$ses->start('nocache', 'bcode-admin-session', $current_path);
 
 	require_once('./config/config.php');
-$log = new B_Log(B_LOG_FILE);
+
 	// Check logedin
 	$auth = new B_AdminAuth;
 	$ret = $auth->getUserInfo($user_id, $user_name, $user_auth, $language);
@@ -40,7 +40,6 @@ $log = new B_Log(B_LOG_FILE);
 		$url = urldecode($url);
 		$_REQUEST['url'] = $url;
 		$thumbnail = B_UPLOAD_THUMBDIR . str_replace('/', '-', $url);
-$log->write('$thumbnail', $thumbnail);
 		if(file_exists($thumbnail)) {
 			switch($file['extension']) {
 			case 'avi':
@@ -59,10 +58,16 @@ $log->write('$thumbnail', $thumbnail);
 			readfile($thumbnail);
 			exit;
 		}
-		else {
-			header('HTTP/1.1 404 Not Found');
-			exit;
-		}
+	}
+
+	switch(strtolower($file['extension'])) {
+	case 'swf':
+	case 'jpg':
+	case 'jpeg':
+	case 'gif':
+	case 'png':
+		header('HTTP/1.1 404 Not Found');
+		exit;
 	}
 
 	// Set TERMINAL_ID
@@ -73,7 +78,13 @@ $log->write('$thumbnail', $thumbnail);
 		define('TERMINAL_ID', __getRandomText(12));
 	}
 
-	// Set DISPATCH_URL
-	define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID);
+	$project = __project($_REQUEST['url']);
+	if($project) {
+		$_REQUEST['project'] = $project;
+		define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID . '&amp;project=' . $project);
+	}
+	else {
+		define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID);
+	}
 
 	require_once('./controller/controller.php');

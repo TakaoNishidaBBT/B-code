@@ -16049,7 +16049,7 @@ var Text = function(parentEl) {
                 span.className = "ace_invisible ace_invisible_tab";
 // added by T.Nishida 2019/01/14
 //                span.textContent = lang.stringRepeat(this.TAB_CHAR, i);
-                span.textContent = this.TAB_CHAR + lang.stringRepeat("\xa0", this.tabSize - 1);
+                span.textContent = this.TAB_CHAR + lang.stringRepeat("\xa0", i - 1);
                 tabStr.push(span);
             } else {
                 tabStr.push(this.dom.createTextNode(lang.stringRepeat(" ", i), this.element));

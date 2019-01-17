@@ -12,6 +12,26 @@ div#title-header {
 	color: #fff;
 	background-color: #444;
 }
+div.title-menu {
+	display: flex;
+	flex-direction: row;
+}
+div.title {
+	width: 90px;
+	padding-top: 3px;
+	margin: 0 30px 0 10px;
+}
+div.title {
+	color: #5e5e5e;
+	text-shadow: -1px -1px #333;
+	font-weight: bold;
+	font-family: Arial,Meiryo,Helvetica,Verdana;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 div.login-user {
 	float:right;
 	margin: 0;
@@ -68,22 +88,22 @@ div.pull_down_menu {
 	overflow: hidden;
 }
 div.pull_down_menu ul {
+	display: flex;
+	flex-direction: row;
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 	min-width: 800px;
 }
 div.pull_down_menu ul li {
-	float: left;
 	margin: 0;
-	width: 120px;
-	text-align: center;
+	min-width: 120px;
 }
 div.pull_down_menu ul li img {
 	vertical-align: -4px;
 	margin-right: 4px;
 }
-div.pull_down_menu ul li:not(:first-child):hover {
+div.pull_down_menu ul li:hover {
 	background-color: #0689de;
 }
 div.pull_down_menu a,
@@ -96,51 +116,4 @@ div.pull_down_menu a:visited {
 }
 div.pull_down_menu a:hover {
 	text-shadow: -1px -1px #006699;
-}
-div.pull_down_menu ul li.title {
-	width: 90px;
-	padding-top: 3px;
-	margin-right: 30px;
-}
-div.pull_down_menu ul span.title {
-	color: #5e5e5e;
-	text-shadow: -1px -1px #333;
-	font-weight: bold;
-	font-family: Arial,Meiryo,Helvetica,Verdana;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
-div.pull_down_menu ul li.terminator {
-	border-right: none;
-}
-div.pull_down_menu ul li.new_tab {
-	width: 30px;
-}
-div.pull_down_menu ul li.new_tab a,
-div.pull_down_menu ul li.new_tab a {
-	padding: 0;
-}
-div.pull_down_menu ul li.new_tab a span {
-	color: #5e5e5e;
-	text-shadow: -1px -1px #333;
-	line-height: 36px;
-	border-left: none;
-	font-weight: bold;
-	font-size: 24px;
-	font-family: Arial,Meiryo,Helvetica,Verdana;
-}
-div.pull_down_menu ul li.new_tab a:hover span {
-	color: #f0f0f0;
-	text-shadow: -1px -1px #666;
-	line-height: 36px;
-	border-left: none;
-	font-weight: bold;
-	font-size: 24px;
-	font-family: Arial,Meiryo,Helvetica,Verdana;
-}
-div.pull_down_menu ul li.new_tab img {
-	vertical-align: -4px;
 }

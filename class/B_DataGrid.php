@@ -107,27 +107,50 @@
 				$this->record_cnt = count($data);
 			}
 			else {
-				// data bind from DB
-				$sql = $this->createSQL();
+				switch(get_class($this->db)) {
+				case 'B_DBaccess':
+					// data bind from DB
+					$sql = $this->createSQL();
 
-				// get record data
-				$rs = $this->db->query($sql);
+					// get record data
+					$rs = $this->db->query($sql);
 
-				for($record_cnt=0; $value = $this->db->fetch_assoc($rs); $record_cnt++) {
-					$this->bind_data[] = $value;
-					// create row instance
-					$row = new B_Element($this->config['row'], $this->auth_filter, $this->config_filter);
-					$row->setValue($value);
-					$this->row[] = $row;
-				}
-				if($this->pager) {
-					$count_sql = 'select found_rows() cnt';
-					$rs = $this->db->query($count_sql);
-					$row = $this->db->fetch_assoc($rs);
-					$this->record_cnt = $row['cnt'];
-				}
-				else {
+					for($record_cnt=0; $value = $this->db->fetch_assoc($rs); $record_cnt++) {
+						$this->bind_data[] = $value;
+						// create row instance
+						$row = new B_Element($this->config['row'], $this->auth_filter, $this->config_filter);
+						$row->setValue($value);
+						$this->row[] = $row;
+					}
+					if($this->pager) {
+						$count_sql = 'select found_rows() cnt';
+						$rs = $this->db->query($count_sql);
+						$row = $this->db->fetch_assoc($rs);
+						$this->record_cnt = $row['cnt'];
+					}
+					else {
+						$this->record_cnt = $record_cnt;
+					}
+					break;
+
+				case 'B_DataFile':
+					$data = $this->db->getAll();
+
+					$record_cnt = 0;
+					if(is_array($data)) {
+						foreach($data as $value) {
+							$this->bind_data[] = $value;
+							// create row instance
+							$row = new B_Element($this->config['row'], $this->auth_filter, $this->config_filter);
+							$row->setValue($value);
+							$this->row[] = $row;
+							$record_cnt++;
+						}
+					}
+
 					$this->record_cnt = $record_cnt;
+
+					break;
 				}
 			}
 		}

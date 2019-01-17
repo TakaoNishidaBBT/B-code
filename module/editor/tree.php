@@ -9,7 +9,10 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			$this->dir = B_FILE_ROOT_DIR;
+			if($this->request['project']) $this->session['project_dir'] = $this->getProjectDirectory($this->request['project']);
+
+			$this->dir = B_Util::getPath(B_FILE_ROOT_DIR, $this->session['project_dir']) . '/';
+			if(substr($this->dir, 0, 1) != '/') $this->dir .= '/';
 
 			require_once('./config/tree_config.php');
 			$this->tree_config = $tree_config;
@@ -27,12 +30,12 @@
 			$this->status = true;
 			if(!$this->session['sort_order']) $this->session['sort_order'] = 'asc';
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
+		}
 
-//			$this->global_session['open_project'] = '';
-			$this->global_session['open_project']['target/'] = true;
-//			$this->global_session['open_project']['target2/'] = true;
-//			$this->global_session['open_project']['target3/'] = true;
-//			$this->global_session['open_project']['target2/test/'] = true;
+		function getProjectDirectory($project) {
+			$this->df = new B_DataFile(B_PROJECT_DATA, 'project');
+			$row = $this->df->select('name', $project);
+			return $row['directory'];
 		}
 
 		function openCurrentNode($node_id) {
@@ -68,13 +71,10 @@
 			if($this->request['node_id']) {
 				$this->session['open_nodes'][$this->request['node_id']] = true;
 			}
-//			if(!$this->session['current_node']) {
-//				$this->session['current_node'] = 'root';
-//			}
 			if(isset($this->request['display_mode'])) {
 				$this->session['display_mode'] = $this->request['display_mode'];
 			}
-//$this->log->write('editor getNodeList', $this->session);
+
 			$this->response($this->session['current_node'], 'select');
 
 			exit;
@@ -551,40 +551,33 @@
 				$response['message'] = $this->message;
 			}
 
-			if(is_array($this->global_session['open_project'])) {
-				foreach($this->global_session['open_project'] as $path => $value) {
-					if($this->session['open_nodes'][$path]) {
-						$root_node = new B_FileNode($this->dir, $path, $this->session['open_nodes'], null, 1);
-					}
-					else {
-						$root_node = new B_FileNode($this->dir, $path, $this->session['open_nodes'], null, 0);
-					}
-
-					$list[] = $root_node->getNodeList($node_id, $category);
-					if(!$this->session['current_node']) $this->session['current_node'] = $path;
-
-					// set current node
-					if(!$current_node) 	$current_node = $root_node->getNodeById($this->session['current_node']);
-				}
-
-				if($current_node && $this->session['sort_key']) {
-					$current_node->setSortKey($this->session['sort_key']);
-					$current_node->setSortOrder($this->session['sort_order']);
-				}
-
-				$response['current_node'] = $this->session['current_node'];
-
-				if($this->session['selected_node']) {
-					$response['selected_node'] = $this->session['selected_node'];
-				}
-				if($list) {
-					$response['node_info'] = $list;
-				}
-				if($this->session['sort_key']) {
-					$response['sort_key'] = $this->session['sort_key'];
-					$response['sort_order'] = $this->session['sort_order'];
-				}
+			$root_node = new B_FileNode($this->dir, '/', $this->session['open_nodes'], null, 1);
+			$current_node = $root_node->getNodeById($this->session['current_node']);
+			if(!$current_node) {
+				$current_node = $root_node;
+				$this->session['current_node'] = 'root';
 			}
+
+			if($current_node && $this->session['sort_key']) {
+				$current_node->setSortKey($this->session['sort_key']);
+				$current_node->setSortOrder($this->session['sort_order']);
+			}
+
+			$list[] = $root_node->getNodeList($node_id, $category);
+
+			$response['current_node'] = $this->session['current_node'];
+
+			if($this->session['selected_node']) {
+				$response['selected_node'] = $this->session['selected_node'];
+			}
+			if($list) {
+				$response['node_info'] = $list;
+			}
+			if($this->session['sort_key']) {
+				$response['sort_key'] = $this->session['sort_key'];
+				$response['sort_order'] = $this->session['sort_order'];
+			}
+
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);
 		}

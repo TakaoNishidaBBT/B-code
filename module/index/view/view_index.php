@@ -24,7 +24,10 @@
 <body>
 	<script>if(window != top) top.location.href='.'</script>
 	<div id="title-header">
-		<?php echo $this->menu->gethtml(); ?>
+		<div class="title-menu">
+			<div class="title">B-code</div>
+			<?php if($this->menu) echo $this->menu->gethtml(); ?>
+		</div>
 		<div class="login-user">
 			<ul>
 				<li>
