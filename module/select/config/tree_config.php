@@ -28,6 +28,7 @@ $tree_config = array(
 				'deleteNode'	=> 'deleteNode',
 				'truncateNode'	=> 'truncateNode',
 				'closeNode'		=> 'closeNode',
+				'selectFolder'	=> 'selectFolder',
 				'createNode'	=> 'createNode',
 				'updateDispSeq'	=> 'updateDispSeq',
 				'saveName'		=> 'saveName',

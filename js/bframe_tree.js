@@ -955,6 +955,9 @@
 					selected_node.set(node_id);
 					selected_node.setColor('current');
 					mode = 'current';
+					if(property.folderselect == 'true') {
+						currentObject(node_id);
+					}
 				}
 			}
 			var node_type = document.getElementById('nt' + node_id);
@@ -975,6 +978,28 @@
 		}
 
 		function closeNodeResponse() {
+			if(httpObj.readyState == 4 && httpObj.status == 200 && response_wait) {
+				response_wait = false;
+			}
+		}
+
+		function selectFolder(node_id) {
+			var mode;
+
+			if(current_node.id() == node_id) return;
+			currentObject(node_id);
+
+			var param = 'terminal_id='+terminal_id+'&node_id='+encodeURIComponent(node_id.substr(1));
+
+			httpObj = createXMLHttpRequest(selectFolderResponse);
+			eventHandler(httpObj, property.module, property.file, property.method.selectFolder, 'POST', param);
+
+			bframe.fireEvent(window, 'resize');
+
+			response_wait = true;
+		}
+
+		function selectFolderResponse() {
 			if(httpObj.readyState == 4 && httpObj.status == 200 && response_wait) {
 				response_wait = false;
 			}
@@ -4889,7 +4914,7 @@
 				getNodeList(node.id);
 			}
 			else if(property.folderselect == 'true') {
-				currentObject(node.id);
+				selectFolder(node.id);
 			}
 			else if(control && bframe.getFileName(control.src) == bframe.getFileName(property.icon.plus.src)) {
 				getNodeList(node.id);

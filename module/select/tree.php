@@ -81,6 +81,17 @@
 			exit;
 		}
 
+		function selectFolder() {
+			$this->session['current_node'] = $this->request['node_id'];
+			$this->session['selected_node'] = $this->request['node_id'];
+
+			header('Content-Type: application/x-javascript charset=utf-8');
+			$response['status'] = true;
+			echo json_encode($response);
+
+			exit;
+		}
+
 		function pasteNode() {
 			$dest = new B_FileNode($this->dir, $this->request['destination_node_id'], null, null, 1);
 			if(!file_exists($dest->fullpath)) {
@@ -586,7 +597,6 @@
 		}
 
 		function view() {
-$this->log->write('view');
 			// Start buffering
 			ob_start();
 

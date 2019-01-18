@@ -30,6 +30,7 @@
 			switch($this->mode) {
 			case 'insert':
 				$this->control = new B_Element($this->input_control_config, $this->user_auth);
+				$this->form->setFilterValue('select');
 				break;
 
 			case 'update':
@@ -38,6 +39,7 @@
 				$this->session['init_value'] = $row;
 
 				$this->control = new B_Element($this->input_control_config, $this->user_auth);
+				$this->form->setFilterValue('select');
 				break;
 
 			case 'delete':
@@ -49,7 +51,6 @@
 				$this->control = new B_Element($this->delete_control_config, $this->user_auth);
 				break;
 			}
-			$this->form->setFilterValue('select');
 		}
 
 		function confirm() {

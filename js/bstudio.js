@@ -23,7 +23,7 @@
 	bstudio.setDirectory = function() {
 		var nodes = bframe_tree.getCurrentNodes();
 		var node_id = nodes[0].id.substr(1);
-//console.log('node_id', node_id);
+
 //		if(node_id == 'root') return;
 
 		bstudio.insertValue(window.frameElement.opener, 'directory', node_id);
