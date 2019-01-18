@@ -9,7 +9,9 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			if($this->request['project']) $this->session['project_dir'] = $this->getProjectDirectory($this->request['project']);
+			if($this->request['project']) {
+				$this->session['project_dir'] = $this->getProjectDirectory($this->request['project']);
+			}
 
 			$this->dir = B_Util::getPath(B_FILE_ROOT_DIR, $this->session['project_dir']) . '/';
 			if(substr($this->dir, 0, 1) != '/') $this->dir .= '/';

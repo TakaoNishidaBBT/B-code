@@ -18,7 +18,7 @@
 
 			// Create DataGrid
 			require_once('./config/list_config.php');
-			$this->dg = new B_DataGrid($this->df, $list_config);
+			$this->dg = new B_DataGrid($this->df, $list_config, $this->user_auth, $this->language);
 
 			// Set call back
 			$this->dg->setCallBack($this, '_list_callback');

@@ -10,16 +10,6 @@ array(
 	'start_html'	=> '<table class="list bframe_elastic" id="entry_list">',
 	'end_html'		=> '</table>',
 
-	'select_sql'	=> "select   id
-								,user_id
-								,user_name
-								,user_auth
-								,user_status
-								,language
-								,notes
-						from " . B_DB_PREFIX . "user
-						where 1=1 ",
-
 	'empty_message'	=> '<span class="bold">　' . __('No record found') . '</span>',
 
 	'thead'	=>
@@ -53,6 +43,19 @@ array(
 			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=name',
 		),
 		array(
+			'name'				=> 'directory',
+			'start_html'		=> '<th class="sortable" style="width:150px">',
+			'start_html_asc'	=> '<th class="sortable asc" style="width:150px">',
+			'start_html_desc'	=> '<th class="sortable desc" style="width:150px">',
+			'end_html'			=> '</th>',
+			'value'				=> __('Directory'),
+			'class'				=> 'B_Link',
+			'link'				=> DISPATCH_URL,
+			'cond_html'			=> 'class="current-key"',
+			'sort_key'			=> 'directory',
+			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=directory',
+		),
+		array(
 			'name'				=> 'notes',
 			'start_html'		=> '<th class="sortable" style="width:250px">',
 			'start_html_asc'	=> '<th class="sortable asc" style="width:250px">',
@@ -66,11 +69,13 @@ array(
 			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=notes',
 		),
 		array(
+			'auth_filter'		=> 'super_admin',
 			'start_html'		=> '<th class="center" style="width:60px"><span>',
 			'end_html'			=> '</span></th>',
 			'value'				=> __('Edit'),
 		),
 		array(
+			'auth_filter'		=> 'super_admin',
 			'start_html'		=> '<th class="center" style="width:60px"><span>',
 			'end_html'			=> '</span></th>',
 			'value'				=> __('Delete'),
@@ -95,13 +100,19 @@ array(
 			'name'			=> 'name',
 		),
 		array(
+			'name'			=> 'directory',
+			'class'			=> 'B_Text',
+			'start_html'	=> '<td class="left">',
+			'end_html'		=> '</td>',
+		),
+		array(
 			'name'			=> 'notes',
 			'class'			=> 'B_Text',
 			'start_html'	=> '<td class="left">',
 			'end_html'		=> '</td>',
-			'shorten_text'	=> '50',
 		),
 		array(
+			'auth_filter'	=> 'super_admin',
 			'start_html'	=> '<td class="button">',
 			'end_html'		=> '</td>',
 			'element'		=>
@@ -130,6 +141,7 @@ array(
 			),
 		),
 		array(
+			'auth_filter'	=> 'super_admin',
 			'start_html'	=> '<td class="button">',
 			'end_html'		=> '</td>',
 			'element'		=>

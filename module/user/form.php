@@ -34,7 +34,6 @@
 
 			case 'update':
 				$row = $this->df->get($this->request['id']);
-$this->log->write('$row', $row);
 				$this->form->setValue($row);
 				$this->session['init_value'] = $row;
 

@@ -78,9 +78,9 @@ $list_header_config = array(
 					'value'			=> __('Clear'),
 				),
 				array(
+					'auth_filter'	=> 'super_admin',
 					'id'			=> 'insert-button',
 					'name'			=> 'insert-button',
-					'auth_filter'	=> 'super_admin/admin',
 					'class'			=> 'B_Button',
 					'start_html'	=> '<li>',
 					'end_html'		=> '</li>',

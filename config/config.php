@@ -110,6 +110,9 @@
 	// Project Data File
 	define('B_PROJECT_DATA', B_CURRENT_DIR . 'config/project_data.txt');
 
+	// Session Data Save Directory
+	define('B_SESSION_DIR', B_CURRENT_DIR . 'session/');
+
 	// PHP Display Errors
 	ini_set('display_errors','Off');
 	ini_set('log_errors','On');

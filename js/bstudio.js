@@ -24,7 +24,7 @@
 		var nodes = bframe_tree.getCurrentNodes();
 		var node_id = nodes[0].id.substr(1);
 
-//		if(node_id == 'root') return;
+		if(node_id == 'root') node_id = '/';
 
 		bstudio.insertValue(window.frameElement.opener, 'directory', node_id);
 		window.frameElement.deactivate();

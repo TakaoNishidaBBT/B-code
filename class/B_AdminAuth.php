@@ -21,23 +21,38 @@
 					return true;
 				}
 			}
-/*
-			$sql = " select user_id, user_name, pwd, user_auth, language from " . B_DB_PREFIX . "user";
-			$sql.= " where user_status = '1' and user_id = binary '%USER_ID%' and pwd = binary '%PWD%'";
 
-			$sql = str_replace('%USER_ID%', $db->real_escape_string($user_id), $sql);
-			$sql = str_replace('%PWD%', $db->real_escape_string($pwd), $sql);
+			switch(get_class($db)) {
+			case 'B_DBaccess':
+				$sql = " select user_id, user_name, pwd, user_auth, language from " . B_DB_PREFIX . "user";
+				$sql.= " where user_status = '1' and user_id = binary '%USER_ID%' and pwd = binary '%PWD%'";
 
-			$rs = $db->query($sql);
-			$row = $db->fetch_assoc($rs);
-			if($row) {
-				$_SESSION['user_id'] = $row['user_id'];
-				$_SESSION['user_name'] = $row['user_name'];
-				$_SESSION['user_auth'] = $row['user_auth'];
-				$_SESSION['language'] = $row['language'];
-				return true;
+				$sql = str_replace('%USER_ID%', $db->real_escape_string($user_id), $sql);
+				$sql = str_replace('%PWD%', $db->real_escape_string($pwd), $sql);
+
+				$rs = $db->query($sql);
+				$row = $db->fetch_assoc($rs);
+				if($row) {
+					$_SESSION['user_id'] = $row['user_id'];
+					$_SESSION['user_name'] = $row['user_name'];
+					$_SESSION['user_auth'] = $row['user_auth'];
+					$_SESSION['language'] = $row['language'];
+					return true;
+				}
+				break;
+
+			case 'B_DataFile':
+				$row = $db->select('user_id', $user_id);
+				if($row && $row['pwd'] == $pwd) {
+					$_SESSION['user_id'] = $row['user_id'];
+					$_SESSION['user_name'] = $row['user_name'];
+					$_SESSION['user_auth'] = $row['user_auth'];
+					$_SESSION['language'] = $row['language'];
+					return true;
+				}
+				break;
 			}
-*/
+
 			return false;
 		}
 

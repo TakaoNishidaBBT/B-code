@@ -70,21 +70,24 @@
 		exit;
 	}
 
+	$project = __project($_REQUEST['url']);
+	if($project) {
+		$_REQUEST['project'] = $project;
+	}
+
 	// Set TERMINAL_ID
 	if($_REQUEST['terminal_id']) {
 		define('TERMINAL_ID', $_REQUEST['terminal_id']);
 	}
 	else {
-		define('TERMINAL_ID', __getRandomText(12));
+		if($project) {
+			define('TERMINAL_ID', $project);
+		}
+		else {
+			define('TERMINAL_ID', 'FIXEDTERMINAL_ID');
+		}
 	}
 
-	$project = __project($_REQUEST['url']);
-	if($project) {
-		$_REQUEST['project'] = $project;
-		define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID . '&amp;project=' . $project);
-	}
-	else {
-		define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID);
-	}
+	define('DISPATCH_URL', 'index.php?terminal_id=' . TERMINAL_ID);
 
 	require_once('./controller/controller.php');

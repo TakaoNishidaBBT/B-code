@@ -18,8 +18,8 @@
 			}
 
 			// Check logedin
-			$auth = new B_AdminAuth;
-			$ret = $auth->getUserInfo($this->user_id, $this->user_name, $this->user_auth, $this->language);
+			$this->auth = new B_AdminAuth;
+			$ret = $this->auth->getUserInfo($this->user_id, $this->user_name, $this->user_auth, $this->language);
 			if($ret) {
 				$this->admin();
 			}
@@ -41,9 +41,11 @@
 				$this->initial_page = DISPATCH_URL . '&amp;module=editor&amp;page=tree&amp;project=' . $_REQUEST['project'];
 			}
 			else {
-				// Menu
-				require_once('./config/menu_config.php');
-				$this->menu = new B_Element($menu_config, $this->user_auth);
+				if($this->user_auth == 'super_admin') {
+					// Menu
+					require_once('./config/menu_config.php');
+					$this->menu = new B_Element($menu_config, $this->user_auth);
+				}
 
 				$this->initial_page = DISPATCH_URL . '&amp;module=project&amp;page=list';
 			}
@@ -56,11 +58,21 @@
 
 			if($_POST['login']) {
 				// Check login
-				$auth = new B_AdminAuth;
-				$ret = $auth->login($this->db, $_POST['user_id'], $_POST['password']);
+				$this->df = new B_DataFile(B_USER_DATA, 'user');
+				$ret = $this->auth->login($this->df, $_POST['user_id'], $_POST['password']);
 				if($ret) {
 					// Generate session id
 					session_regenerate_id(true);
+
+					$this->auth->getUserInfo($this->user_id, $this->user_name, $this->user_auth, $this->language);
+					$session_file = B_SESSION_DIR . $this->user_id . '.txt';
+
+					if(file_exists($session_file)) {
+						$fp = fopen($session_file, 'rb');
+					    $serializedString = fread($fp, 200000);
+			    		$_SESSION = unserialize($serializedString);
+						fclose($fp);
+					}
 
 					// Redirect
 					$path = B_SITE_BASE;

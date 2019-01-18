@@ -48,6 +48,12 @@
 
 	// class auto loader
 	register_shutdown_function(function() {
-//		$log = new B_Log(B_LOG_FILE);
-//		$log->write('shutdown_function', $_SESSION);
+		$auth = new B_AdminAuth;
+		$ret = $auth->getUserInfo($user_id, $user_name, $user_auth, $language);
+		if($ret) {
+			$file_name = B_SESSION_DIR . $user_id . '.txt';
+			$fp = fopen($file_name, 'w');
+	        fwrite($fp, serialize($_SESSION));
+			fclose($fp);
+		}
 	});
