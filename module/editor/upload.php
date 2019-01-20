@@ -183,9 +183,10 @@ $this->log->write('upload B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
 					}
 				}
 				else {
-					$status = move_uploaded_file($_FILES['Filedata']['tmp_name'], B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename'])));
+					$path = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename']));
+					$status = move_uploaded_file($_FILES['Filedata']['tmp_name'], $path);
 					if($status) {
-						chmod(B_Util::getPath(B_FILE_ROOT_DIR, $this->path) . $file['basename'], 0777);
+						chmod($path, 0777);
 						$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename']), null, null, 1);
 						$node->createthumbnail($this->except);
 						$response['node_info'][] = $node->getNodeList('', '', $this->path);
