@@ -117,7 +117,6 @@
 			$ret = $this->_register($message);
 			if($ret) $this->df->save();
 
-
 			$this->result = new B_Element($this->result_config, $this->user_auth);
 			$this->result_control = new B_Element($this->result_control_config, $this->user_auth);
 
@@ -177,18 +176,27 @@
 			$param['create_datetime'] = time();
 			$param['update_user'] = $this->user_id;
 			$param['update_datetime'] = time();
-$this->log->write('insert $param', $param);
-			return $this->df->insert($param);
+
+			$this->df->insert($param);
+$this->log->write('insert');
+			$this->createThumbnail($param['name'], $param['directory']);
+
+			return true;
 		}
 
 		function update() {
 			$param = $this->df->get($param['id'], $param);
+			$directory_old = $param['directory'];
 			$param = $this->session['post'];
 
 			$param['update_user'] = $this->user_id;
 			$param['update_datetime'] = time();
 
 			$this->df->update($param['id'], $param);
+$this->log->write('$param[directory]', $param['directory'], '$directory_old', $directory_old);
+			if($param['directory'] != $directory_old) {
+				$this->createThumbnail($param['name'], $param['directory']);
+			}
 
 			return true;
 		}
@@ -197,7 +205,42 @@ $this->log->write('insert $param', $param);
 			$param = $this->session['post'];
 			$this->df->delete($param['id']);
 
+			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $param['name'] . '/');
+$this->log->write('delete B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
+			$this->removeThumbnail();
+			if(file_exists(B_UPLOAD_THUMBDIR)) rmdir(B_UPLOAD_THUMBDIR);
+
 			return true;
+		}
+
+		function createThumbnail($name, $directory) {
+			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $name . '/');
+$this->log->write('B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
+			if(file_exists(B_UPLOAD_THUMBDIR)) {
+				$this->removeThumbnail();
+			}
+			else {
+				mkdir(B_UPLOAD_THUMBDIR);
+				chmod(B_UPLOAD_THUMBDIR, 0777);
+			}
+
+			if(substr($directory, -1) != '/') $directory .= '/';
+			$node = new B_FileNode(B_FILE_ROOT_DIR, $directory, null, null, 'all');
+			$this->createTumbnail_files = 0;
+			$this->progress = 0;
+			$node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
+		}
+
+		function removeThumbnail() {
+			if(!file_exists(B_UPLOAD_THUMBDIR)) return;
+
+			if($handle = opendir(B_UPLOAD_THUMBDIR)) {
+				while(false !== ($file_name = readdir($handle))){
+					if($file_name == '.' || $file_name == '..') continue;
+					unlink(B_UPLOAD_THUMBDIR . $file_name);
+				}
+				closedir($handle);
+			}
 		}
 
 		function view() {

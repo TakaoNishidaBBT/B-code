@@ -10,15 +10,18 @@
 			parent::__construct(__FILE__);
 
 			if($this->request['project']) {
+				$this->session['project'] = $this->request['project'];
 				$this->session['project_dir'] = $this->getProjectDirectory($this->request['project']);
 			}
+			$this->project = $this->session['project'];
+			$this->project_dir = $this->session['project_dir'];
 
-			$this->dir = B_Util::getPath(B_FILE_ROOT_DIR, $this->session['project_dir']) . '/';
-			if(substr($this->dir, 0, 1) != '/') $this->dir .= '/';
+			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $this->project . '/');
+			$this->dir = B_FILE_ROOT_DIR;
 
 			require_once('./config/tree_config.php');
 			$this->tree_config = $tree_config;
-			$this->tree = new B_FileNode($this->dir, '');
+			$this->tree = new B_FileNode(B_FILE_ROOT_DIR, '');
 
 			$this->tree->setConfig($this->tree_config);
 
@@ -73,6 +76,9 @@
 			if($this->request['node_id']) {
 				$this->session['open_nodes'][$this->request['node_id']] = true;
 			}
+			if(!$this->session['current_node']) {
+				$this->session['current_node'] = $this->project_dir;
+			}
 			if(isset($this->request['display_mode'])) {
 				$this->session['display_mode'] = $this->request['display_mode'];
 			}
@@ -94,7 +100,7 @@
 		}
 
 		function pasteNode() {
-			$dest = new B_FileNode($this->dir, $this->request['destination_node_id'], null, null, 1);
+			$dest = new B_FileNode(B_FILE_ROOT_DIR, $this->request['destination_node_id'], null, null, 1);
 			if(!file_exists($dest->fullpath)) {
 				$this->message = __('Another user has updated this record');
 				$this->status = false;
@@ -111,7 +117,7 @@
 				$this->copy_nodes = 0;
 
 				foreach($this->request['source_node_id'] as $node_id) {
-					$source = new B_FileNode($this->dir, $node_id, null, null, 'all');
+					$source = new B_FileNode(B_FILE_ROOT_DIR, $node_id, null, null, 'all');
 					if(!file_exists($source->fullpath)) {
 						$this->message = __('Another user has updated this record');
 						$this->status = false;
@@ -192,7 +198,7 @@
 
 			case 'cut':
 				foreach($this->request['source_node_id'] as $node_id) {
-					$source = new B_FileNode($this->dir, $node_id, null, null, 'all');
+					$source = new B_FileNode(B_FILE_ROOT_DIR, $node_id, null, null, 'all');
 
 					if(!file_exists($source->fullpath)) {
 						$this->message = __('Another user has updated this record');
@@ -253,7 +259,7 @@
 
 		function createNode() {
 			$this->session['open_nodes'][$this->request['destination_node_id']] = true;
-			$node = new B_FileNode($this->dir, $this->request['destination_node_id']);
+			$node = new B_FileNode(B_FILE_ROOT_DIR, $this->request['destination_node_id']);
 
 			if($this->request['node_type'] == 'folder') {
 				$ret = $node->createFolder('newFolder', $new_node_id);
@@ -278,7 +284,7 @@
 		function deleteNode() {
 			if($this->request['delete_node_id'] && $this->request['delete_node_id'] != 'null') {
 				foreach($this->request['delete_node_id'] as $node_id) {
-					$node = new B_FileNode($this->dir, $node_id, null, null, 'all');
+					$node = new B_FileNode(B_FILE_ROOT_DIR, $node_id, null, null, 'all');
 					if(!file_exists($node->fullpath)) {
 						$this->message = __('Another user has updated this record');
 						$this->status = false;
@@ -313,7 +319,7 @@
 				$dest = B_Util::getPath($this->dir , $new_node_id);
 
 				if($this->checkFileName($source, $dest, $node_name, $file_info)) {
-					$node = new B_FileNode($this->dir, $this->request['node_id'], null, null, 'all');
+					$node = new B_FileNode(B_FILE_ROOT_DIR, $this->request['node_id'], null, null, 'all');
 					if($node) {
 						$ret = $node->rename($this->request['node_id'], $new_node_id);
 					}
@@ -377,7 +383,7 @@
 		function createFile() {
 			if($this->request['download_node_id'] && $this->request['download_node_id'] != 'null') {
 				foreach($this->request['download_node_id'] as $node_id) {
-					$nodes[] = new B_FileNode($this->dir, $node_id, null, null, 'all');
+					$nodes[] = new B_FileNode(B_FILE_ROOT_DIR, $node_id, null, null, 'all');
 				}
 				if(count($nodes) == 1 && $nodes[0]->node_type == 'file') {
 					$info = pathinfo($nodes[0]->file_name);
@@ -553,7 +559,7 @@
 				$response['message'] = $this->message;
 			}
 
-			$root_node = new B_FileNode($this->dir, '/', $this->session['open_nodes'], null, 1);
+			$root_node = new B_FileNode(B_FILE_ROOT_DIR, $this->project_dir, $this->session['open_nodes'], null, 1);
 			$current_node = $root_node->getNodeById($this->session['current_node']);
 			if(!$current_node) {
 				$current_node = $root_node;

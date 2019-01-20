@@ -9,11 +9,9 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			$this->dir = B_Util::getPath(B_FILE_ROOT_DIR, $this->session['project_dir']) . '/';
-			if(substr($this->dir, 0, 1) != '/') $this->dir .= '/';
+			$this->dir = B_FILE_ROOT_DIR;
 
 			require_once('./config/editor_config.php');
-
 			$this->editor = new B_Element($editor_config);
 		}
 

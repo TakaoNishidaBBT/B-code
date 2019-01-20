@@ -11,6 +11,11 @@
 			if($this->request['session']) {
 				$this->session['relation'] = $this->request['session'];
 			}
+			$this->project = $this->session['project'];
+			$this->project_dir = $this->session['project_dir'];
+
+			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $this->project . '/');
+$this->log->write('upload B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
 		}
 
 		function confirm() {
