@@ -68,7 +68,7 @@
 	// Thumbnail Directory
 	define('B_ADMIN_FILES', 'bs-admin-files/');
 	define('B_ADMIN_FILES_DIR', B_DOC_ROOT . B_CURRENT_ROOT . B_ADMIN_FILES);
-	define('B_UPLOAD_THUMBDIR', B_ADMIN_FILES_DIR . 'thumbs/');
+	define('B_THUMBDIR', B_ADMIN_FILES_DIR . 'thumbs/');
 
 	// Zip File Upload Extract Directory
 	define('B_FILE_EXTRACT_DIR', B_ADMIN_FILES_DIR . 'extract/');

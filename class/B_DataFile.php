@@ -21,7 +21,7 @@
 				fclose($this->fp);
 				unset($this->fp);
 			}
-			if(is_array($this->value)) $this->max_key = max(array_keys($this->value));
+			if(is_array($this->value) && array_keys($this->value)) $this->max_key = max(array_keys($this->value));
 			if(!$this->max_key) $this->max_key = 0;
 			$this->max_key++;
 
