@@ -17212,7 +17212,8 @@ var editorCss = "\
 .ace_editor {\
 position: relative;\
 overflow: hidden;\
-font: 12px/normal 'Consolas', 'Menlo', 'Monaco', 'Ubuntu Mono', 'source-code-pro', monospace;\
+font-family: 'Consolas', 'Menlo', 'Monaco', 'Ubuntu Mono', 'source-code-pro', monospace;\
+font-size: 12px;\
 direction: ltr;\
 text-align: left;\
 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\
