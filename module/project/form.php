@@ -211,6 +211,9 @@
 		}
 
 		function createThumbnail($name, $directory) {
+			// Set time limit to 3 minutes
+			set_time_limit(180);
+
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $name . '/');
 			if(file_exists(B_UPLOAD_THUMBDIR)) {
 				$this->removeThumbnail();
