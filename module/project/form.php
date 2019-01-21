@@ -178,7 +178,6 @@
 			$param['update_datetime'] = time();
 
 			$this->df->insert($param);
-$this->log->write('insert');
 			$this->createThumbnail($param['name'], $param['directory']);
 
 			return true;
@@ -193,7 +192,6 @@ $this->log->write('insert');
 			$param['update_datetime'] = time();
 
 			$this->df->update($param['id'], $param);
-$this->log->write('$param[directory]', $param['directory'], '$directory_old', $directory_old);
 			if($param['directory'] != $directory_old) {
 				$this->createThumbnail($param['name'], $param['directory']);
 			}
@@ -206,7 +204,6 @@ $this->log->write('$param[directory]', $param['directory'], '$directory_old', $d
 			$this->df->delete($param['id']);
 
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $param['name'] . '/');
-$this->log->write('delete B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
 			$this->removeThumbnail();
 			if(file_exists(B_UPLOAD_THUMBDIR)) rmdir(B_UPLOAD_THUMBDIR);
 
@@ -215,7 +212,6 @@ $this->log->write('delete B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
 
 		function createThumbnail($name, $directory) {
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $name . '/');
-$this->log->write('B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
 			if(file_exists(B_UPLOAD_THUMBDIR)) {
 				$this->removeThumbnail();
 			}
