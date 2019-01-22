@@ -37,6 +37,10 @@
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
 		}
 
+		function open() {
+			$this->session['mode'] = 'open';
+		}
+
 		function getProjectDirectory($project) {
 			$this->df = new B_DataFile(B_PROJECT_DATA, 'project');
 			$row = $this->df->select('name', $project);
@@ -584,6 +588,10 @@
 			if($this->session['sort_key']) {
 				$response['sort_key'] = $this->session['sort_key'];
 				$response['sort_order'] = $this->session['sort_order'];
+			}
+			if($this->session['mode'] == 'open') {
+				$response['open'] = true;
+				$this->session['mode'] = '';
 			}
 
 			header('Content-Type: application/x-javascript charset=utf-8');

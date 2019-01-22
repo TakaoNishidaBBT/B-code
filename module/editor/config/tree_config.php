@@ -23,8 +23,7 @@ $tree_config = array(
 			'root_url'		=> B_FILE_ROOT_DIR,
 			'thumb_path'	=> B_FILE_ROOT_URL,
 			'thumb_prefix'	=> B_THUMB_PREFIX,
-			'target'		=> $this->target,
-			'target_id'		=> $this->target_id,
+			'project'		=> $this->project,
 			'method'		=>
 			array(
 				'getNodeList'	=> 'getNodeList',

@@ -147,7 +147,7 @@
 
 			$open = &$row->getElementByName('open');
 			$name = &$row->getElementByName('name');
-			$open->link.= $name->value;
+			$open->link.= $name->value . '/';
 		}
 
 		function view() {

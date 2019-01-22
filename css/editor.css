@@ -218,3 +218,18 @@ div.visual_editor {
 	border-top: 1px solid #3a3a3a;
 	border-bottom: 1px solid #777;
 }
+div.not-found {
+	background-color: #262626;
+	text-align: center;
+	color: #fff;
+	overflow: hidden;
+}
+div.not-found dl dt{
+	margin: 100px 0 20px;
+	font-size: 32px;
+}
+div.not-found dl dd{
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+}

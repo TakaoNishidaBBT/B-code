@@ -18,9 +18,14 @@
 		function open() {
 			if($this->request['node_id']) {
 				$file_path = B_Util::getPath($this->dir , $this->request['node_id']);
+				if(!file_exists($file_path)) {
+					$this->view_file = './view/view_not_found.php';
+					return;
+				}
 				$info = pathinfo($file_path);
 				$update_datetime = filemtime($file_path);
 				$obj = $this->editor->getElementByName('contents');
+
 				$contents = file_get_contents($file_path);
 				if($contents) {
 					$encoding = mb_detect_encoding($contents);
@@ -54,6 +59,8 @@
 				if($obj) $obj->value = $update_datetime;
 
 				$this->setTitle($info['basename']);
+
+				$this->view_file = './view/view_editor.php';
 			}
 		}
 
@@ -99,7 +106,7 @@
 			// Start buffering
 			ob_start();
 
-			require_once('./view/view_editor.php');
+			require_once($this->view_file);
 
 			// Get buffer
 			$contents = ob_get_clean();
