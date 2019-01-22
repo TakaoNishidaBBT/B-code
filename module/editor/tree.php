@@ -95,6 +95,9 @@
 		function closeNode() {
 			$this->session['open_nodes'][$this->request['node_id']] = false;
 			$this->session['selected_node'] = '';
+			if($this->request['mode'] == 'current') {
+				$this->session['current_node'] = $this->request['node_id'];
+			}
 
 			header('Content-Type: application/x-javascript charset=utf-8');
 			$response['status'] = true;
@@ -593,7 +596,6 @@
 				$response['open'] = true;
 				$this->session['mode'] = '';
 			}
-
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);
 		}

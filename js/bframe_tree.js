@@ -842,8 +842,12 @@
 				}
 
 				scrollToLatest();
+
 				if(property.editor_mode == 'true' && !new_node && !reload_status) {
 					tab_control.open();
+					if(!response.open) {
+						tab_control.save();
+					}
 				}
 
 				if(response.open) {
@@ -2316,7 +2320,7 @@
 				setOrder();
 				scrollTo(obj);
 
-				if(node_id)	save();
+				if(node_id) save();
 			}
 			this.open = open;
 
@@ -2331,6 +2335,7 @@
 				var item_json = JSON.stringify(item);
 				localStorage.setItem(property.project, item_json);
 			}
+			this.save = save;
 
 			function restore() {
 				var item_json = localStorage.getItem(property.project);
