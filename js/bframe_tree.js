@@ -50,7 +50,6 @@
 		var file_upload;
 
 		var reload_status;
-		var add_project;
 
 		var context_menu = new bframe.contextMenu(10000);
 		var context_menu_frame = window;
@@ -856,7 +855,6 @@
 
 				new_node = false;
 				reload_status = false;
-				add_project = false;
 
 				bframe.fireEvent(window, 'resize');
 			}
@@ -871,8 +869,9 @@
 			ul.name = 'nodes';
 			li.appendChild(ul);
 
-			if(node_info.children) {
-				if(!add_project || (add_project && current_node.id() && node_info.node_id != current_node.id().substr(1))) {
+	console.log('response.open_tree_nodes', response.open_tree_nodes, 'node_info.node_id', node_info.node_id);
+			if(response.open_tree_nodes[node_info.node_id]) {
+				if(node_info.children) {
 					for(var i=0; i < node_info.children.length; i++) {
 						if(pane && property.editor_mode != 'true' && node_info.children[i].node_type == 'file') {
 							continue;
@@ -1344,12 +1343,6 @@
 			getNodeList(current_node.id());
 		}
 		this.reloadTree = reloadTree;
-
-		function addProject(response) {
-			add_project = true;
-			getNodeList('t' + response.node_id, 'addProject');
-		}
-		this.addProject = addProject;
 
 		function setCutStatus() {
 			if(!clipboard.target) return;
@@ -4448,12 +4441,7 @@
 				a.ondblclick = selectResourceNode;
 				if((pane && config.folder_count > 0 ) || (config.node_count > 0)) {
 					if(config.children) {
-						if(!add_project || (add_project && current_node.id() && config.node_id != current_node.id().substr(1))) {
-							control.src = property.icon.minus.src;
-						}
-						else {
-							control.src = property.icon.plus.src;
-						}
+						control.src = property.icon.minus.src;
 					}
 					else {
 						control.src = property.icon.plus.src;
