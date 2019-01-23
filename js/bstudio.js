@@ -100,7 +100,6 @@
 	}
 
 	bstudio.setFilename = function(filename) {
-console.log(filename);
 		top.bstudio._setFilename('filename', filename);
 	}
 
