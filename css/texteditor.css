@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	body {
+	    font-weight: 600;
+	}
+}
+
 div.container {
 	margin: 0;
 	overflow: auto;

@@ -2891,6 +2891,7 @@
 				var open_mode;
 				var z = zIndex++;
 				var edit_flag;
+				var fullpath;
 
 				li.style.zIndex = z;
 
@@ -2905,7 +2906,7 @@
 					editor = document.getElementById('ed' + node_id);
 					var file_name = getFilename(node_id);
 					fname.innerHTML = file_name;
-					a.title = node_id.substr(1);
+					a.title = fullpath = node_id.substr(1);
 					fname.classList.add(mode);
 
 					control.appendChild(li);
@@ -2956,6 +2957,7 @@
 					else {
 						folder_container.style.display = 'block';
 					}
+					this.showFilename(fullpath);
 				}
 
 				this.hide = function() {
@@ -2970,6 +2972,11 @@
 					else {
 						folder_container.style.display = 'none';
 					}
+				}
+
+				this.showFilename = function(filename) {
+					if(!filename) filename = current_node.id().substr(1);
+					bstudio.setFilename(filename);
 				}
 
 				this.inVisible = function() {

@@ -38,6 +38,7 @@
 
 			$this->user_name = htmlspecialchars($this->user_name, ENT_QUOTES, B_CHARSET);
 			if($_REQUEST['project']) {
+				$this->title = $_REQUEST['project'] . ' - ' . $this->title;
 				$this->initial_page = DISPATCH_URL . '&amp;module=editor&amp;page=tree&amp;method=open&amp;project=' . $_REQUEST['project'];
 			}
 			else {

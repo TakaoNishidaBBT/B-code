@@ -99,6 +99,18 @@
 		} 
 	}
 
+	bstudio.setFilename = function(filename) {
+console.log(filename);
+		top.bstudio._setFilename('filename', filename);
+	}
+
+	bstudio._setFilename = function(target_id, target_value) {
+		var target = document.getElementById(target_id);
+		if(!target) return;
+
+		target.innerHTML = target_value;
+	}
+
 	bstudio.setProperty = function(module) {
 		bframe.ajaxSubmit.registerCallBackFunctionAfter(window.frameElement.deactivate);
 		bframe.ajaxSubmit.submit('F1', module, 'property', 'register', '', true);

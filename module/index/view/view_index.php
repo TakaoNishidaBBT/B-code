@@ -28,6 +28,7 @@
 			<div class="title">B-code</div>
 			<?php if($this->menu) echo $this->menu->gethtml(); ?>
 		</div>
+		<div id="filename"></div>
 		<div class="login-user">
 			<ul>
 				<li>
