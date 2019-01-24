@@ -2345,10 +2345,12 @@
 				if(node_id) {
 					node_id = 't' + node_id;
 					let obj = document.getElementById(node_id);
-					if(!obj) return;
-					if(!bframe.isVisible(obj)) return;
-
-					selected_node.set(node_id);
+					if(obj && bframe.isVisible(obj)) {
+						selected_node.set(node_id);
+					}
+					else {
+						selected_node.set();
+					}
 					selected_node.setColor('selected');
 				}
 				else {
