@@ -95,6 +95,26 @@
 
 		var style = bframe.getStyle(self);
 
+		var overlay = document.createElement('div');
+
+		overlay.className = 'drag_overlay';
+		overlay.style.display = 'none';
+		overlay.style.position = 'absolute';
+		overlay.style.top = 0;
+		overlay.style.left = 0;
+		overlay.style.width = '100%';
+		overlay.style.height = '100%';
+		overlay.style.opacity = 0;
+		overlay.style.zIndex = 998;
+		overlay.style.backgroundColor = '#f00';
+
+		top.document.body.appendChild(overlay);
+
+		bframe.addEventListener(overlay, 'mousemove', onMouseMoveY);
+		bframe.addEventListener(overlay, 'mousemove', onMouseMoveX);
+		bframe.addEventListener(overlay, 'mouseup', onMouseUpY);
+		bframe.addEventListener(overlay, 'mouseup', onMouseUpX);
+
 		// vertical
 		paddingTop = parseInt(style.paddingTop);
 		paddingBottom = parseInt(style.paddingBottom);
@@ -837,6 +857,8 @@
 		function onMouseDownX(event) {
 			if(self.clientWidth >= self.scrollWidth) return;
 
+			overlay.style.display = 'block';
+
 			draggStartMousePosition = bframe.getMousePosition(event);
 			draggStartScrollLeft = self.scrollLeft;
 			draggingX = true;
@@ -846,6 +868,8 @@
 
 		function onMouseDownY(event) {
 			if(self.clientHeight >= self.scrollHeight) return;
+
+			overlay.style.display = 'block';
 
 			draggStartMousePosition = bframe.getMousePosition(event);
 			draggStartScrollTop = self.scrollTop;
@@ -882,6 +906,7 @@
 			if(!draggingX) return;
 			if(self.clientWidth >= self.scrollWidth) return;
 
+			overlay.style.display = 'none';
 			draggingX = false;
 
 			if(isMouseOver) {
@@ -897,6 +922,7 @@
 			if(!draggingY) return;
 			if(self.clientHeight >= self.scrollHeight) return;
 
+			overlay.style.display = 'none';
 			draggingY = false;
 
 			if(isMouseOver) {
