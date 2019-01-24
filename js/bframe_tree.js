@@ -180,10 +180,10 @@
 			bframe.addEventListener(display_detail, 'click', display_detail_mode);
 			display_mode = property.display_mode.default;
 			if(display_mode == 'detail') {
-				bframe.appendClass('current', display_detail);
+				display_detail.classList.add('current');
 			}
 			else {
-				bframe.appendClass('current', display_thumbnail);
+				display_thumbnail.classList.add('current');
 			}
 		}
 
@@ -917,8 +917,8 @@
 							setNewNode(node_info.children[i]);
 						}
 					}
-					bframe.removeClass('current', display_thumbnail);
-					bframe.appendClass('current', display_detail);
+					display_thumbnail.classList.remove('current');
+					display_detail.classList.add('current');
 				}
 				else {
 					// thumb nail mode
@@ -934,8 +934,8 @@
 							setNewNode(node_info.children[i]);
 						}
 					}
-					bframe.removeClass('current', display_detail);
-					bframe.appendClass('current', display_thumbnail);
+					display_detail.classList.remove('current');
+					display_thumbnail.classList.add('current');
 				}
 			}
 		}
@@ -4188,17 +4188,17 @@
 
 				function clickErrorObject(event) {
 					if(overwriteList) {
-						bframe.appendClass('fadein', overwriteList);
+						overwriteList.classList.add('fadein');
 						overwriteList = '';
 					}
 					if(overwriteTr) {
 						for(var i=0; i<overwriteTr.cells.length; i++) {
-							bframe.appendClass('fadein', overwriteTr.cells[i].firstChild);
+							overwriteTr.cells[i].firstChild.classList.add('fadein');
 						}
 						overwriteTr = '';
 					}
 					if(fileProgressWrapper) {
-						bframe.appendClass('fadeout2', fileProgressWrapper);
+						fileProgressWrapper.classList.add('fadeout2');
 						bframe.addEventListener(fileProgressWrapper, 'animationend', onAnimationEnd);
 					}
 					else {
@@ -4207,7 +4207,7 @@
 							bframe.addEventListener(fileProgressElement, 'animationend', onAnimationEnd);
 						}
 						if(fileProgressTree) {
-							bframe.appendClass('fadeout2', fileProgressTree);
+							fileProgressTree.classList.add('fadeout2');
 							bframe.addEventListener(fileProgressTree, 'animationend', onAnimationEnd);
 						}
 					}
@@ -4215,17 +4215,17 @@
 
 				function setCancelled() {
 					if(overwriteList) {
-						bframe.appendClass('fadein', overwriteList);
+						overwriteList.classList.add('fadein');
 						overwriteList = '';
 					}
 					if(overwriteTr) {
 						for(var i=0; i<overwriteTr.cells.length; i++) {
-							bframe.appendClass('fadein', overwriteTr.cells[i].firstChild);
+							overwriteTr.cells[i].firstChild.classList.add('fadein');
 						}
 						overwriteTr = '';
 					}
 					if(fileProgressWrapper) {
-						bframe.appendClass('fadeout', fileProgressWrapper);
+						fileProgressWrapper.classList.add('fadeout');
 						bframe.addEventListener(fileProgressWrapper, 'animationend', onAnimationEnd);
 					}
 					else {
@@ -4234,7 +4234,7 @@
 							bframe.addEventListener(fileProgressElement, 'animationend', onAnimationEnd);
 						}
 						if(fileProgressTree) {
-							bframe.appendClass('fadeout', fileProgressTree);
+							fileProgressTree.classList.add('fadeout');
 							bframe.addEventListener(fileProgressTree, 'animationend', onAnimationEnd);
 						}
 					}
@@ -4298,7 +4298,7 @@
 							li.appendChild(fileProgressTree);
 							li.firstChild.style.opacity = 0.2;
 							overwriteList = li.firstChild;
-							bframe.removeClass('fadein', overwriteList);
+							overwriteList.classList.remove('fadein');
 							break;
 						}
 					}
@@ -4359,7 +4359,7 @@
 
 							for(var i=0; i<tr.cells.length; i++) {
 								tr.childNodes[i].firstChild.style.opacity = 0;
-								bframe.removeClass('fadein', tr.childNodes[i].firstChild);
+								tr.childNodes[i].firstChild.classList.remove('fadein');
 							}
 
 							overwriteTr = tr;

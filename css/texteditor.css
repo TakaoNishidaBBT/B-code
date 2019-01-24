@@ -5,7 +5,9 @@
 	    font-weight: 600;
 	}
 }
-
+body {
+	-webkit-font-smoothing: subpixel-antialiased;
+}
 div.container {
 	margin: 0;
 	overflow: auto;
