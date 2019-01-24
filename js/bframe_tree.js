@@ -40,6 +40,7 @@
 
 		var node_number = 0;
 		var current_node = new currentNodeControl();
+		var current_parent_node = new currentNodeControl();
 		var selected_node = new currentNodeControl();
 		var current_edit_node;
 		var eventPlace;
@@ -786,11 +787,6 @@
 					}
 				}
 
-				if(!selected_node.object()) {
-					// set current node to selected node
-					selected_node.set(current_node.id());
-				}
-
 				if(response.current_nodes) {
 					// set plural current nodes
 					var nodes = response.current_nodes.split(',');
@@ -951,8 +947,8 @@
 					if(bframe.isVisible(obj)) break;
 					 obj = bframe.searchParentByTagName(obj.parentNode, 'li');
 				}
-				current_node.set(obj.id);
-				current_node.setColor('current');
+				current_parent_node.set(obj.id);
+				current_parent_node.setColor('current');
 			}
 		}
 
@@ -978,10 +974,8 @@
 			if(current_node.id()) {
 				var node = document.getElementById(node_id);
 				if(bframe.searchNodeById(node, current_node.id())) {
-//					selected_node.set(node_id);
-//					selected_node.setColor('current');
-					current_node.set(node_id);
-					current_node.setColor('current');
+					current_parent_node.set(node_id);
+					current_parent_node.setColor('current');
 					mode = 'current';
 					if(property.folderselect == 'true') {
 						currentObject(node_id);
