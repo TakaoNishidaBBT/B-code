@@ -4615,11 +4615,21 @@
 				}
 			}
 			else {
-				if(config.node_type == 'folder' && config.children && ((pane && config.folder_count > 0 ) || (!pane && config.node_count > 0))) {
-					obj_img.src = property.icon['folder_open'].src;
+				if(property.editor_mode == 'true') {
+					if(config.node_type == 'folder' && config.children && response.open_tree_nodes[config.node_id]) {
+						obj_img.src = property.icon['folder_open'].src;
+					}
+					else {
+						obj_img.src = property.icon[config.node_type].src;
+					}
 				}
 				else {
-					obj_img.src = property.icon[config.node_type].src;
+					if(config.node_type == 'folder' && config.children && ((pane && config.folder_count > 0 ) || (!pane && config.node_count > 0)) && response.open_tree_nodes[config.node_id]) {
+						obj_img.src = property.icon['folder_open'].src;
+					}
+					else {
+						obj_img.src = property.icon[config.node_type].src;
+					}
 				}
 			}
 			if(config.node_status) {
