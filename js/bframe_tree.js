@@ -2290,6 +2290,7 @@
 				}
 
 				open('t' + tabs_array[v_index].node_id, tabs_array[v_index].mode, true);
+				save();
 			}
 
 			function open(node_id='', mode='', keep='') {
@@ -2319,15 +2320,12 @@
 				closeAll(obj, exist, keep);
 				obj.show(mode);
 
-				if(node_id) {
-					selectTreeNode(node_id);
-				}
-				else {
-					// folder
+				if(!node_id) {	// folder
 					var file_name = document.getElementById('nm' + current_node.id()).value;
 					obj.setFilename(file_name);
 				}
 
+				selectTreeNode(node_id);
 				setOrder();
 				scrollTo(obj);
 
