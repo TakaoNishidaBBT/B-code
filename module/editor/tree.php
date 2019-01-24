@@ -40,8 +40,6 @@
 		function open() {
 			$this->session['mode'] = 'open';
 			$this->session['open_tree_nodes'][$this->project_dir] = true;
-$this->log->write('$this->project_dir', $this->project_dir);
-$this->log->write('open', $this->session);
 		}
 
 		function getProjectDirectory($project) {
@@ -84,6 +82,7 @@ $this->log->write('open', $this->session);
 				$this->session['open_nodes'][$this->request['node_id']] = true;
 			}
 			if($this->request['mode'] == 'open') {
+				$this->open_node = true;
 				$this->session['open_tree_nodes'][$this->request['node_id']] = true;
 			}
 			if(!$this->session['current_node']) {
@@ -99,7 +98,9 @@ $this->log->write('open', $this->session);
 		}
 
 		function closeNode() {
-			unset($this->session['open_nodes'][$this->request['node_id']]);
+			if($this->request['mode'] != 'current') {
+				unset($this->session['open_nodes'][$this->request['node_id']]);
+			}
 			unset($this->session['open_tree_nodes'][$this->request['node_id']]);
 
 			$this->session['selected_node'] = '';
@@ -145,8 +146,6 @@ $this->log->write('open', $this->session);
 				}
 				if(!$this->status) break;
 
-				$max = $source->getMaxThumbnailNo();
-
 				if(10 < $this->total_copy_nodes) {
 					// send progress
 					header('Content-Type: application/octet-stream');
@@ -170,7 +169,7 @@ $this->log->write('open', $this->session);
 				foreach($source_node as $source) {
 					if($dest->node_type == 'folder' || $dest->node_type == 'root') {
 						if($this->show_progress) $callback = array('obj' => $this, 'method' => '_copy_callback');
-						$ret = $source->copy($dest->path, $new_node_name, $data, $max, true, $callback);
+						$ret = $source->copy($dest->path, $new_node_name, $data, true, $callback);
 					}
 					if($ret) {
 						$this->session['selected_node'][] = $dest->path . '/' . $new_node_name;
@@ -575,7 +574,7 @@ $this->log->write('open', $this->session);
 			$current_node = $root_node->getNodeById($this->session['current_node']);
 			if(!$current_node) {
 				$current_node = $root_node;
-				$this->session['current_node'] = 'root';
+				$this->session['current_node'] = $this->project_dir;
 			}
 
 			if($current_node && $this->session['sort_key']) {
@@ -604,8 +603,9 @@ $this->log->write('open', $this->session);
 			if($this->session['open_tree_nodes']) {
 				$response['open_tree_nodes'] = $this->session['open_tree_nodes'];
 			}
-$this->log->write('response[open_tree_nodes]', $response['open_tree_nodes']);
-$this->log->write('response[open_nodes]', $this->session['open_nodes']);
+			if($this->open_node) {
+				$response['open_node'] = true;
+			}
 
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);

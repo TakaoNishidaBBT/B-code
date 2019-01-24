@@ -711,6 +711,7 @@
 				}
 			}
 			catch(e) {
+				console.log(e);
 				return;
 			}
 		}
@@ -842,7 +843,7 @@
 
 				scrollToLatest();
 
-				if(property.editor_mode == 'true' && !new_node && !reload_status) {
+				if(property.editor_mode == 'true' && !new_node && !reload_status && !response.open_node) {
 					tab_control.open();
 					if(!response.open) {
 						tab_control.save();
@@ -852,6 +853,9 @@
 				if(response.open) {
 					tab_control.init();
 				}
+
+				// if current node is not visible, set visible parent node to current
+				setVisibleCurrentNode();
 
 				new_node = false;
 				reload_status = false;
@@ -869,15 +873,18 @@
 			ul.name = 'nodes';
 			li.appendChild(ul);
 
-	console.log('response.open_tree_nodes', response.open_tree_nodes, 'node_info.node_id', node_info.node_id);
-			if(response.open_tree_nodes[node_info.node_id]) {
-				if(node_info.children) {
-					for(var i=0; i < node_info.children.length; i++) {
-						if(pane && property.editor_mode != 'true' && node_info.children[i].node_type == 'file') {
-							continue;
-						}
-						_showNode(ul, node_info.children[i], trash);
+			if(!response.open_tree_nodes[node_info.node_id]) {
+				ul.style.display='none';
+				var control = bframe.searchNodeById(ul, 'c' + node_info.node_id);
+				control.src = property.icon.plus.src;
+			}
+
+			if(node_info.children) {
+				for(var i=0; i < node_info.children.length; i++) {
+					if(pane && property.editor_mode != 'true' && node_info.children[i].node_type == 'file') {
+						continue;
 					}
+					_showNode(ul, node_info.children[i], trash);
 				}
 			}
 
@@ -937,6 +944,18 @@
 			}
 		}
 
+		function setVisibleCurrentNode() {
+			if(!bframe.isVisible(current_node.object())) {
+				let obj = current_node.object();
+				while(1) {
+					if(bframe.isVisible(obj)) break;
+					 obj = bframe.searchParentByTagName(obj.parentNode, 'li');
+				}
+				current_node.set(obj.id);
+				current_node.setColor('current');
+			}
+		}
+
 		function setNewNode(node_info) {
 			if(node_info['new_node']) {
 				if(eventPlace == 'pane') {
@@ -959,8 +978,10 @@
 			if(current_node.id()) {
 				var node = document.getElementById(node_id);
 				if(bframe.searchNodeById(node, current_node.id())) {
-					selected_node.set(node_id);
-					selected_node.setColor('current');
+//					selected_node.set(node_id);
+//					selected_node.setColor('current');
+					current_node.set(node_id);
+					current_node.setColor('current');
 					mode = 'current';
 					if(property.folderselect == 'true') {
 						currentObject(node_id);
@@ -2182,7 +2203,6 @@
 
 			this.setColor = function(mode) {
 				if(!current_node[0]) return;
-
 				for(var i=0; i < current_node.length; i++) {
 					if(current_edit_node.id == current_node[i].id) continue;
 					var node = self.object(i);
@@ -2304,8 +2324,12 @@
 
 				closeAll(obj, exist, keep);
 				obj.show(mode);
-				select('t' + node_id);
-				if(!node_id) { // folder
+
+				if(node_id) {
+					selectTreeNode(node_id);
+				}
+				else {
+					// folder
 					var file_name = document.getElementById('nm' + current_node.id()).value;
 					obj.setFilename(file_name);
 				}
@@ -2316,6 +2340,23 @@
 				if(node_id) save();
 			}
 			this.open = open;
+
+			function selectTreeNode(node_id) {
+				if(node_id) {
+					node_id = 't' + node_id;
+					let obj = document.getElementById(node_id);
+					if(!obj) return;
+					if(!bframe.isVisible(obj)) return;
+
+					selected_node.set(node_id);
+					selected_node.setColor('selected');
+				}
+				else {
+					// select folder tab
+					selected_node.set();
+					current_node.setColor('current');
+				}
+			}
 
 			function save() {
 				var item = {};
@@ -2467,7 +2508,7 @@
 				if(tabs[i].obj.isVisible()) {
 					tabs[i-1].obj.show();
 					scrollTo(tabs[i-1].obj);
-					select(tabs[i-1].node_id);
+					selectTreeNode(tabs[i-1].node_id);
 				}
 
 				animate(
@@ -2516,7 +2557,7 @@
 				for(var i=0; i < tabs.length; i++) {
 					if(tabs[i].obj.isChild(evtSrc)) {
 						tabs[i].obj.show();
-						select('t' + tabs[i].node_id);
+						selectTreeNode(tabs[i].node_id);
 						scrollTo(tabs[i].obj);
 					}
 					else {
@@ -4428,7 +4469,6 @@
 			control.name = 'node_control';
 			control.style.cursor = 'pointer';
 			div.appendChild(control);
-
 			control.className = 'control';
 
 			a = document.createElement('a');
@@ -4440,7 +4480,7 @@
 				a.onclick = selectNode;
 				a.ondblclick = selectResourceNode;
 				if((pane && config.folder_count > 0 ) || (config.node_count > 0)) {
-					if(config.children) {
+					if(config.children && response.open_tree_nodes[config.node_id]) {
 						control.src = property.icon.minus.src;
 					}
 					else {
