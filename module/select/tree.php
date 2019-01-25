@@ -59,7 +59,6 @@
 				$this->session['open_tree_nodes'][$this->request['node_id']] = true;
 			}
 			if(!$this->session['open_tree_nodes']) {
-//				$this->session['open_tree_nodes'][$this->dir] = true;
 				$this->session['open_tree_nodes']['root'] = true;
 			}
 			if(!$this->session['current_node']) {

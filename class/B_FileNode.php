@@ -12,6 +12,7 @@
 	class B_FileNode {
 		function __construct($dir, $path, $open_nodes=null, $parent=null, $expand_level=0, $level=0) {
 			if(!$path) return;
+
 			$this->dir = $dir;
 			$this->path = $path == 'root' ? '' : $path;
 			$this->node_id = $path == '/' ? 'root' : $path;

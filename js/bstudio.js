@@ -62,10 +62,10 @@
 
 	bstudio.registerEditor = function(fname, module, page, method, mode, nocheck) {
 		var opener = window.frameElement.opener;
-		if(typeof opener.bframe_tree !== 'undefined') {
-			bframe.ajaxSubmit.removeCallBackFunctionAfter(opener.bframe_tree.reloadTree);
-			bframe.ajaxSubmit.registerCallBackFunctionAfter(opener.bframe_tree.reloadTree);
-		}
+//		if(typeof opener.bframe_tree !== 'undefined') {
+//			bframe.ajaxSubmit.removeCallBackFunctionAfter(opener.bframe_tree.reloadTree);
+//			bframe.ajaxSubmit.registerCallBackFunctionAfter(opener.bframe_tree.reloadTree);
+//		}
 		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.resetEditFlag);
 		bframe.ajaxSubmit.submit(fname, module, page, method, mode, nocheck);
 	}

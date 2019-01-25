@@ -235,13 +235,6 @@
 		bframe.addEventListener(barContainerX, 'mouseover', onContainerMouseoverX);
 		bframe.addEventListener(barContainerX, 'mouseout', onContainerMouseoutX);
 
-		if(mode == 'ace') {
-			bframe.addEventListener(self.parentNode, 'wheel', onWheel);
-			bframe.addEventListener(self.parentNode, 'resize', onResize);
-			bframe.addEventListener(self.parentNode, 'mouseover', onMouseover);
-			bframe.addEventListener(self.parentNode, 'mouseout', onMouseout);
-		}
-
 		bframe.addEventListener(self, 'click', onClick);
 		bframe.addEventListenerAllFrames(top, 'mousedown', onMousedown);
 		bframe.addEventListenerAllFrames(top, 'keydown', onKeydown);
