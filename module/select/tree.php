@@ -54,6 +54,14 @@
 			if($this->request['node_id']) {
 				$this->session['open_nodes'][$this->request['node_id']] = true;
 			}
+			if($this->request['mode'] == 'open') {
+				$this->open_node = true;
+				$this->session['open_tree_nodes'][$this->request['node_id']] = true;
+			}
+			if(!$this->session['open_tree_nodes']) {
+//				$this->session['open_tree_nodes'][$this->dir] = true;
+				$this->session['open_tree_nodes']['root'] = true;
+			}
 			if(!$this->session['current_node']) {
 				$this->session['current_node'] = 'root';
 			}
@@ -585,6 +593,12 @@
 				$response['sort_key'] = $this->session['sort_key'];
 				$response['sort_order'] = $this->session['sort_order'];
 			}
+			if($this->session['open_tree_nodes']) {
+				$response['open_tree_nodes'] = $this->session['open_tree_nodes'];
+			}
+			if($this->open_node) {
+				$response['open_node'] = true;
+			}
 
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);
@@ -612,7 +626,6 @@
 			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/upload.css">');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_tree.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_dialog.js"></script>');
-			$this->html_header->appendProperty('script', '<script src="js/bframe_progress_bar.js"></script>');
 
 			// Show HTML header
 			$this->showHtmlHeader();
