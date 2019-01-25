@@ -148,7 +148,7 @@ span.current {
 	position: relative;
 }
 span.selected {
-	background-color: #dbd8c7 !important;
+	background-color: #ece9d8 !important;
 	color: #333 !important;
 	z-index: 100;
 	position: relative;

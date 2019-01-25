@@ -442,11 +442,6 @@
 				}
 			}
 
-			if(property.editor_mode == 'true') {
-				if(editor_overlay) editor_overlay.style.display = 'block';
-				tab_control.select(selected_node.id());
-			}
-
 			trash_context_menu.hide();
 			return false;
 		}
