@@ -11977,7 +11977,8 @@ exports.commands = [{
     readOnly: true
 }, {
     name: "gotoline",
-    bindKey: bindKey("Ctrl-L", "Command-L"),
+//    bindKey: bindKey("Ctrl-L", "Command-L"),
+    bindKey: bindKey("Ctrl-G", "Command-G"),
     exec: function(editor, line) {
         if (typeof line !== "number")
             line = parseInt(prompt("Enter line number:"), 10);
@@ -12035,6 +12036,8 @@ exports.commands = [{
     exec: function(editor) { editor.session.unfold(); },
     scrollIntoView: "center",
     readOnly: true
+// 2019/01/26 updated by T.Nishida
+/*
 }, {
     name: "findnext",
     bindKey: bindKey("Ctrl-K", "Command-G"),
@@ -12042,6 +12045,7 @@ exports.commands = [{
     multiSelectAction: "forEach",
     scrollIntoView: "center",
     readOnly: true
+*/
 }, {
     name: "findprevious",
     bindKey: bindKey("Ctrl-Shift-K", "Command-Shift-G"),

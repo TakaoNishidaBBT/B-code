@@ -224,3 +224,32 @@ line：16880
 };
 
 
+7. go to line を　win:ctrl+g  mac:Command+g に変更
+
+line：12040
+
+/*
+}, {
+    name: "findnext",
+    bindKey: bindKey("Ctrl-K", "Command-G"),
+    exec: function(editor) { editor.findNext(); },
+    multiSelectAction: "forEach",
+    scrollIntoView: "center",
+    readOnly: true
+*/
+
+line 11979
+
+    name: "gotoline",
+//    bindKey: bindKey("Ctrl-L", "Command-L"),
+    bindKey: bindKey("Ctrl-g", "Command-g"),
+    exec: function(editor, line) {
+        if (typeof line !== "number")
+            line = parseInt(prompt("Enter line number:"), 10);
+        if (!isNaN(line)) {
+            editor.gotoLine(line);
+        }
+    },
+    readOnly: true
+}, {
+
