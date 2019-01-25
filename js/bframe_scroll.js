@@ -61,7 +61,6 @@
 			}
 		}
 		else {
-			if(mode == 'ace') return;
 			bouncescroll = true;
 		}
 
@@ -220,7 +219,13 @@
 		bframe.addEventListenerAllFrames(top, 'mousemove' , onMouseMoveX);
 		bframe.addEventListenerAllFrames(top, 'mouseup', onMouseUpX);
 
-		bframe.addEventListener(self, 'wheel', onWheel);
+		if(mode == 'ace') {
+			bframe.addEventListener(self.parentNode, 'mouseover', onMouseover);
+			bframe.addEventListener(self.parentNode, 'mouseout', onMouseout);
+		}
+		else {
+			bframe.addEventListener(self, 'wheel', onWheel);
+		}
 
 		bframe.addEventListener(self, 'mouseover', onMouseover);
 		bframe.addEventListener(self, 'mouseout', onMouseout);
