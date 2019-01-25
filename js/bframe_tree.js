@@ -839,13 +839,19 @@
 
 				scrollToLatest();
 
-				if(property.editor_mode == 'true' && !new_node && !reload_status && !response.open_node) {
-					tab_control.open();
-					if(!response.open) {
-						tab_control.save();
+				// set tab_control
+				if(property.editor_mode == 'true' && !new_node && !reload_status) {
+					if(!response.open_node) {
+						tab_control.open();
+						if(!response.open) {
+							tab_control.save();
+						}
 					}
+					// select current opened file in tree
+					tab_control.select();
 				}
 
+				// initialize editor (only reload)
 				if(response.open) {
 					tab_control.init();
 				}
@@ -2283,13 +2289,12 @@
 			this.init = function() {
 				var item = restore();
 				var tabs_array = item.tabs;
-				var v_index = item.visible_index;
 
 				for(let i=1; i < tabs_array.length; i++) {
 					open('t' + tabs_array[i].node_id, tabs_array[i].mode, true);
 				}
+				open('t' + tabs_array[item.visible_index].node_id, tabs_array[item.visible_index].mode, true);
 
-				open('t' + tabs_array[v_index].node_id, tabs_array[v_index].mode, true);
 				save();
 			}
 
@@ -2370,19 +2375,9 @@
 				return JSON.parse(item_json);
 			}
 
-			this.select = function(node_id) {
-				node_id = node_id.substr(1);
-
-				var node_type = document.getElementById('ntt' + node_id);
-				if(node_type && node_type.value == 'folder') node_id = '';
-
-				var obj = exists(node_id);
-
-				if(obj) {
-					closeAll(obj, true);
-					obj.show();
-					save();
-				}
+			this.select = function() {
+				visble_index = getVisibleIndex();
+				selectTreeNode(tabs[visible_index].node_id);
 			}
 
 			this.changeFileName = function(value) {
