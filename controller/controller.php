@@ -10,12 +10,13 @@
 	$auth = new B_AdminAuth;
 	$controller = new B_Controller;
 
+	$module_dir = 'module/';
+
 	try {
 		if(!isset($_REQUEST['terminal_id']) || !$auth->checkUserAuth()) {
 			throw new Exception();
 		}
 
-		$module_dir = 'module/';
 		$page = $_REQUEST['page'] . '.php';
 		$dir = $module_dir . $_REQUEST['module'];
 		$file_name = $dir . '/' . $page;
@@ -23,6 +24,7 @@
 		if(!file_exists($file_name)) {
 			throw new Exception();
 		}
+
 		$class = $_REQUEST['module'] . '_' . $_REQUEST['page'];
 		$method = 'func_default';
 		if(isset($_REQUEST['method'])) {
@@ -30,7 +32,6 @@
 		}
 	}
 	catch(Exception $e) {
-		$module_dir = 'module/';
 		$dir = $module_dir . 'index';
 		$page = 'index.php';
 		$class = 'index_index';

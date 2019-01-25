@@ -9,7 +9,7 @@
 
 	require_once('global/b_global_function.php');
 
-	// Set directory information
+	// Set Directory Information
 	$doc_root = str_replace('\\' , '/', realpath($_SERVER['DOCUMENT_ROOT']));
 	if(substr($doc_root, -1) != '/') $doc_root.= '/';
 
@@ -21,18 +21,17 @@
 
 	$current = str_replace('.', '-', basename($current_dir));
 
-	// Start admin session
+	// Start Admin Session
 	$ses = new B_Session;
 	$ses->start('nocache', 'bcode-admin-session', $current_path);
 
 	require_once('./config/config.php');
-$log = new B_Log(B_LOG_FILE);
 
-	// Check logedin
+	// Check Logedin
 	$auth = new B_AdminAuth;
-	$ret = $auth->getUserInfo($user_id, $user_name, $user_auth, $language);
-	if($ret && $_REQUEST['url']) {
-		// To get real url
+	$login = $auth->getUserInfo($user_id, $user_name, $user_auth, $language);
+	if($login && $_REQUEST['url']) {
+		// To Get Real URL
 		$url = $_SERVER['REQUEST_URI'];
 		$url = preg_replace('"^' . B_CURRENT_ROOT . '"', '', $url);
 		$url = preg_replace('/\?.*/', '', $url);
