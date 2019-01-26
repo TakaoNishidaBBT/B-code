@@ -225,18 +225,17 @@ line：16880
 
 
 7. go to line を　win:ctrl+g  mac:Command+g に変更
+   finednext を　F3 に変更
 
 line：12040
 
-/*
 }, {
     name: "findnext",
-    bindKey: bindKey("Ctrl-K", "Command-G"),
+    bindKey: bindKey("F3", "F3"),
     exec: function(editor) { editor.findNext(); },
     multiSelectAction: "forEach",
     scrollIntoView: "center",
     readOnly: true
-*/
 
 line 11979
 

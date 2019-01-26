@@ -12037,15 +12037,13 @@ exports.commands = [{
     scrollIntoView: "center",
     readOnly: true
 // 2019/01/26 updated by T.Nishida
-/*
 }, {
     name: "findnext",
-    bindKey: bindKey("Ctrl-K", "Command-G"),
+    bindKey: bindKey("F3", "F3"),
     exec: function(editor) { editor.findNext(); },
     multiSelectAction: "forEach",
     scrollIntoView: "center",
     readOnly: true
-*/
 }, {
     name: "findprevious",
     bindKey: bindKey("Ctrl-Shift-K", "Command-Shift-G"),
