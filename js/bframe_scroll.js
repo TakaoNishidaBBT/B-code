@@ -887,7 +887,7 @@
 			if(self.clientWidth >= self.scrollWidth) return;
 
 			mpos = bframe.getMousePosition(event);
-			self.scrollLeft = draggStartScrollLeft + (mpos.x - draggStartMousePosition.x) * Math.round(scrollWidth / barScrollWidth);
+			self.scrollLeft = draggStartScrollLeft + (mpos.screenX - draggStartMousePosition.screenX) * Math.round(scrollWidth / barScrollWidth);
 			var barleft = Math.round(barScrollWidth * self.scrollLeft / scrollWidth) + padding;
 
 			barX.style.left = barleft + 'px';
@@ -899,7 +899,7 @@
 			if(self.clientHeight >= self.scrollHeight) return;
 
 			mpos = bframe.getMousePosition(event);
-			self.scrollTop = draggStartScrollTop + (mpos.y - draggStartMousePosition.y) * Math.round(scrollHeight / barScrollHeight);
+			self.scrollTop = draggStartScrollTop + (mpos.screenY - draggStartMousePosition.screenY) * Math.round(scrollHeight / barScrollHeight);
 			var bartop = Math.round(barScrollHeight * self.scrollTop / scrollHeight) + padding;
 
 			barY.style.top = bartop + 'px';
