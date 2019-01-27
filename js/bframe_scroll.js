@@ -234,10 +234,12 @@
 
 		bframe.addEventListener(barY, 'mouseover', onContainerMouseoverY);
 		bframe.addEventListener(barContainerY, 'mouseover', onContainerMouseoverY);
+		bframe.addEventListener(barY, 'mouseout', onContainerMouseoutY);
 		bframe.addEventListener(barContainerY, 'mouseout', onContainerMouseoutY);
 
 		bframe.addEventListener(barX, 'mouseover', onContainerMouseoverX);
 		bframe.addEventListener(barContainerX, 'mouseover', onContainerMouseoverX);
+		bframe.addEventListener(barX, 'mouseout', onContainerMouseoutX);
 		bframe.addEventListener(barContainerX, 'mouseout', onContainerMouseoutX);
 
 		bframe.addEventListener(self, 'click', onClick);
@@ -783,32 +785,32 @@
 		function onMouseover(event) {
 			isMouseOver = true;
 
-			if(self.clientHeight < self.scrollHeight) {
-				barY.style.transition = 'opacity 0.4s ease-out';
-				barY.style.opacity = '0.2';
-			}
-
 			if(self.clientWidth < self.scrollWidth) {
 				barX.style.transition = 'opacity 0.4s ease-out';
 				barX.style.opacity = '0.2';
+			}
+
+			if(self.clientHeight < self.scrollHeight) {
+				barY.style.transition = 'opacity 0.4s ease-out';
+				barY.style.opacity = '0.2';
 			}
 		}
 
 		function onMouseout(event) {
 			isMouseOver = false;
 
-			if(!draggingY && self.clientHeight < self.scrollHeight) {
-				barY.style.transition = 'opacity 0.4s ease-out';
-				barY.style.opacity = '0';
-				barContainerY.style.transition = 'opacity 0.2s ease-out';
-				barContainerY.style.opacity = '0';
-			}
-
 			if(!draggingX && self.clientWidth < self.scrollWidth) {
 				barX.style.transition = 'opacity 0.4s ease-out';
 				barX.style.opacity = '0';
 				barContainerX.style.transition = 'opacity 0.2s ease-out';
 				barContainerX.style.opacity = '0';
+			}
+
+			if(!draggingY && self.clientHeight < self.scrollHeight) {
+				barY.style.transition = 'opacity 0.4s ease-out';
+				barY.style.opacity = '0';
+				barContainerY.style.transition = 'opacity 0.2s ease-out';
+				barContainerY.style.opacity = '0';
 			}
 		}
 
@@ -840,6 +842,8 @@
 			if(draggingX) return;
 			if(self.clientWidth >= self.scrollWidth) return;
 
+			barX.style.transition = 'opacity 0.4s ease-out';
+			barX.style.opacity = '0';
 			barContainerX.style.transition = 'opacity 0.2s ease-out';
 			barContainerX.style.opacity = '0';
 		}
@@ -848,6 +852,8 @@
 			if(draggingY) return;
 			if(self.clientHeight >= self.scrollHeight) return;
 
+			barY.style.transition = 'opacity 0.4s ease-out';
+			barY.style.opacity = '0';
 			barContainerY.style.transition = 'opacity 0.2s ease-out';
 			barContainerY.style.opacity = '0';
 		}
