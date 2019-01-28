@@ -12052,6 +12052,13 @@ exports.commands = [{
     scrollIntoView: "center",
     readOnly: true
 }, {
+    name: "findprevious",
+    bindKey: bindKey("Shift-F3", "Shift-F3"),
+    exec: function(editor) { editor.findPrevious(); },
+    multiSelectAction: "forEach",
+    scrollIntoView: "center",
+    readOnly: true
+}, {
     name: "selectOrFindNext",
     bindKey: bindKey("Alt-K", "Ctrl-G"),
     exec: function(editor) {
