@@ -288,7 +288,6 @@
 				wrapper.style.display = 'block';
 			}
 
-
 			var currentScrollTop = self.scrollTop;
 			var currentScrollLeft = self.scrollLeft;
 
