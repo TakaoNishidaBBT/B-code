@@ -962,8 +962,6 @@
 		}
 
 		function onKeydown(event) {
-console.log('onKeydown');
-return;
 			if(self.tagName.toLowerCase() == 'textarea') return;
 			if(document.activeElement != self) {
 				if(!scrollTarget ||	isScrollable(document.activeElement)) return;
