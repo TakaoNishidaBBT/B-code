@@ -296,8 +296,10 @@
 			wrapper.style.height = self.clientHeight + 'px';
 
 			// vertical
-			self.scrollTop = 0;
-			self.style.paddingBottom = 0;
+			if(mode != 'ace') {
+				self.scrollTop = 0;
+				self.style.paddingBottom = 0;
+			}
 
 			barY.style.top = 0;
 			barY.style.height = 0;
@@ -382,14 +384,14 @@
 				self.scrollTop = scrollHeight;
 			}
 			else {
-				self.scrollTop = currentScrollTop;
+				if(mode != 'ace') self.scrollTop = currentScrollTop;
 			}
 
 			if(currentScrollLeft > scrollWidth) {
 				self.scrollLeft = scrollWidth;
 			}
 			else {
-				self.scrollLeft = currentScrollLeft;
+				if(mode != 'ace') self.scrollLeft = currentScrollLeft;
 			}
 
 			var bartop = Math.round(barScrollHeight * self.scrollTop / scrollHeight) + padding;
@@ -961,6 +963,8 @@
 		}
 
 		function onKeydown(event) {
+console.log('onKeydown');
+return;
 			if(self.tagName.toLowerCase() == 'textarea') return;
 			if(document.activeElement != self) {
 				if(!scrollTarget ||	isScrollable(document.activeElement)) return;
