@@ -291,15 +291,24 @@
 			var currentScrollTop = self.scrollTop;
 			var currentScrollLeft = self.scrollLeft;
 
-			wrapper.style.width = self.clientWidth + 'px';
-			wrapper.style.height = self.clientHeight + 'px';
+			if(mode == 'ace') {
+				wrapper.style.width = self.parentNode.clientWidth + 'px';
+				wrapper.style.height = self.parentNode.clientHeight + 'px';
+			}
+			else {
+				wrapper.style.width = self.clientWidth + 'px';
+				wrapper.style.height = self.clientHeight + 'px';
 
-			// vertical
-			if(mode != 'ace') {
+				// vertical
 				self.scrollTop = 0;
 				self.style.paddingBottom = 0;
+
+				// horizontal
+				self.scrollLeft = 0;
+				self.style.paddingRight = 0;
 			}
 
+			// vertical
 			barY.style.top = 0;
 			barY.style.height = 0;
 			barContainerY.style.top = 0;
@@ -324,9 +333,6 @@
 			barY.style.height = barHeight - padding*2 + 'px';
 
 			// horizontal
-			self.scrollLeft = 0;
-			self.style.paddingRight = 0;
-
 			barX.style.left = 0;
 			barX.style.width = 0;
 			barContainerX.style.left = 0;

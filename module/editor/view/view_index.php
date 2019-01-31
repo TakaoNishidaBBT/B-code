@@ -16,7 +16,7 @@
 				<li class="selected"><a href="" class="tab"><span class="file_name">root</span></a><span class="close-button">×</span></li>
 			</ul>
 		</div>
-		<div class="main_container bframe_adjustparent" data-param="margin:30">
+		<div class="main_container bframe_adjustparent" data-param="margin:28">
 			<div id="folder_container" class="bframe_adjustparent" data-param="margin:0">
 				<ul class="resource_control">
 					<li class="upload">
