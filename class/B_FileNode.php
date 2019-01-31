@@ -180,11 +180,11 @@
 		}
 
 		function _getNodeList($node_id, $category, $path, $disp_seq) {
-			$list['node_id'] = $this->node_id;
+			$list['node_id'] = mb_convert_encoding($this->node_id, 'utf8', B_SYSTEM_FILENAME_ENCODE);
 			$list['node_type'] = $this->node_type;
 			$list['node_class'] = $this->node_class;
-			$list['node_name'] = $this->file_name;
-			$list['thumbnail_image_path'] = $this->thumbnail_image_path;
+			$list['node_name'] = mb_convert_encoding($this->file_name, 'utf8', B_SYSTEM_FILENAME_ENCODE);
+			$list['thumbnail_image_path'] = mb_convert_encoding($this->thumbnail_image_path, 'utf8', B_SYSTEM_FILENAME_ENCODE);
 			$list['node_count'] = $this->node_count;
 			$list['folder_count'] = $this->folder_count;
 			$list['create_datetime_u'] = $this->update_datetime_u;
@@ -202,7 +202,7 @@
 			if($this->node_id == $node_id) {
 				$list[$category] = true;
 			}
-			$list['path'] = $this->path;
+			$list['path'] = mb_convert_encoding($this->path, 'utf8', B_SYSTEM_FILENAME_ENCODE);
 			$list['disp_seq'] = $disp_seq;
 			$list['order'] = $this->order;
 			return $list;

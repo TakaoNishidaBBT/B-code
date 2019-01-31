@@ -18,7 +18,7 @@
 		function open() {
 			if($this->request['node_id']) {
 				$file_path = B_Util::getPath($this->dir , $this->request['node_id']);
-				if(!file_exists($file_path)) {
+				if(!file_exists(mb_convert_encoding($file_path, B_SYSTEM_FILENAME_ENCODE, 'utf8'))) {
 					$this->view_file = './view/view_not_found.php';
 					return;
 				}
@@ -26,7 +26,7 @@
 				$update_datetime = filemtime($file_path);
 				$obj = $this->editor->getElementByName('contents');
 
-				$contents = file_get_contents($file_path);
+				$contents = file_get_contents(mb_convert_encoding($file_path, B_SYSTEM_FILENAME_ENCODE, 'utf8'));
 				if($contents) {
 					$encoding = mb_detect_encoding($contents);
 					$obj->value = mb_convert_encoding($contents, 'UTF-8', B_MB_DETECT_ORDER);
