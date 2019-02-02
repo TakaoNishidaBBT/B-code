@@ -297,11 +297,10 @@
 
 		function refresh() {
 			if(ace_editor.getSession().getUndoManager().undoDepth() != undo_depth) {
-				if(confirm(top.bframe.message.getProperty('refresh_confirm'))) {
-					bstudio.updateEditor = updateEditor;
-					bframe.fireEvent(refresh_button, 'click');
-				}
+				if(!confirm(top.bframe.message.getProperty('refresh_confirm'))) return;
 			}
+			bstudio.updateEditor = updateEditor;
+			bframe.fireEvent(refresh_button, 'click');
 		}
 
 		function onFocus() {
@@ -324,7 +323,7 @@
 			session.setScrollTop(top);
 			ace_editor.focus();
 			ace_editor.getSession().getUndoManager().reset();
-			bstudio.resetEditFlag();
+			setTimeout(bstudio.resetEditFlag, 100);
 		}
 
 		function updateTarget() {
