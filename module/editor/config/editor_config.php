@@ -32,4 +32,14 @@ $editor_config = array(
 			'value'			=> '<img src="images/common/save.png" alt="Save" />' . __('Save'),
 		),
 	),
+	array(
+		'start_html'	=> '<div style="display:none">',
+		'end_html'		=> '</div>',
+		array(
+			'name'			=> 'refresh',
+			'start_html'	=> '<span id="refresh" class="refresh-button" onclick="bstudio.refreshEditor(\'F1\', \'' . $this->module . '\', \'editor\', \'refresh\', \'confirm\', true)">',
+			'end_html'		=> '</span>',
+			'value'			=> '<img src="images/editor/refresh.png" alt="Save" />' . __('Refresh'),
+		),
+	),
 );

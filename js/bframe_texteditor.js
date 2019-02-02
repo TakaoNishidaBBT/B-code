@@ -27,7 +27,7 @@
 		var ace_editor, theme, Split, split, UndoManager;
 		var edit_flag = false;
 		var undo_depth = 0;
-		var command = {
+		var save_command = {
 			name: 'save',
 			bindKey: {
 				mac: 'Command-S',
@@ -35,6 +35,16 @@
 			},
 			exec: function(){
 				save()
+			}
+		}
+		var refresh_command = {
+			name: 'refresh',
+			bindKey: {
+				mac: 'Command-Shift-R',
+				win: 'Ctrl-Shitf-R'
+			},
+			exec: function(){
+				refresh()
 			}
 		}
 
@@ -51,27 +61,37 @@
 
 		function createControl() {
 			// control
-			control = document.createElement('ul');
+			control = document.createElement('div');
 			control.className = 'control';
 			parent.appendChild(control);
 
+			control1 = document.createElement('ul');
+			control.appendChild(control1);
+
 			li = createControlButton('images/editor/undo.png', 'undo (ctrl-z)', undo);
-			control.appendChild(li);
+			control1.appendChild(li);
 			li = createControlButton('images/editor/redo.png', 'redo (ctrl-y)', redo);
-			control.appendChild(li);
+			control1.appendChild(li);
 			li = createControlButton('images/editor/splith.png', 'split horizontal', splith);
-			control.appendChild(li);
+			control1.appendChild(li);
 			li = createControlButton('images/editor/splitv.png', 'split vertical', splitv);
-			control.appendChild(li);
+			control1.appendChild(li);
 			li = createControlButton('images/editor/indent_guide.png', 'show indent guide', indentGuide);
-			control.appendChild(li);
+			control1.appendChild(li);
 			li = createControlButton('images/editor/invisible_object.png', 'show invisibles', invisible);
-			control.appendChild(li);
+			control1.appendChild(li);
 			widget = bframe.searchNodeByClassName(parent, 'open_widgetmanager');
 			if(widget) {
 				li = createControlButton('images/editor/gear.png', 'widgets', openWidget);
-				control.appendChild(li);
+				control1.appendChild(li);
 			}
+
+			control2 = document.createElement('ul');
+			control.appendChild(control2);
+
+			li = createControlButton('images/editor/refresh.png', 'refresh (ctrl-shift-r)', refresh);
+			li.className = 'refresh';
+			control2.appendChild(li);
 		}
 
 		function createControlButton(icon_img, title, func) {
@@ -94,6 +114,9 @@
 		function init() {
 			// register button
 			register_button = document.getElementById('register');
+
+			// refresh button
+			refresh_button = document.getElementById('refresh');
 
 			// create control
 			createControl();
@@ -148,7 +171,8 @@
 			     });
 
 			ace_editor.setScrollSpeed(2);
-			ace_editor.commands.addCommand(command);
+			ace_editor.commands.addCommand(save_command);
+			ace_editor.commands.addCommand(refresh_command);
 
 			target.style.display = 'none';
 
@@ -271,17 +295,36 @@
 			}
 		}
 
+		function refresh() {
+			if(ace_editor.getSession().getUndoManager().undoDepth() != undo_depth) {
+				if(confirm(top.bframe.message.getProperty('refresh_confirm'))) {
+					bstudio.updateEditor = updateEditor;
+					bframe.fireEvent(refresh_button, 'click');
+				}
+			}
+		}
+
 		function onFocus() {
 			split.resize();
 			split.focus();
 		}
 
 		function updateEditor() {
+			var session = ace_editor.getSession();
+			var cursor = session.selection.getCursor();
+			var top = session.getScrollTop();
+
 			ace_editor.selectAll();
 			var range = ace_editor.getSelectionRange();
 			ace_editor.clearSelection();
 			ace_editor.getSession().replace(range, target.value);
-			ace_editor.renderer.alignCursor(0);
+
+			// keep scroll top and cursor position 
+			ace_editor.moveCursorToPosition(cursor);
+			session.setScrollTop(top);
+			ace_editor.focus();
+			ace_editor.getSession().getUndoManager().reset();
+			bstudio.resetEditFlag();
 		}
 
 		function updateTarget() {

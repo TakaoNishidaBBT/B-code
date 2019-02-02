@@ -64,6 +64,28 @@
 			}
 		}
 
+		function refresh() {
+			$status = true;
+			$file_path = B_Util::getPath($this->dir , $this->post['node_id']);
+			$file_path = mb_convert_encoding($file_path, B_SYSTEM_FILENAME_ENCODE, 'utf8');
+			$contents = file_get_contents($file_path);
+			if($contents) {
+				$encoding = mb_detect_encoding($contents);
+				$contents = mb_convert_encoding($contents, 'UTF-8', B_MB_DETECT_ORDER);
+			}
+
+			$response['status'] = $status;
+			$response['mode'] = $mode;
+			$response['values'] = array(
+				'contents' => $contents,
+				'update_datetime' => filemtime($file_path)
+			);
+
+			header('Content-Type: application/x-javascript charset=utf-8');
+			echo json_encode($response);
+			exit;
+		}
+
 		function register() {
 			$status = true;
 			$file_path = B_Util::getPath($this->dir , $this->post['node_id']);

@@ -60,9 +60,15 @@
 		if(typeof bframe_tree !== 'undefined') bframe_tree.reload();
 	}
 
+	bstudio.refreshEditor = function(fname, module, page, method, mode, nocheck) {
+		bframe.ajaxSubmit.clearCallBackFunctionAfter();
+		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.updateEditor);
+		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.resetEditFlag);
+		bframe.ajaxSubmit.submit(fname, module, page, method, mode, nocheck);
+	}
+
 	bstudio.registerEditor = function(fname, module, page, method, mode, nocheck) {
-		var opener = window.frameElement.opener;
-		bframe.ajaxSubmit.removeCallBackFunctionAfter(bstudio.resetEditFlag);
+		bframe.ajaxSubmit.clearCallBackFunctionAfter();
 		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.resetEditFlag);
 		bframe.ajaxSubmit.submit(fname, module, page, method, mode, nocheck);
 	}

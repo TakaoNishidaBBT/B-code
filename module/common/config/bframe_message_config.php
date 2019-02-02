@@ -22,6 +22,8 @@ $bframe_message_config = array(
 			'upload_confirm_dialog2'		=> __('Overwrite all'),
 			'upload_confirm_dialog3'		=> __('No'),
 			'upload_confirm_dialog4'		=> __('Cancel'),
+
+			'refresh_confirm'				=> __("Content is not saved yet.\nAre you sure you want to refresh?"),
 		),
 	),
 );

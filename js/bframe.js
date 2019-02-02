@@ -180,6 +180,10 @@
 			}
 		}
 
+		this.clearCallBackFunction = function(func) {
+			cb = [];
+		}
+
 		AjaxSubmitExecuteCallBack = function() {
 			for(var i=0; i<cb.length; i++) {
 				func = cb[i];
@@ -264,6 +268,10 @@
 					cba.splice(i, 1);
 				}
 			}
+		}
+
+		this.clearCallBackFunctionAfter = function() {
+			cba = [];
 		}
 
 		AjaxSubmitExecuteCallBackAfter = function(response) {
