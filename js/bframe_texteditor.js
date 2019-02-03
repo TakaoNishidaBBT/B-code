@@ -27,13 +27,14 @@
 		var ace_editor, theme, Split, split, UndoManager;
 		var edit_flag = false;
 		var undo_depth = 0;
+		var message_field;
 		var save_command = {
 			name: 'save',
 			bindKey: {
 				mac: 'Command-S',
 				win: 'Ctrl-S'
 			},
-			exec: function(){
+			exec: function() {
 				save()
 			}
 		}
@@ -43,7 +44,7 @@
 				mac: 'Command-Shift-R',
 				win: 'Ctrl-Shitf-R'
 			},
-			exec: function(){
+			exec: function() {
 				refresh()
 			}
 		}
@@ -60,6 +61,7 @@
 		init();
 
 		function createControl() {
+			var control, control1, control2, li;
 			// control
 			control = document.createElement('div');
 			control.className = 'control';
@@ -85,6 +87,10 @@
 				li = createControlButton('images/editor/gear.png', 'widgets', openWidget);
 				control1.appendChild(li);
 			}
+
+			message_field = document.createElement('div'); 
+			message_field.className = 'message-field'; 
+			control.appendChild(message_field);
 
 			control2 = document.createElement('ul');
 			control.appendChild(control2);
@@ -300,6 +306,7 @@
 				if(!confirm(top.bframe.message.getProperty('refresh_confirm'))) return;
 			}
 			bstudio.updateEditor = updateEditor;
+			message_field.innerHTML = '';
 			bframe.fireEvent(refresh_button, 'click');
 		}
 
@@ -308,7 +315,7 @@
 			split.focus();
 		}
 
-		function updateEditor() {
+		function updateEditor(response) {
 			var session = ace_editor.getSession();
 			var cursor = session.selection.getCursor();
 			var top = session.getScrollTop();
@@ -323,6 +330,13 @@
 			session.setScrollTop(top);
 			ace_editor.focus();
 			ace_editor.getSession().getUndoManager().reset();
+
+			message_field.innerHTML = '';
+			var span = document.createElement('span');
+			span.className = 'fadeout';
+			span.innerHTML = response.message;
+			message_field.appendChild(span);
+
 			setTimeout(bstudio.resetEditFlag, 100);
 		}
 
@@ -355,6 +369,8 @@
 		}
 
 		function save() {
+			if(ace_editor.getSession().getUndoManager().undoDepth() == undo_depth) return;
+
 			bframe.fireEvent(register_button, 'click');
 			undo_depth = ace_editor.getSession().getUndoManager().undoDepth();
 		}

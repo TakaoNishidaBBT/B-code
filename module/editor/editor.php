@@ -76,6 +76,7 @@
 
 			$response['status'] = $status;
 			$response['mode'] = $mode;
+			$response['message'] = 'refreshed';
 			$response['values'] = array(
 				'contents' => $contents,
 				'update_datetime' => filemtime($file_path)
