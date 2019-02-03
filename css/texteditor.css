@@ -58,6 +58,9 @@ div.control .message-field {
 	padding-top: 9px;
 	text-shadow: -1px -1px #333;
 }
+div.control ul li.refresh a {
+	padding-top: 5px;
+}
 
 div.line_number {
 	float: left;

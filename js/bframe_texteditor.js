@@ -68,6 +68,7 @@
 			parent.appendChild(control);
 
 			control1 = document.createElement('ul');
+			control1.className = 'left-side-control';
 			control.appendChild(control1);
 
 			li = createControlButton('images/editor/undo.png', 'undo (ctrl-z)', undo);
@@ -93,6 +94,7 @@
 			control.appendChild(message_field);
 
 			control2 = document.createElement('ul');
+			control2.className = 'right-side-control';
 			control.appendChild(control2);
 
 			li = createControlButton('images/editor/refresh.png', 'refresh (ctrl-shift-r)', refresh);
@@ -331,7 +333,10 @@
 			ace_editor.focus();
 			ace_editor.getSession().getUndoManager().reset();
 
-			message_field.innerHTML = '';
+			while(message_field.firstChild) {
+				message_field.removeChild(message_field.firstChild);
+			}
+
 			var span = document.createElement('span');
 			span.className = 'fadeout';
 			span.innerHTML = response.message;
