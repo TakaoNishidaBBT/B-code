@@ -42,7 +42,7 @@
 			name: 'refresh',
 			bindKey: {
 				mac: 'Command-Shift-R',
-				win: 'Ctrl-Shitf-R'
+				win: 'alt-R'
 			},
 			exec: function() {
 				refresh()
@@ -97,7 +97,7 @@
 			control2.className = 'right-side-control';
 			control.appendChild(control2);
 
-			li = createControlButton('images/editor/refresh.png', 'refresh (ctrl-shift-r)', refresh);
+			li = createControlButton('images/editor/refresh.png', 'refresh (alt-r)', refresh);
 			li.className = 'refresh';
 			control2.appendChild(li);
 		}
