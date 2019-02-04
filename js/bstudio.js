@@ -102,11 +102,11 @@
 		} 
 	}
 
-	bstudio.setFilename = function(filename) {
-		top.bstudio._setFilename('filename', filename);
+	bstudio.setFileName = function(f_name) {
+		top.bstudio._setFileName('file_name', f_name);
 	}
 
-	bstudio._setFilename = function(target_id, target_value) {
+	bstudio._setFileName = function(target_id, target_value) {
 		var target = document.getElementById(target_id);
 		if(!target) return;
 

@@ -2322,7 +2322,7 @@
 
 				if(!node_id) {	// folder
 					var file_name = document.getElementById('nm' + current_node.id()).value;
-					obj.setFilename(file_name);
+					obj.setFileName(file_name);
 				}
 
 				selectTreeNode(node_id);
@@ -2330,8 +2330,23 @@
 				scrollTo(obj);
 
 				if(node_id) save();
+
+				setFileName();
+
 			}
 			this.open = open;
+
+			function setFileName() {
+				var f_name = [];
+				for(var i=0; i < tabs.length; i++) {
+					f_name[i] = tabs[i].obj.getFileName();
+				}
+console.log('f_name', f_name);
+				var c = f_name.filter(function (x, i, self) {
+					return self.indexOf(x) !== self.lastIndexOf(x);
+				});
+console.log('c', c);
+			}
 
 			function selectTreeNode(node_id) {
 				if(node_id) {
@@ -2910,6 +2925,7 @@
 				var z = zIndex++;
 				var edit_flag;
 				var fullpath;
+				var file_name;
 
 				li.style.zIndex = z;
 
@@ -2922,8 +2938,8 @@
 
 				this.add = function(node_id, mode) {
 					editor = document.getElementById('ed' + node_id);
-					var file_name = getFilename(node_id);
-					fname.innerHTML = file_name;
+					var node_array = node_id.split('/');
+					this.setFileName(node_array[node_array.length-1]);
 					a.title = fullpath = node_id.substr(1);
 					fname.classList.add(mode);
 
@@ -2931,9 +2947,13 @@
 					open_mode = mode;
 				}
 
-				function getFilename(node_id) {
-					var node_array = node_id.split('/');
-					return node_array[node_array.length-1];
+				this.getFileName = function() {
+					return file_name;
+				}
+
+				this.setFileName = function(f_name) {
+					file_name = f_name;
+					fname.innerHTML = file_name;
 				}
 
 				this.remove = function() {
@@ -2975,7 +2995,7 @@
 					else {
 						folder_container.style.display = 'block';
 					}
-					this.showFilename(fullpath);
+					this.showFileName(fullpath);
 				}
 
 				this.hide = function() {
@@ -2992,9 +3012,9 @@
 					}
 				}
 
-				this.showFilename = function(filename) {
-					if(!filename) filename = current_node.id().substr(1);
-					bstudio.setFilename(filename);
+				this.showFileName = function(f_name) {
+					if(!f_name) f_name = current_node.id().substr(1);
+					bstudio.setFileName(f_name);
 				}
 
 				this.inVisible = function() {
@@ -3015,10 +3035,6 @@
 
 				this.element = function() {
 					return li;
-				}
-
-				this.setFilename = function(file_name) {
-					fname.innerHTML = file_name;
 				}
 
 				this.setOrder = function(number) {
