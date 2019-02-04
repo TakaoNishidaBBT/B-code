@@ -97,7 +97,12 @@
 			control2.className = 'right-side-control';
 			control.appendChild(control2);
 
-			li = createControlButton('images/editor/refresh.png', 'refresh (alt-r)', refresh);
+			if(bframe.getOS() == 'windows') {
+				li = createControlButton('images/editor/refresh.png', 'refresh (alt-r)', refresh);
+			}
+			else {
+				li = createControlButton('images/editor/refresh.png', 'refresh (command-shift-r)', refresh);
+			}
 			li.className = 'refresh';
 			control2.appendChild(li);
 		}
