@@ -1793,15 +1793,14 @@
 			var node = current_node.object();
 			if(bframe.searchParentById(node, 'ttrash')) return;
 
-			var node_span = document.getElementById('s'+node_id);
-			var node_type = document.getElementById('nt'+node_id);
+			var node_span = document.getElementById('s' + node_id);
+			var node_class = document.getElementById('nc' + node_id);
 			var node_name = node_span.innerHTML;
 			var func;
 
 
 			if(property.relation && property.relation.insertFile) {
-				var node_type =  document.getElementById('nt' + node_id).value;
-				if(property.relation.insertFile.node_type && property.relation.insertFile.node_type == node_type) {
+				if(node_class.value == 'leaf') {
 					if(opener) { 					// open from CKEditor
 						insertImageToCKEditor(node_id);
 					}
@@ -1840,7 +1839,7 @@
 				if(current_edit_node && current_edit_node.id == node_id) return;
 
 				var func = property.ondblclick.script;
-				if(bstudio[func]) bstudio[func](node_id.substr(1), node_name, node_type.value);
+				if(bstudio[func]) bstudio[func](node_id.substr(1), node_name, node_class.value);
 			}
 		}
 
@@ -2332,20 +2331,33 @@
 				if(node_id) save();
 
 				setFileName();
-
 			}
 			this.open = open;
 
 			function setFileName() {
-				var f_name = [];
+				var file_name;
+				var file_name_array = [];
+
 				for(var i=0; i < tabs.length; i++) {
-					f_name[i] = tabs[i].obj.getFileName();
+					file_name = tabs[i].obj.getFileName();
+					if(!Array.isArray(file_name_array[file_name])) {
+						file_name_array[file_name] = [];
+					}
+					file_name_array[file_name].push(tabs[i].obj);
 				}
-console.log('f_name', f_name);
-				var c = f_name.filter(function (x, i, self) {
-					return self.indexOf(x) !== self.lastIndexOf(x);
-				});
-console.log('c', c);
+
+				for(var key in  file_name_array) {
+					if(file_name_array[key].length == 1) {
+						file_name_array[key][0].setDisplayName(key);
+					}
+					else {
+						var arr = file_name_array[key];
+						for(var i=0; i < arr.length; i++) {
+							var dir = arr[i].getDirName();
+							arr[i].setDisplayName(key + ' ― ' + dir);
+						}
+					}
+				}
 			}
 
 			function selectTreeNode(node_id) {
@@ -2484,6 +2496,7 @@ console.log('c', c);
 						break;
 					}
 				}
+
 				bframe.stopPropagation(event);
 			}
 
@@ -2538,6 +2551,7 @@ console.log('c', c);
 								tabs[i].obj.remove();
 								tabs.splice(i, 1);
 								save();
+								setFileName();
 							}
 						);
 					}
@@ -2925,7 +2939,9 @@ console.log('c', c);
 				var z = zIndex++;
 				var edit_flag;
 				var fullpath;
+				var node_array;
 				var file_name;
+				var display_name;
 
 				li.style.zIndex = z;
 
@@ -2938,8 +2954,9 @@ console.log('c', c);
 
 				this.add = function(node_id, mode) {
 					editor = document.getElementById('ed' + node_id);
-					var node_array = node_id.split('/');
+					node_array = node_id.split('/');
 					this.setFileName(node_array[node_array.length-1]);
+					this.setDisplayName(node_array[node_array.length-1]);
 					a.title = fullpath = node_id.substr(1);
 					fname.classList.add(mode);
 
@@ -2953,7 +2970,20 @@ console.log('c', c);
 
 				this.setFileName = function(f_name) {
 					file_name = f_name;
-					fname.innerHTML = file_name;
+				}
+
+				this.setDisplayName = function(f_name) {
+					fname.innerHTML = f_name;
+				}
+
+				this.getDirName = function() {
+					var dir = '';
+
+					for(let i=2; i < node_array.length-1; i++) {
+						if(dir) dir += '/';
+						dir += node_array[i];
+					}
+					return dir;
 				}
 
 				this.remove = function() {
@@ -4453,9 +4483,9 @@ console.log('c', c);
 			li.className = 'tree-list';
 			li.id = node_id;
 
-			li.node_class = config.node_class;
-			li.node_type = config.node_type;
-			li.utime = config.update_datetime_u;
+//			li.node_class = config.node_class;
+//			li.node_type = config.node_type;
+//			li.utime = config.update_datetime_u;
 
 			div = document.createElement('div');
 			div.name = 'node_div';
@@ -4620,7 +4650,7 @@ console.log('c', c);
 			}
 			else {
 				if(property.editor_mode == 'true') {
-					if(config.node_type == 'folder' && config.children && response.open_tree_nodes[config.node_id]) {
+					if(config.node_class == 'folder' && config.children && response.open_tree_nodes[config.node_id]) {
 						obj_img.src = property.icon['folder_open'].src;
 					}
 					else {
@@ -4628,7 +4658,7 @@ console.log('c', c);
 					}
 				}
 				else {
-					if(config.node_type == 'folder' && config.children && ((pane && config.folder_count > 0 ) || (!pane && config.node_count > 0)) && response.open_tree_nodes[config.node_id]) {
+					if(config.node_class == 'folder' && config.children && ((pane && config.folder_count > 0 ) || (!pane && config.node_count > 0)) && response.open_tree_nodes[config.node_id]) {
 						obj_img.src = property.icon['folder_open'].src;
 					}
 					else {
@@ -4665,6 +4695,13 @@ console.log('c', c);
 			span.id = 's' + node_id;
 			span.name = 'node_span';
 			a.appendChild(span);
+
+			input = document.createElement('input');
+			input.type = 'hidden';
+			input.id = 'nc' + node_id;
+			input.name = 'node_class';
+			input.value = config.node_class;
+			a.appendChild(input);
 
 			input = document.createElement('input');
 			input.type = 'hidden';
@@ -4856,6 +4893,13 @@ console.log('c', c);
 
 			input = document.createElement('input');
 			input.type = 'hidden';
+			input.id = 'nc' + node_id;
+			input.name = 'node_class';
+			input.value = config.node_class;
+			a.appendChild(input);
+
+			input = document.createElement('input');
+			input.type = 'hidden';
 			input.id = 'nt' + node_id;
 			input.name = 'node_type';
 			input.value = config.node_type;
@@ -4981,9 +5025,9 @@ console.log('c', c);
 			// right button
 			if(e.button == 2) return;
 			var node = getEventNode(event);
-			var node_type = document.getElementById('nt' + node.id);
+			var node_class = document.getElementById('nc' + node.id);
 			if(property.selectable == 'true') {
-				if(node_type.value != 'folder' && node.id.substr(1) != 'root' && node.id.substr(1) != 'trash') {
+				if(node_class.value != 'folder' && node.id.substr(1) != 'root' && node.id.substr(1) != 'trash') {
 					if(current_node.id() && current_node.place() == 'tree' && (e.ctrlKey || e.metaKey)) {
 						addCurrentObject(node.id);
 					}
@@ -4999,11 +5043,11 @@ console.log('c', c);
 
 			if(node.id == current_node.id() && tab_control && tab_control.isFolderOpen()) return;
 
-			if(node_type.value == 'file' && property.editor_mode == 'true') {
+			if(node_class.value == 'leaf' && property.editor_mode == 'true') {
 				selectResource(node.id, 'temporary');
 			}
 
-			if(node_type.value != 'folder' && node.id.substr(1) != 'root' && node.id.substr(1) != 'trash') {
+			if(node_class.value != 'folder' && node.id.substr(1) != 'root' && node.id.substr(1) != 'trash') {
 				return;
 			}
 			var control = document.getElementById('c' + node.id);
