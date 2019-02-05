@@ -71,10 +71,18 @@
 			control1.className = 'left-side-control';
 			control.appendChild(control1);
 
-			li = createControlButton('images/editor/undo.png', 'undo (ctrl-z)', undo);
-			control1.appendChild(li);
-			li = createControlButton('images/editor/redo.png', 'redo (ctrl-y)', redo);
-			control1.appendChild(li);
+			if(bframe.getOS() == 'windows') {
+				li = createControlButton('images/editor/undo.png', 'undo (ctrl-z)', undo);
+				control1.appendChild(li);
+				li = createControlButton('images/editor/redo.png', 'redo (ctrl-y)', redo);
+				control1.appendChild(li);
+			}
+			else {
+				li = createControlButton('images/editor/undo.png', 'undo (command-z)', undo);
+				control1.appendChild(li);
+				li = createControlButton('images/editor/redo.png', 'redo (command-y)', redo);
+				control1.appendChild(li);
+			}
 			li = createControlButton('images/editor/splith.png', 'split horizontal', splith);
 			control1.appendChild(li);
 			li = createControlButton('images/editor/splitv.png', 'split vertical', splitv);
