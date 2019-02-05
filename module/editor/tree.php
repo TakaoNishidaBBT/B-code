@@ -25,16 +25,10 @@
 
 			$this->tree->setConfig($this->tree_config);
 
-			if($this->request['node_id']) {
-				$this->openCurrentNode($this->request['node_id']);
-			}
-			if($this->request['mode'] == 'open') {
-				$this->openCurrentNode($this->session['current_node']);
-			}
-
-			$this->status = true;
 			if(!$this->session['sort_order']) $this->session['sort_order'] = 'asc';
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
+
+			$this->status = true;
 		}
 
 		function open() {
@@ -46,16 +40,6 @@
 			$this->df = new B_DataFile(B_PROJECT_DATA, 'project');
 			$row = $this->df->select('name', $project);
 			return $row['directory'];
-		}
-
-		function openCurrentNode($node_id) {
-			$dir = explode('/', $node_id);
-
-			for($i=0; $i<count($dir); $i++) {
-				if(!$dir[$i]) continue;
-				$path.= '/' . $dir[$i];
-				$this->session['open_nodes'][$path] = true;
-			}
 		}
 
 		function select() {
@@ -78,11 +62,9 @@
 			if($this->request['node_id'] && $this->request['mode'] != 'open') {
 				$this->session['current_node'] = $this->request['node_id'];
 			}
-			if($this->request['node_id']) {
-				$this->session['open_nodes'][$this->request['node_id']] = true;
-			}
 			if($this->request['mode'] == 'open') {
 				$this->open_node = true;
+				$this->session['open_nodes'][$this->request['node_id']] = true;
 				$this->session['open_tree_nodes'][$this->request['node_id']] = true;
 			}
 			if(!$this->session['current_node']) {
@@ -98,11 +80,8 @@
 		}
 
 		function closeNode() {
-			if($this->request['mode'] != 'current') {
-				unset($this->session['open_nodes'][$this->request['node_id']]);
-			}
+			unset($this->session['open_nodes'][$this->request['node_id']]);
 			unset($this->session['open_tree_nodes'][$this->request['node_id']]);
-
 			$this->session['selected_node'] = '';
 
 			header('Content-Type: application/x-javascript charset=utf-8');
@@ -564,13 +543,29 @@
 			exit;
 		}
 
+		function margeOpenCurrentNodes() {
+			$current = explode('/', $this->session['current_node']);
+
+			foreach($current as $value) {
+				if(!$value) continue;
+
+				$dir .= '/' . $value;
+				$nodes[$dir] = true;
+			}
+
+			if(is_array($nodes) && is_array($this->session['open_nodes'])) {
+				$nodes = array_merge($nodes, $this->session['open_nodes']);
+			}
+
+			return $nodes;
+		}
+
 		function response($node_id, $category) {
 			$response['status'] = $this->status;
 			if($this->message) {
 				$response['message'] = $this->message;
 			}
-
-			$root_node = new B_FileNode(B_FILE_ROOT_DIR, $this->project_dir, $this->session['open_nodes'], null, 1);
+			$root_node = new B_FileNode(B_FILE_ROOT_DIR, $this->project_dir, $this->margeOpenCurrentNodes(), null, 1);
 			$current_node = $root_node->getNodeById($this->session['current_node']);
 			if(!$current_node) {
 				$current_node = $root_node;
