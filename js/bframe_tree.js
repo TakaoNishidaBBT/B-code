@@ -45,6 +45,7 @@
 		var current_edit_node;
 		var eventPlace;
 		var new_node;
+		var open_node = {};
 
 		var tab_control;
 		var drag_control;
@@ -969,8 +970,19 @@
 			return a['order'] - b['order'];
 		}
 
+		function openNode(node_id) {
+			open_node[node_id] = '1';
+console.log(open_node, node_id);
+			getNodeList(node_id, 'open');
+			save();
+		}
+
 		function closeNode(node_id) {
 			var mode;
+
+			delete open_node[node_id];
+console.log(open_node, Object.keys(open_node).length);
+			save();
 
 			if(current_node.id()) {
 				var node = document.getElementById(node_id);
@@ -1951,6 +1963,22 @@
 		}
 		this.open_property = open_property;
 
+		function save() {
+			var item = restore();
+
+			item.open_node = open_node;
+			item.current_node = current_node.id();
+
+			var item_json = JSON.stringify(item);
+			localStorage.setItem(property.project, item_json);
+		}
+		this.save = save;
+
+		function restore() {
+			var item_json = localStorage.getItem(property.project);
+			return JSON.parse(item_json);
+		}
+
 		this.getCurrentFolderId = function() {
 			return current_node.id();
 		}
@@ -2380,7 +2408,7 @@
 			}
 
 			function save() {
-				var item = {};
+				var item = restore();
 
 				visible_index = getVisibleIndex();
 				current_index = visible_index + 1;
@@ -4516,7 +4544,7 @@
 					else {
 						control.src = property.icon.plus.src;
 					}
-					control.onmousedown = openNode;
+					control.onmousedown = openClose;
 					control.onclick = nop;
 				}
 				else {
@@ -4967,7 +4995,7 @@
 			return td;
 		}
 
-		function openNode(event) {
+		function openClose(event) {
 			if(bframe.getButton(event) != 'L') return;
 
 			var obj = bframe.getEventSrcElement(event);
@@ -4975,7 +5003,7 @@
 			var node_id = node.id;
 
 			if(bframe.getFileName(obj.src) == bframe.getFileName(property.icon.plus.src)) {
-				getNodeList(node_id, 'open');
+				openNode(node_id)
 			}
 			else {
 				var ul = document.getElementById('tu' + node_id.substr(1));
@@ -5061,6 +5089,7 @@
 			else if(control && bframe.getFileName(control.src) == bframe.getFileName(property.icon.plus.src)) {
 				getNodeList(node.id);
 			}
+			save();
 		}
 
 		function selectResourceNode(event) {
