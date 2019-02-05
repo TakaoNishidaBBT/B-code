@@ -337,6 +337,7 @@
 			session.setScrollTop(top);
 			ace_editor.focus();
 			ace_editor.getSession().getUndoManager().reset();
+			undo_depth = ace_editor.getSession().getUndoManager().undoDepth();
 
 			while(message_field.firstChild) {
 				message_field.removeChild(message_field.firstChild);
