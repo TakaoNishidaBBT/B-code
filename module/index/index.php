@@ -37,6 +37,7 @@
 			$this->bframe_message = new B_Element($this->bframe_message_config, $this->user_auth);
 
 			$this->user_name = htmlspecialchars($this->user_name, ENT_QUOTES, B_CHARSET);
+
 			if($_REQUEST['project']) {
 				$this->title = $_REQUEST['project'] . ' - ' . $this->title;
 				$this->initial_page = DISPATCH_URL . '&amp;module=editor&amp;page=tree&amp;method=open&amp;project=' . $_REQUEST['project'];
@@ -62,18 +63,10 @@
 				$this->df = new B_DataFile(B_USER_DATA, 'user');
 				$ret = $this->auth->login($this->df, $_POST['user_id'], $_POST['password']);
 				if($ret) {
-					// Generate session id
+					// Regenerate session id
 					session_regenerate_id(true);
 
 					$this->auth->getUserInfo($this->user_id, $this->user_name, $this->user_auth, $this->language);
-					$session_file = B_SESSION_DIR . $this->user_id . '.txt';
-
-					if(file_exists($session_file)) {
-						$fp = fopen($session_file, 'rb');
-					    $serializedString = fread($fp, 200000);
-			    		$_SESSION = unserialize($serializedString);
-						fclose($fp);
-					}
 
 					// Redirect
 					$path = B_SITE_BASE;

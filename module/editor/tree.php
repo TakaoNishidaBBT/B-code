@@ -33,7 +33,6 @@
 
 		function open() {
 			$this->session['mode'] = 'open';
-			$this->session['open_tree_nodes'][$this->project_dir] = true;
 		}
 
 		function getProjectDirectory($project) {
@@ -59,34 +58,29 @@
 				
 				$this->session['sort_key'] = $this->request['sort_key'];
 			}
-			if($this->request['node_id'] && $this->request['mode'] != 'open') {
-				$this->session['current_node'] = $this->request['node_id'];
+
+			if($this->request['current_node']) {
+				$this->session['current_node'] = $this->request['current_node'];
 			}
+
+			// set open_mode
 			if($this->request['mode'] == 'open') {
 				$this->open_node = true;
-				$this->session['open_nodes'][$this->request['node_id']] = true;
-				$this->session['open_tree_nodes'][$this->request['node_id']] = true;
 			}
+
+			// set open_nodes from request
+			$this->session['open_nodes'] = '';
+			if(is_array($this->request['open_nodes'])) {
+				foreach($this->request['open_nodes'] as $node) {
+					$this->session['open_nodes'][$node] = true;
+				}
+			}
+
 			if(!$this->session['current_node']) {
 				$this->session['current_node'] = $this->project_dir;
 			}
-			if(isset($this->request['display_mode'])) {
-				$this->session['display_mode'] = $this->request['display_mode'];
-			}
 
 			$this->response($this->session['current_node'], 'select');
-
-			exit;
-		}
-
-		function closeNode() {
-			unset($this->session['open_nodes'][$this->request['node_id']]);
-			unset($this->session['open_tree_nodes'][$this->request['node_id']]);
-			$this->session['selected_node'] = '';
-
-			header('Content-Type: application/x-javascript charset=utf-8');
-			$response['status'] = true;
-			echo json_encode($response);
 
 			exit;
 		}
@@ -594,9 +588,6 @@
 			if($this->session['mode'] == 'open') {
 				$response['open'] = true;
 				$this->session['mode'] = '';
-			}
-			if($this->session['open_tree_nodes']) {
-				$response['open_tree_nodes'] = $this->session['open_tree_nodes'];
 			}
 			if($this->open_node) {
 				$response['open_node'] = true;

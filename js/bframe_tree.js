@@ -45,7 +45,7 @@
 		var current_edit_node;
 		var eventPlace;
 		var new_node;
-		var open_node = {};
+		var open_nodes = {};
 
 		var tab_control;
 		var drag_control;
@@ -117,6 +117,15 @@
 				if(property.selectable == 'true') {
 					target.onclick = resetCurrentObject;
 				}
+
+				// initialize open_nodes current_node from local storage
+				var item = restore();
+				if(item.open_nodes) {
+					open_nodes = item.open_nodes;
+				}
+
+				current_node.set(item.current_node);
+
 				getNodeList('');
 			}
 		}
@@ -604,6 +613,8 @@
 		function getNodeList(id, mode) {
 			var param;
 
+			open_nodes[id.substr(1)] = '1';
+
 			param = 'terminal_id='+terminal_id;
 			if(id) {
 				param+= '&node_id='+id.substr(1);
@@ -618,6 +629,14 @@
 			if(mode) {
 				param+= '&mode='+mode;
 			}
+
+			for(key in open_nodes) {
+				param+= '&open_nodes[]=' + key;
+			}
+			if(current_node.id()) {
+				param+= '&current_node=' + current_node.id().substr(1);
+			}
+
 			if(bframe.progressBar) {
 				httpObj = createXMLHttpRequest(showProgress);
 				var params = {
@@ -783,14 +802,6 @@
 					}
 				}
 
-				if(response.current_nodes) {
-					// set plural current nodes
-					var nodes = response.current_nodes.split(',');
-					for(var i=0 ; i<nodes.length ; i++) {
-						current_node.add(nodes[i]);
-					}
-				}
-
 				// reload and set color
 				selected_node.reload();
 				selected_node.setColor('selected');
@@ -870,11 +881,8 @@
 			ul.id = 'tu' + node_info.node_id;
 			ul.name = 'nodes';
 			li.appendChild(ul);
-
-			if(!response.open_tree_nodes[node_info.node_id]) {
+			if(!open_nodes[node_info.node_id]) {
 				ul.style.display='none';
-				var control = bframe.searchNodeById(ul, 'c' + node_info.node_id);
-				control.src = property.icon.plus.src;
 			}
 
 			if(node_info.children) {
@@ -971,8 +979,6 @@
 		}
 
 		function openNode(node_id) {
-			open_node[node_id] = '1';
-console.log(open_node, node_id);
 			getNodeList(node_id, 'open');
 			save();
 		}
@@ -980,8 +986,7 @@ console.log(open_node, node_id);
 		function closeNode(node_id) {
 			var mode;
 
-			delete open_node[node_id];
-console.log(open_node, Object.keys(open_node).length);
+			delete open_nodes[node_id.substr(1)];
 			save();
 
 			if(current_node.id()) {
@@ -999,22 +1004,6 @@ console.log(open_node, Object.keys(open_node).length);
 			if(node_type.value == 'folder') {
 				var icon = document.getElementById('i' + node_id);
 				icon.src = property.icon[node_type.value].src;
-			}
-
-			var param = 'terminal_id='+terminal_id+'&node_id='+encodeURIComponent(node_id.substr(1));
-			if(mode) param += '&mode=' + mode;
-
-			httpObj = createXMLHttpRequest(closeNodeResponse);
-			eventHandler(httpObj, property.module, property.file, property.method.closeNode, 'POST', param);
-
-			bframe.fireEvent(window, 'resize');
-
-			response_wait = true;
-		}
-
-		function closeNodeResponse() {
-			if(httpObj.readyState == 4 && httpObj.status == 200 && response_wait) {
-				response_wait = false;
 			}
 		}
 
@@ -1966,7 +1955,7 @@ console.log(open_node, Object.keys(open_node).length);
 		function save() {
 			var item = restore();
 
-			item.open_node = open_node;
+			item.open_nodes = open_nodes;
 			item.current_node = current_node.id();
 
 			var item_json = JSON.stringify(item);
@@ -1976,7 +1965,12 @@ console.log(open_node, Object.keys(open_node).length);
 
 		function restore() {
 			var item_json = localStorage.getItem(property.project);
-			return JSON.parse(item_json);
+			if(item_json) {
+				return JSON.parse(item_json);
+			}
+			else {
+				return {};
+			}
 		}
 
 		this.getCurrentFolderId = function() {
@@ -2310,6 +2304,9 @@ console.log(open_node, Object.keys(open_node).length);
 
 			this.init = function() {
 				var item = restore();
+				if(!item) return;
+				if(!item.tabs) return;
+
 				var tabs_array = item.tabs;
 
 				for(let i=1; i < tabs_array.length; i++) {
@@ -2422,7 +2419,12 @@ console.log(open_node, Object.keys(open_node).length);
 
 			function restore() {
 				var item_json = localStorage.getItem(property.project);
-				return JSON.parse(item_json);
+				if(item_json) {
+					return JSON.parse(item_json);
+				}
+				else {
+					return {}
+				}
 			}
 
 			this.select = function() {
@@ -4511,10 +4513,6 @@ console.log(open_node, Object.keys(open_node).length);
 			li.className = 'tree-list';
 			li.id = node_id;
 
-//			li.node_class = config.node_class;
-//			li.node_type = config.node_type;
-//			li.utime = config.update_datetime_u;
-
 			div = document.createElement('div');
 			div.name = 'node_div';
 			div.id = 'd' + node_id;
@@ -4538,7 +4536,7 @@ console.log(open_node, Object.keys(open_node).length);
 				a.onclick = selectNode;
 				a.ondblclick = selectResourceNode;
 				if((pane && config.folder_count > 0 ) || (config.node_count > 0)) {
-					if(config.children && response.open_tree_nodes[config.node_id]) {
+					if(config.children && open_nodes[config.node_id]) {
 						control.src = property.icon.minus.src;
 					}
 					else {
@@ -4678,7 +4676,7 @@ console.log(open_node, Object.keys(open_node).length);
 			}
 			else {
 				if(property.editor_mode == 'true') {
-					if(config.node_class == 'folder' && config.children && response.open_tree_nodes[config.node_id]) {
+					if(config.node_class == 'folder' && config.children && open_nodes[config.node_id]) {
 						obj_img.src = property.icon['folder_open'].src;
 					}
 					else {
@@ -4686,7 +4684,7 @@ console.log(open_node, Object.keys(open_node).length);
 					}
 				}
 				else {
-					if(config.node_class == 'folder' && config.children && ((pane && config.folder_count > 0 ) || (!pane && config.node_count > 0)) && response.open_tree_nodes[config.node_id]) {
+					if(config.node_class == 'folder' && config.children && ((pane && config.folder_count > 0 ) || (!pane && config.node_count > 0)) && open_nodes[config.node_id]) {
 						obj_img.src = property.icon['folder_open'].src;
 					}
 					else {
