@@ -1013,6 +1013,7 @@
 				var icon = document.getElementById('i' + node_id);
 				icon.src = property.icon[node_type.value].src;
 			}
+			bframe.fireEvent(window, 'resize');
 		}
 
 		function selectFolder(node_id) {
