@@ -33,6 +33,7 @@
 
 		function open() {
 			$this->session['mode'] = 'open';
+			$this->session['current_node'] = '';
 		}
 
 		function getProjectDirectory($project) {

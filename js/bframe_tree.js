@@ -120,13 +120,21 @@
 
 				// initialize open_nodes current_node from local storage
 				var item = restore();
+				current_node.set(item.current_node);
 				if(item.open_nodes) {
 					open_nodes = item.open_nodes;
 				}
 
-				current_node.set(item.current_node);
-
 				getNodeList('');
+			}
+		}
+
+		function setOpenNodes(node_id) {
+			var node_dir = node_id.split('/');
+			var dir = '';
+			for(let i=1; i < node_dir.length; i++) {
+				dir+= '/' + node_dir[i];
+				open_nodes[dir] = true;
 			}
 		}
 
@@ -5079,6 +5087,7 @@
 			var control = document.getElementById('c' + node.id);
 			if(pane) {
 				current_node.set('t' + node.id.substr(1));
+				setOpenNodes(node.id);
 				getNodeList(node.id);
 			}
 			else if(property.folderselect == 'true') {
