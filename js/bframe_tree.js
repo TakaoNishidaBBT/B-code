@@ -4522,6 +4522,10 @@
 			li.className = 'tree-list';
 			li.id = node_id;
 
+			li.node_class = config.node_class;
+			li.node_type = config.node_type;
+			li.utime = config.update_datetime_u;
+
 			div = document.createElement('div');
 			div.name = 'node_div';
 			div.id = 'd' + node_id;
