@@ -1625,6 +1625,8 @@
 		function createNode(p) {
 			var param;
 
+			open_nodes[selected_node.id().substr(1)] = true;
+
 			param = 'terminal_id='+terminal_id;
 			param+= '&'+p+'&destination_node_id='+encodeURIComponent(selected_node.id().substr(1));
 			if(current_node.id()) param+= '&node_id='+encodeURIComponent(current_node.id().substr(1));
