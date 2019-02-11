@@ -104,12 +104,10 @@
 			if($this->session) {
 				$this->header->setValue($this->session);
 			}
-
-			$obj = $this->header->getElementByName('row_per_page');
-			$obj->attr.= ' data-default="' . $this->default_row_per_page . '"';
 		}
 
 		function setData() {
+/*
 			$this->dg->setSqlWhere($this->sql_where);
 
 			if($this->sort_key) {
@@ -121,9 +119,11 @@
 				$this->dg->setSqlOrderBy($sql_order_by);
 			}
 			$this->dg->setRowPerPage($this->row_per_page);
-
+*/
+			$this->data = $this->df->getAll();
+			$this->data = array_merge($this->data, array('', '', ''));
 			$this->dg->setPage($this->page_no);
-			$this->dg->bind();
+			$this->dg->bind($this->data);
 		}
 
 		function setSqlWhere() {
@@ -147,7 +147,14 @@
 
 			$open = &$row->getElementByName('open');
 			$name = &$row->getElementByName('name');
-			$open->link.= $name->value . '/';
+			if($name->value) {
+				$open->link.= $name->value . '/';
+			}
+			else {
+				$li = &$row->getElementByName('data_list');
+				$li->start_html = $li->empty_start_html;
+				unset($li->elements);
+			}
 		}
 
 		function view() {

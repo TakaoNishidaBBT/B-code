@@ -551,6 +551,8 @@
 				context_menu.disableElement('createNode');
 				context_menu.disableElement('upload');
 			}
+
+			// enable updalod in current_node only
 			if(node != current_node.object()) {
 				context_menu.disableElement('upload');
 			}
@@ -3788,51 +3790,52 @@
 			this.selectFiles = selectFiles;
 
 			function uploadFiles(event) {
-				if(visibility) {
-					index = 0;
-					upload_queue.length = 0;
-					upload_count = 0;
-					mode = 'confirm';
-					extract_mode = 'confirm';
-					if(event.type == 'drop') {
-						var files = event.dataTransfer.files;
-						var items = event.dataTransfer.items;
-					}
-					else {
-						var files = event.target.files;
-					}
+				if(!visibility) return;
 
-					var tree_id = 'tu' + current_node.id().substr(1);
-					var pane_id, disp_type;
-					if(display_mode == 'detail') {
-						pane_id = pane_tbody.id;
-						disp_type = 'detail';
-					}
-					else {
-						pane_id = pane_ul.id;
-						disp_type = 'thumbnail';
-					}
-
-					for(var i=0; i<files.length; i++) {
-						files[i].id = i;
-						var progress = new fileProgress(files[i], tree_id, pane_id, disp_type);
-
-						if(items && items[i].webkitGetAsEntry().isDirectory) {
-							progress.setError();
-							progress.setStatus(property.upload.error_message);
-						}
-						else {
-							upload_queue[i] = {'file' : files[i], 'progress' : progress};
-						}
-					}
-					var wsize = bframe.getWindowSize();
-
-					overlay.style.width = wsize.width + 'px';
-					overlay.style.height = wsize.height + 'px';
-					uploading = true;
-
-					confirm(0);
+				index = 0;
+				upload_queue.length = 0;
+				upload_count = 0;
+				mode = 'confirm';
+				extract_mode = 'confirm';
+				if(event.type == 'drop') {
+					var files = event.dataTransfer.files;
+					var items = event.dataTransfer.items;
 				}
+				else {
+					var files = event.target.files;
+				}
+
+				var tree_id = 'tu' + current_node.id().substr(1);
+				var pane_id, disp_type;
+				if(display_mode == 'detail') {
+					pane_id = pane_tbody.id;
+					disp_type = 'detail';
+				}
+				else {
+					pane_id = pane_ul.id;
+					disp_type = 'thumbnail';
+				}
+
+				for(var i=0; i<files.length; i++) {
+					files[i].id = i;
+					var progress = new fileProgress(files[i], tree_id, pane_id, disp_type);
+
+					if(items && items[i].webkitGetAsEntry().isDirectory) {
+						progress.setError();
+						progress.setStatus(property.upload.error_message);
+					}
+					else {
+						upload_queue[i] = {'file' : files[i], 'progress' : progress};
+					}
+				}
+				var wsize = bframe.getWindowSize();
+
+				overlay.style.width = wsize.width + 'px';
+				overlay.style.height = wsize.height + 'px';
+				uploading = true;
+
+				confirm(0);
+
 				event.preventDefault();
 				bframe.fireEvent(window, 'resize');
 			}
@@ -3870,6 +3873,7 @@
 				form_data.append('method', 'confirm');
 				form_data.append('mode', mode);
 				form_data.append('session', module);
+				form_data.append('node_id', selected_node.id().substr(1));
 				form_data.append('extract_mode', extract_mode);
 				form_data.append('filename', upload_queue[index].file['name']);
 				form_data.append('filesize', upload_queue[index].file['size']);
@@ -3941,6 +3945,7 @@
 				form_data.append('method', 'upload');
 				form_data.append('mode', 'register');
 
+				form_data.append('node_id', selected_node.id().substr(1));
 				form_data.append('extract_mode', extract_mode);
 				form_data.append('Filedata', upload_queue[index].file);
 				form_data.append('last_file', index + 1 == upload_queue.length ? true : false);

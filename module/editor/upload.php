@@ -8,9 +8,9 @@
 	class editor_upload extends B_AdminModule {
 		function __construct() {
 			parent::__construct(__FILE__);
-			if($this->request['session']) {
-				$this->session['relation'] = $this->request['session'];
-			}
+//			if($this->request['session']) {
+//				$this->session['relation'] = $this->request['session'];
+//			}
 			$this->project = $this->session['project'];
 			$this->project_dir = $this->session['project_dir'];
 
@@ -45,12 +45,12 @@
 				if(preg_match('/[\\\\:\/\*\?<>\|\s]/', $file['basename'])) {
 					throw new Exception(__('The following characters cannot be used in file or folder names (\ / : * ? " < > | space)'));
 				}
-				if($this->global_session[$this->session['relation']]['current_node'] != 'root') {
-					$path = $this->global_session[$this->session['relation']]['current_node'] . '/';
-					if(substr($path, 0, 1) == '/') {
-						$path = substr($path, 1);
-					}
-				}
+//				if($this->global_session[$this->session['relation']]['current_node'] != 'root') {
+//					$path = $this->global_session[$this->session['relation']]['current_node'] . '/';
+//					if(substr($path, 0, 1) == '/') {
+//						$path = substr($path, 1);
+//					}
+//				}
 
 				if($file['extension'] == 'zip') {
 					switch($this->request['extract_mode']) {
@@ -61,6 +61,7 @@
 						break;
 
 					case 'noextract':
+						$fullpath = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']));
 						if(file_exists(B_FILE_ROOT_DIR . $path . $file['basename']) && $this->request['mode'] == 'confirm') {
 							$response_mode = 'confirm';
 							$message = __('%FILE_NAME% already exists.<br />Are you sure you want to overwrite?');
@@ -70,7 +71,7 @@
 					}
 				}
 				else {
-					if($this->request['mode'] == 'confirm' && file_exists(B_FILE_ROOT_DIR . $path . $file['basename'])) {
+					if($this->request['mode'] == 'confirm' && file_exists($fullpath)) {
 						$response_mode = 'confirm';
 						$message = __('%FILE_NAME% already exists.<br />Are you sure you want to overwrite?');
 						$message = str_replace('%FILE_NAME%', $file['basename'], $message);
@@ -96,9 +97,9 @@
 
 			try {
 				// Set path
-				if($this->global_session[$this->session['relation']]['current_node'] != 'root') {
-					$this->path = $this->global_session[$this->session['relation']]['current_node'];
-				}
+//				if($this->global_session[$this->session['relation']]['current_node'] != 'root') {
+//					$this->path = $this->global_session[$this->session['relation']]['current_node'];
+//				}
 
 				// Get file info
 				$file = B_Util::pathinfo($_FILES['Filedata']['name']);
@@ -164,14 +165,14 @@
 
 						usleep(300000);
 
-						$node = new B_FileNode(B_FILE_ROOT_DIR, $this->path, null, null, 'all');
+						$node = new B_FileNode(B_FILE_ROOT_DIR, $this->request['node_id'], null, null, 'all');
 						$this->createTumbnail_files = 0;
 						$this->progress = 0;
 						$node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
 
 						foreach($this->registered_archive_node as $path) {
-							$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $path), null, null, 0);
-							$response['node_info'][] = $node->getNodeList('', '', $this->path);
+							$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $path), null, null, 0);
+							$response['node_info'][] = $node->getNodeList('', '', $this->request['node_id']);
 						}
 
 						$response['status'] = $status;
@@ -182,13 +183,13 @@
 					}
 				}
 				else {
-					$path = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename']));
+					$path = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']));
 					$status = move_uploaded_file($_FILES['Filedata']['tmp_name'], $path);
 					if($status) {
 						chmod($path, 0777);
-						$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $file['basename']), null, null, 1);
+						$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']), null, null, 1);
 						$node->createthumbnail($this->except);
-						$response['node_info'][] = $node->getNodeList('', '', $this->path);
+						$response['node_info'][] = $node->getNodeList('', '', $this->request['node_id']);
 					}
 				}
 				if(!$status) {
@@ -270,7 +271,7 @@
 				$this->registered_archive_node[] = $node->path;
 			}
 
-			$dest = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $node->path));
+			$dest = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $node->path));
 			if(is_dir($node->fullpath)) {
  				if(!file_exists($dest)) {
 					mkdir($dest);
@@ -278,7 +279,7 @@
 				return true;
 			}
 			else {
-				copy($node->fullpath, B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->path, $node->path)));
+				copy($node->fullpath, B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $node->path)));
 			}
 
 			$this->registerd_files++;

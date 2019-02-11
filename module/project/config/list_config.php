@@ -7,115 +7,49 @@
 */
 $list_config = 
 array(
-	'start_html'	=> '<table class="list bframe_elastic" id="entry_list">',
-	'end_html'		=> '</table>',
+	'start_html'	=> '<ul class="list" id="entry_list">',
+	'end_html'		=> '</ul>',
 
 	'empty_message'	=> '<span class="bold">　' . __('No record found') . '</span>',
 
-	'thead'	=>
-	array(
-		'start_html'	=> '<thead>',
-		'end_html'		=> '</thead>',
-	),
-
-	'tbody'	=>
-	array(
-		'start_html'	=> '<tbody>',
-		'end_html'		=> '</tbody>',
-	),
-
-	'header'	=>
-	array(
-		'start_html'	=> '<tr>',
-		'end_html'		=> '</tr>',
-		'class'			=> 'B_Row',
-		array(
-			'name'				=> 'name',
-			'start_html'		=> '<th class="sortable" style="width:80px">',
-			'start_html_asc'	=> '<th class="sortable asc" style="width:80px">',
-			'start_html_desc'	=> '<th class="sortable desc" style="width:80px">',
-			'end_html'			=> '</th>',
-			'value'				=> __('Name'),
-			'class'				=> 'B_Link',
-			'link'				=> DISPATCH_URL,
-			'cond_html'			=> 'class="current-key"',
-			'sort_key'			=> 'name',
-			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=name',
-		),
-		array(
-			'name'				=> 'directory',
-			'start_html'		=> '<th class="sortable" style="width:150px">',
-			'start_html_asc'	=> '<th class="sortable asc" style="width:150px">',
-			'start_html_desc'	=> '<th class="sortable desc" style="width:150px">',
-			'end_html'			=> '</th>',
-			'value'				=> __('Directory'),
-			'class'				=> 'B_Link',
-			'link'				=> DISPATCH_URL,
-			'cond_html'			=> 'class="current-key"',
-			'sort_key'			=> 'directory',
-			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=directory',
-		),
-		array(
-			'name'				=> 'notes',
-			'start_html'		=> '<th class="sortable" style="width:250px">',
-			'start_html_asc'	=> '<th class="sortable asc" style="width:250px">',
-			'start_html_desc'	=> '<th class="sortable desc" style="width:250px">',
-			'end_html'			=> '</th>',
-			'value'				=> __('Notes'),
-			'class'				=> 'B_Link',
-			'link'				=> DISPATCH_URL,
-			'cond_html'			=> 'class="current-key"',
-			'sort_key'			=> 'notes',
-			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=notes',
-		),
-		array(
-			'auth_filter'		=> 'super_admin',
-			'start_html'		=> '<th class="center" style="width:60px"><span>',
-			'end_html'			=> '</span></th>',
-			'value'				=> __('Edit'),
-		),
-		array(
-			'auth_filter'		=> 'super_admin',
-			'start_html'		=> '<th class="center" style="width:60px"><span>',
-			'end_html'			=> '</span></th>',
-			'value'				=> __('Delete'),
-		),
-		array(
-			'start_html'		=> '<th class="center" style="width:60px"><span>',
-			'end_html'			=> '</span></th>',
-			'value'				=> __('Open'),
-		),
-	),
-
 	'row'		=>
 	array(
-		'start_html'			=> '<tr>',
-		'start_html_invalid'	=> '<tr class="invalid">',
-		'end_html'				=> '</tr>',
+		'name'					=> 'data_list',
+		'start_html'			=> '<li>',
+		'empty_start_html'		=> '<li class="empty">',
+		'end_html'				=> '</li>',
 		'class'					=> 'B_Row',
 		array(
-			'start_html'	=> '<td class="left">',
-			'end_html'		=> '</td>',
+			'start_html'	=> '<div class="name">',
+			'end_html'		=> '</div>',
 			'class'			=> 'B_Text',
 			'name'			=> 'name',
 		),
 		array(
-			'name'			=> 'directory',
-			'class'			=> 'B_Text',
-			'start_html'	=> '<td class="left">',
-			'end_html'		=> '</td>',
+			'start_html'	=> '<div class="open-button">',
+			'end_html'		=> '</div>',
+			array(
+				'name'			=> 'open',
+				'class'			=> 'B_Link',
+				'link'			=> B_CURRENT_ROOT,
+				'attr'			=> 'class="open-button" target="_blank"',
+				array(
+					'value'			=> __('OPEN'),
+					'start_html'	=> '<span>',
+					'end_html'		=> '</span>',
+				)
+			),
 		),
-		array(
-			'name'			=> 'notes',
-			'class'			=> 'B_Text',
-			'start_html'	=> '<td class="left">',
-			'end_html'		=> '</td>',
-		),
+//		array(
+//			'name'			=> 'directory',
+//			'class'			=> 'B_Text',
+//			'start_html'	=> '<td class="left">',
+//			'end_html'		=> '</td>',
+//		),
 		array(
 			'auth_filter'	=> 'super_admin',
-			'start_html'	=> '<td class="button">',
-			'end_html'		=> '</td>',
-			'element'		=>
+			'start_html'	=> '<div class="settings-button">',
+			'end_html'		=> '</div>',
 			array(
 				'name'			=> 'edit',
 				'class'			=> 'B_Link',
@@ -134,59 +68,17 @@ array(
 					'project_id'	=> 'id',
 				),
 				array(
-					'value'			=> __('Edit'),
+					'value'			=> '<img class="gear" src="images/common/gear.png" alt="settings" />',
+				),
+				array(
+					'value'			=> __('Settings'),
 					'start_html'	=> '<span>',
 					'end_html'		=> '</span>',
 				),
-			),
-		),
-		array(
-			'auth_filter'	=> 'super_admin',
-			'start_html'	=> '<td class="button">',
-			'end_html'		=> '</td>',
-			'element'		=>
-			array(
-				'name'			=> 'delete',
-				'class'			=> 'B_Link',
-				'link'			=> 'index.php',
-				'attr'			=> 'class="delete-button"',
-				'fixedparam'	=>
-				array(
-					'terminal_id'	=> TERMINAL_ID,
-					'module'		=> $this->module, 
-					'page'			=> 'form', 
-					'method'		=> 'select',
-					'mode'			=> 'delete',
-				),
-				'param'		=>
-				array(
-					'project_id'	=> 'id',
-				),
-				array(
-					'value'			=> __('Delete'),
-					'start_html'	=> '<span>',
-					'end_html'		=> '</span>',
-				)
-			),
-		),
-		array(
-			'start_html'	=> '<td class="button">',
-			'end_html'		=> '</td>',
-			'element'		=>
-			array(
-				'name'			=> 'open',
-				'class'			=> 'B_Link',
-				'link'			=> B_CURRENT_ROOT,
-				'attr'			=> 'class="open-button" target="_blank"',
-				array(
-					'value'			=> __('Open'),
-					'start_html'	=> '<span>',
-					'end_html'		=> '</span>',
-				)
 			),
 		),
 	),
 
 	// pager
-	'pager'		=> $this->pager_config,
+//	'pager'		=> $this->pager_config,
 );

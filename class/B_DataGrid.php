@@ -134,22 +134,17 @@
 					break;
 
 				case 'B_DataFile':
-					$data = $this->db->getAll();
-
-					$record_cnt = 0;
-					if(is_array($data)) {
-						foreach($data as $value) {
-							$this->bind_data[] = $value;
+					// data bind from file
+					$this->bind_data = $this->db->getAll();
+					if(is_array($this->bind_data)) {
+						foreach($this->bind_data as $value) {
 							// create row instance
 							$row = new B_Element($this->config['row'], $this->auth_filter, $this->config_filter);
 							$row->setValue($value);
 							$this->row[] = $row;
-							$record_cnt++;
 						}
+						$this->record_cnt = count($this->bind_data);
 					}
-
-					$this->record_cnt = $record_cnt;
-
 					break;
 				}
 			}

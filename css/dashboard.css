@@ -4,24 +4,144 @@ body {
 	background-color: #fff;
 }
 
-h1 {
+/* title-header */
+div#title-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	margin: 0;
-	padding-left: 10px;
 	background: #bbb;
-	height: 32px;
+	height: 34px;
 	line-height: 32px;
-	font-size: 15px;
 	color: #fff;
 	background-color: #444;
-	text-align: center;
+}
+div.title {
+	margin: 5px 0 0 70px;
+}
+div.title img {
+	width: 60px;
+}
+div.login-user {
+	float:right;
+	margin: 0;
+	padding: 3px 0 0 0;
+	white-space: nowrap;
+}
+div.login-user ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	white-space: nowrap;
+}
+div.login-user ul li {
+	float: left;
+	padding: 0;
+	margin-right: 10px;
+	height: 16px;
+	font-size: 12px;
+	font-weight: normal;
+}
+div.login-user ul li.settings {
+	padding: 3px;
+}
+div.login-user ul li.settings a {
+	opacity: 0.5;
+}
+div.login-user ul li.settings a:hover {
+	opacity: 1;
+}
+dl.login-user {
+	margin: 0;
+	padding: 0;
+}
+dl.login-user dt {
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+dl.login-user dt img {
+	vertical-align: text-bottom;
+	border-radius: 2px;
+}
+dl.login-user dd {
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+dl.login-user dd  strong {
+	font-size: 14px;
+	padding-left: 2px;
 }
 
-div.main {
-	width: 60%;
-	min-width: 400px;
-	height: 190px;
-	margin: 40px auto;
-	padding: 0;
+.container {
+	display: flex;
+	height: 100%;
+}
+#small-identicon img {
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+}
+.user {
+	height: 200px;
+	background-color: #e3e3e3;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #000;
+}
+#big-identicon img {
+	width: 90px;
+	height: 90px;
+	border-radius: 3px;
+}
+.user .user-name {
+	margin-top: 6px;
+}
+#left-container {
+	min-width: 200px;
+	height: 100%;
+	background-color: #414141;
 	color: #fff;
-	font-family: "メイリオ","Meryo","ＭＳ Ｐゴシック","MS PGothic","Hiragino Kaku Gothic Pro","ヒラギノ角ゴ Pro W3","Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+}
+#left-container .logo {
+	text-align: center;
+	padding-top: 40px;
+}
+#left-container .logo img {
+	width: 60px;
+}
+#main {
+	flex-basis: auto;
+}
+.side_menu ul {
+	margin-top: 40px;
+	padding: 0;
+	list-style: none;
+}
+.side_menu ul  li {
+	text-align: center;
+}
+.side_menu ul  li .right-arrow {
+	width: 16px;
+	height: 16px;
+}
+.side_menu ul  li a {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px 0;
+	color: #fff;
+	font-size: 14px;
+	text-decoration: none;
+}
+.side_menu ul  li a:hover {
+	background-color: #6e6e6e;
+}
+.side_menu ul  li a .menu-icon {
+	margin-left: 20px;
+}
+.side_menu ul  li a .right-arrow {
+	margin-right: 20px;
 }
