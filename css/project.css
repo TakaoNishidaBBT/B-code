@@ -85,6 +85,7 @@ ul.list li {
 ul.list li.empty {
 	height: 0;
 	border: none;
+	margin: 22px;
 }
 ul.list li .name {
 	text-align: center;
