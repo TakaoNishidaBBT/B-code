@@ -133,5 +133,6 @@
 			format: 'svg'
 		};
 		var data = new Identicon(hash, options).toString(true);
-		big_identicon.innerHTML = small_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
+		if(small_identicon) small_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
+		if(big_identicon) big_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
 	}

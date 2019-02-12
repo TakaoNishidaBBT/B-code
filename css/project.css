@@ -20,9 +20,12 @@ h2.project span {
 	line-height: 24px;
 }
 
+#header {
+	padding: 0 80px;
+	min-width: 700px;
+}
 div.list-header {
 	margin: 0 auto;
-	width: 986px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #d2d2d2;
 }
@@ -76,7 +79,7 @@ ul.list li {
 	min-width: 300px;
 	max-width: 300px;
 	height: 220px;
-	margin: 20px;
+	margin: 21px;
 	border: 1px solid #d2d2d2;
 }
 ul.list li.empty {

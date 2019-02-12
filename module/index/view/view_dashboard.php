@@ -7,6 +7,7 @@
 <meta name="source_page" content="index">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/dashboard.css">
 <script src="js/bstudio.js"></script>
 <script src="js/identicon/sha256.js"></script>

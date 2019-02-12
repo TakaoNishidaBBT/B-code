@@ -4,84 +4,9 @@ body {
 	background-color: #fff;
 }
 
-/* title-header */
-div#title-header {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin: 0;
-	background: #bbb;
-	height: 34px;
-	line-height: 32px;
-	color: #fff;
-	background-color: #444;
-}
-div.title {
-	margin: 5px 0 0 70px;
-}
-div.title img {
-	width: 60px;
-}
-div.login-user {
-	float:right;
-	margin: 0;
-	padding: 3px 0 0 0;
-	white-space: nowrap;
-}
-div.login-user ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	white-space: nowrap;
-}
-div.login-user ul li {
-	float: left;
-	padding: 0;
-	margin-right: 10px;
-	height: 16px;
-	font-size: 12px;
-	font-weight: normal;
-}
-div.login-user ul li.settings {
-	padding: 3px;
-}
-div.login-user ul li.settings a {
-	opacity: 0.5;
-}
-div.login-user ul li.settings a:hover {
-	opacity: 1;
-}
-dl.login-user {
-	margin: 0;
-	padding: 0;
-}
-dl.login-user dt {
-	margin: 0;
-	padding: 0;
-	display: inline;
-}
-dl.login-user dt img {
-	vertical-align: text-bottom;
-	border-radius: 2px;
-}
-dl.login-user dd {
-	margin: 0;
-	padding: 0;
-	display: inline;
-}
-dl.login-user dd  strong {
-	font-size: 14px;
-	padding-left: 2px;
-}
-
 .container {
 	display: flex;
 	height: 100%;
-}
-#small-identicon img {
-	width: 16px;
-	height: 16px;
-	margin-right: 4px;
 }
 .user {
 	height: 200px;
