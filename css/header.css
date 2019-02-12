@@ -18,59 +18,40 @@ div.title {
 div.title img {
 	width: 60px;
 }
-div.login-user {
-	float:right;
+.login-user {
+	display: flex;
+	align-items: center;
 	margin: 0;
-	padding: 3px 0 0 0;
+	padding: 0 30px 0 0;
 	white-space: nowrap;
+	list-style: none;
 }
-div.login-user ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	white-space: nowrap;
-}
-div.login-user ul li {
-	float: left;
-	padding: 0;
-	margin-right: 10px;
-	height: 16px;
-	font-size: 12px;
-	font-weight: normal;
-}
-div.login-user ul li.settings {
-	padding: 3px;
-}
-div.login-user ul li.settings a {
-	opacity: 0.5;
-}
-div.login-user ul li.settings a:hover {
-	opacity: 1;
-}
-dl.login-user {
-	margin: 0;
-	padding: 0;
-}
-dl.login-user dt {
-	margin: 0;
-	padding: 0;
-	display: inline;
-}
-dl.login-user dt img {
-	vertical-align: text-bottom;
-	border-radius: 2px;
-}
-dl.login-user dd {
-	margin: 0;
-	padding: 0;
-	display: inline;
-}
-dl.login-user dd  strong {
-	font-size: 14px;
-	padding-left: 2px;
+.login-user li {
+	flex: auto;
 }
 #small-identicon img {
 	width: 16px;
 	height: 16px;
-	margin-right: 4px;
+	margin: 10px 10px 0 0;
+}
+#user-name {
+	margin-right: 10px;
+}
+#user-settings img {
+	width: 16px;
+	height: 16px;
+	margin: 10px 8px 0 0;
+}
+#logout a {
+	display: flex;
+	align-items: center;
+	margin-left: 30px;
+	text-decoration: none;
+	color: #fff;
+}
+#logout a:hover {
+	opacity: 0.8;
+}
+#logout img {
+	margin: 2px 0 0 6px;
 }

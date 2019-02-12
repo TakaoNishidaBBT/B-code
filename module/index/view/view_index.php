@@ -28,18 +28,12 @@
 	<div id="title-header">
 		<div class="title"><img src="images/common/bcode-logo.png" alt="B-code" /></div>
 		<div id="file_name"></div>
-		<div class="login-user">
-			<ul>
-				<li>
-					<dl class="login-user">
-						<dt id="small-identicon"></dt>
-						<dd id="user-name"><?php echo $this->user_name ?></dd>
-						<dd id="user-id" style="display:none"><?php echo $this->user_id ?></dd>
-					</dl>
-				</li>
-				<li><a href="<?php echo DISPATCH_URL ?>&amp;module=index&amp;page=logout" target="_top" ><?php echo __('Log out'); ?></a></li>
-			</ul>
-		</div>
+		<ul class="login-user">
+			<li id="small-identicon"></li>
+			<li id="user-name"><?php echo $this->user_name ?></li>
+			<li id="user-id" style="display:none"><?php echo $this->user_id ?></li>
+			<li id="logout"><a href="<?php echo DISPATCH_URL ?>&amp;module=index&amp;page=logout" target="_top" ><?php echo __('Log out'); ?><img class="logout" src="images/common/logout.png" alt="logout" /></a></li>
+		</ul>
 	</div>
 	<iframe id="main" name="main" class="bframe_adjustwindow" src="<?php echo $this->initial_page; ?>"></iframe>
 	<script type="text/javascript">

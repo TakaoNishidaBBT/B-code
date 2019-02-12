@@ -1,5 +1,5 @@
 <body>
-	<div id="header"><h2 class="project"><?php echo __('Project'); ?></h2></div>
+	<div id="header"><h2 class="project"><?php echo __('PROJECT'); ?></h2></div>
 
 	<form name="F1" method="post" action="index.php">
 		<div id="control">
