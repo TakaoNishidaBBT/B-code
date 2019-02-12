@@ -9,6 +9,17 @@
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/context_menu.css">
+<link rel="stylesheet" href="css/modal_window.css">
+<link rel="stylesheet" href="css/progress_bar.css">
+<script src="js/bframe.js"></script>
+<script src="js/bframe_ajax.js"></script>
+<script src="js/bframe_message.js"></script>
+<script src="js/bframe_popup.js"></script>
+<script src="js/bframe_context_menu.js"></script>
+<script src="js/bframe_menu.js"></script>
+<script src="js/bframe_adjustwindow.js"></script>
+<script src="js/bframe_modal_window.js"></script>
 <script src="js/bstudio.js"></script>
 <script src="js/identicon/sha256.js"></script>
 <script src="js/identicon/identicon.js"></script>
@@ -24,7 +35,7 @@
 			<li id="logout"><a href="<?php echo DISPATCH_URL ?>&amp;module=index&amp;page=logout" target="_top"><?php echo __('Log out'); ?><img class="logout" src="images/common/logout.png" alt="logout" /></a></li>
 		</ul>
 	</div>
-	<div class="container">
+	<div class="main-content">
 		<div id="left-container">
 			<div class="user">
 				<span id="big-identicon"></span>

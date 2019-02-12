@@ -40,21 +40,14 @@ array(
 				)
 			),
 		),
-//		array(
-//			'name'			=> 'directory',
-//			'class'			=> 'B_Text',
-//			'start_html'	=> '<td class="left">',
-//			'end_html'		=> '</td>',
-//		),
 		array(
 			'auth_filter'	=> 'super_admin',
-			'start_html'	=> '<div class="settings-button">',
+			'start_html'	=> '<div class="settings">',
 			'end_html'		=> '</div>',
 			array(
 				'name'			=> 'edit',
 				'class'			=> 'B_Link',
 				'link'			=> 'index.php',
-				'attr'			=> 'class="edit-button"',
 				'fixedparam'	=>
 				array(
 					'terminal_id'	=> TERMINAL_ID,

@@ -106,8 +106,9 @@ ul.list li .open-button a {
 ul.list li .open-button a:hover {
 	opacity: 0.8;
 }
-ul.list li .settings-button a {
+ul.list li .settings a {
 	display: flex;
+	align-items: center;
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -115,15 +116,26 @@ ul.list li .settings-button a {
 	color: #000;
 	padding: 10px 20px;
 }
-ul.list li .settings-button a:hover {
+ul.list li .settings a:hover {
 	opacity: 0.8;
 }
-ul.list li .settings-button a .gear {
+ul.list li .settings a .gear {
 	margin-right: 7px;
-	margin-top: -1px;
-	width: 100%;
-	height: 100%;
 }
-ul.list li .settings-button a span {
+ul.list li .settings a span {
 	font-size: 13px;
+}
+
+/* button elements */
+.settings-button,
+.clear-button {
+	display: inline-block;
+	line-height: 0;
+	padding: 5px;
+	border: 1px solid #d2d2d2;
+	vertical-align: middle;
+}
+.settings-button:hover,
+.clear-button:hover {
+	opacity: 0.8;
 }
