@@ -34,9 +34,11 @@ div.list-header ul.search {
 	justify-content: center;
 	position: relative;
 	list-style: none;
+	padding: 0;
 }
 div.list-header ul.search li.search {
-	background: url(images/common/search.png) #e3e3e3 no-repeat 97% center;
+	display: flex;
+	background-color: #e3e3e3;
 }
 div.list-header ul.search li.search .keyword {
 	width: 300px;
@@ -45,9 +47,18 @@ div.list-header ul.search li.search .keyword {
 	border: none;
 	font-size: 14px;
 }
-#search-button,
-#clear-button {
-	display: none;
+div.list-header ul.search input:forcus {
+  outline: none;
+}
+#search-button {
+	display: block;
+	padding: 8px 0 8px 30px;
+	font-size: 14px;
+	width: 30px;
+	overflow: hidden;
+	background: url(images/common/search.png) #e3e3e3 no-repeat center center;
+	border: none;
+	cursor: pointer;
 }
 #add-button {
 	display: block;

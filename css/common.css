@@ -254,26 +254,6 @@ input.link-button {
 	text-align: center;
 	}
 
-input.search-button {
-	padding: 5px 0;
-	line-height: 17px;
-	border-top: 1px solid #2e9047;
-	border-right: 1px solid #007427;
-	border-bottom: 1px solid #007427;
-	border-left: 1px solid #2e9047;
-	background-color: #007b27;
-	color: #fff;
-	width: 80px;
-	vertical-align: middle;
-}
-input.search-button:hover {
-	border-top: 1px solid #1ebb32;
-	border-right: 1px solid #19b028;
-	border-bottom: 1px solid #19b028;
-	border-left: 1px solid #1ebb32;
-	cursor: pointer;
-	background-color: #19b632;
-}
 input.insert-button {
 	padding: 5px 0;
 	line-height: 17px;

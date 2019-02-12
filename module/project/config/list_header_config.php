@@ -23,20 +23,20 @@ $list_header_config = array(
 				'start_html'	=> '<ul class="search">',
 				'end_html'		=> '</ul>',
 				array(
-					'class'			=> 'B_InputText',
-					'name'			=> 'keyword',
 					'start_html'	=> '<li class="search">',
 					'end_html'		=> '</li>',
-					'attr'			=> 'class="keyword" maxlength="100" placeholder="keyword"',
-				),
-				array(
-					'id'			=> 'search-button',
-					'name'			=> 'search-button',
-					'class'			=> 'B_Submit',
-					'start_html'	=> '<li>',
-					'end_html'		=> '</li>',
-					'attr'			=> 'class="search-button" onclick="bframe.submit(\'header_form\', \'' . $this->module . '\', \'list\', \'select\', \'\')"',
-					'value'			=> __('Search'),
+					array(
+						'class'			=> 'B_InputText',
+						'name'			=> 'keyword',
+						'attr'			=> 'class="keyword" maxlength="100" placeholder="keyword"',
+					),
+					array(
+						'id'			=> 'search-button',
+						'name'			=> 'search-button',
+						'class'			=> 'B_Submit',
+						'attr'			=> 'class="search-button" onclick="bframe.submit(\'header_form\', \'' . $this->module . '\', \'list\', \'select\')"',
+						'value'			=> __('Search'),
+					),
 				),
 				array(
 					'auth_filter'	=> 'super_admin',
