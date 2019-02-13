@@ -224,6 +224,7 @@
 		function setEventHandler() {
 			bframe.addEventListener(window, 'beforeunload', cleanUp);
 			bframe.addEventListener(window, 'resize', hideContextMenu);
+			bframe.addEventListener(top.document.body, 'mousedown', hideContextMenu);
 
 			// set event handller
 			bframe.addEventListenerAllFrames(top, 'load', hideContextMenuAllFrames);

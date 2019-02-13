@@ -8,4 +8,7 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		document.body.addEventListener('mousedown', top.bstudio.clickBody);
+	</script>
 </body>

@@ -136,3 +136,7 @@
 		if(small_identicon) small_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
 		if(big_identicon) big_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
 	}
+
+	bstudio.mousedownBody = function() {
+		bframe.fireEvent(document.body, 'mousedown');
+	}
