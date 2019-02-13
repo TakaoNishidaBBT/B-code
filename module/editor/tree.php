@@ -70,7 +70,7 @@
 			}
 
 			// set open_nodes from request
-			$this->session['open_nodes'] = '';
+			$this->session['open_nodes'] = array();
 			if(is_array($this->request['open_nodes'])) {
 				foreach($this->request['open_nodes'] as $node) {
 					$this->session['open_nodes'][$node] = true;
