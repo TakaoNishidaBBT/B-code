@@ -38,6 +38,7 @@ div.list-header ul.search {
 }
 div.list-header ul.search li.search {
 	display: flex;
+	position: relative;
 	background-color: #e3e3e3;
 }
 div.list-header ul.search li.search .keyword {
@@ -52,6 +53,8 @@ div.list-header ul.search input:forcus {
 }
 #search-button {
 	display: block;
+	position: absolute;
+	right: 0;
 	padding: 8px 0 8px 30px;
 	font-size: 14px;
 	width: 30px;
