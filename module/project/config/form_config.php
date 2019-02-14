@@ -55,7 +55,7 @@ $form_config = array(
 					'config_filter'		=> 'insert',
 					'name'				=> 'name',
 					'class'				=> 'B_InputText',
-					'attr'				=> 'class="textbox ime_off" maxlength="10" ',
+					'attr'				=> 'class="textbox ime_off" maxlength="100" ',
 					'validate'			=>
 					array(
 						array(

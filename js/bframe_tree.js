@@ -3793,6 +3793,9 @@
 			function uploadFiles(event) {
 				if(!visibility) return;
 
+				// open directory tab
+				tab_control.open();
+
 				index = 0;
 				upload_queue.length = 0;
 				upload_count = 0;
@@ -3874,7 +3877,7 @@
 				form_data.append('method', 'confirm');
 				form_data.append('mode', mode);
 				form_data.append('session', module);
-				form_data.append('node_id', selected_node.id().substr(1));
+				form_data.append('node_id', current_node.id().substr(1));
 				form_data.append('extract_mode', extract_mode);
 				form_data.append('filename', upload_queue[index].file['name']);
 				form_data.append('filesize', upload_queue[index].file['size']);
@@ -3945,9 +3948,8 @@
 				form_data.append('page', page);
 				form_data.append('method', 'upload');
 				form_data.append('mode', 'register');
-
-				form_data.append('node_id', selected_node.id().substr(1));
 				form_data.append('extract_mode', extract_mode);
+				form_data.append('node_id', current_node.id().substr(1));
 				form_data.append('Filedata', upload_queue[index].file);
 				form_data.append('last_file', index + 1 == upload_queue.length ? true : false);
 				httpObj.open('POST','index.php');

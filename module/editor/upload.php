@@ -8,9 +8,7 @@
 	class editor_upload extends B_AdminModule {
 		function __construct() {
 			parent::__construct(__FILE__);
-//			if($this->request['session']) {
-//				$this->session['relation'] = $this->request['session'];
-//			}
+
 			$this->project = $this->session['project'];
 			$this->project_dir = $this->session['project_dir'];
 
@@ -45,12 +43,6 @@
 				if(preg_match('/[\\\\:\/\*\?<>\|\s]/', $file['basename'])) {
 					throw new Exception(__('The following characters cannot be used in file or folder names (\ / : * ? " < > | space)'));
 				}
-//				if($this->global_session[$this->session['relation']]['current_node'] != 'root') {
-//					$path = $this->global_session[$this->session['relation']]['current_node'] . '/';
-//					if(substr($path, 0, 1) == '/') {
-//						$path = substr($path, 1);
-//					}
-//				}
 
 				if($file['extension'] == 'zip') {
 					switch($this->request['extract_mode']) {
@@ -62,7 +54,7 @@
 
 					case 'noextract':
 						$fullpath = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']));
-						if(file_exists(B_FILE_ROOT_DIR . $path . $file['basename']) && $this->request['mode'] == 'confirm') {
+						if(file_exists(B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']))) && $this->request['mode'] == 'confirm') {
 							$response_mode = 'confirm';
 							$message = __('%FILE_NAME% already exists.<br />Are you sure you want to overwrite?');
 							$message = str_replace('%FILE_NAME%', $file['basename'], $message);
@@ -71,6 +63,7 @@
 					}
 				}
 				else {
+					$fullpath = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']));
 					if($this->request['mode'] == 'confirm' && file_exists($fullpath)) {
 						$response_mode = 'confirm';
 						$message = __('%FILE_NAME% already exists.<br />Are you sure you want to overwrite?');

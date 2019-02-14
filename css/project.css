@@ -154,3 +154,9 @@ ul.list li .settings a span {
 .clear-button:hover {
 	opacity: 0.8;
 }
+
+/* form */
+#name,
+#directory {
+	width: 300px;
+}

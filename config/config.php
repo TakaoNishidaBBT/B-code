@@ -70,6 +70,12 @@
 	define('B_ADMIN_FILES_DIR', B_DOC_ROOT . B_CURRENT_ROOT . B_ADMIN_FILES);
 	define('B_THUMBDIR', B_ADMIN_FILES_DIR . 'thumbs/');
 
+	// User Data File
+	define('B_USER_DATA', B_ADMIN_FILES_DIR . 'data/user_data.txt');
+
+	// Project Data File
+	define('B_PROJECT_DATA', B_ADMIN_FILES_DIR . 'data/project_data.txt');
+
 	// Zip File Upload Extract Directory
 	define('B_FILE_EXTRACT_DIR', B_ADMIN_FILES_DIR . 'extract/');
 
@@ -106,15 +112,6 @@
 
 	// Built-in User File
 	require_once(B_CURRENT_DIR . 'user/users.php');
-
-	// User Data File
-	define('B_USER_DATA', B_CURRENT_DIR . 'config/user_data.txt');
-
-	// Project Data File
-	define('B_PROJECT_DATA', B_CURRENT_DIR . 'config/project_data.txt');
-
-	// Session Data Save Directory
-	define('B_SESSION_DIR', B_CURRENT_DIR . 'session/');
 
 	// PHP Display Errors
 	ini_set('display_errors','Off');
