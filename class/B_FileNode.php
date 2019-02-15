@@ -367,7 +367,7 @@
 						$source->parent->removeNodes($source);
 						$this->addNodes($source);
 						$source->parent = $this;
-						$this->rename($source->node_id, B_Util::getPath($this->path, $source->file_name));
+						$source->rename($source->node_id, B_Util::getPath($this->path, $source->file_name));
 						return true;
 					}
 				}

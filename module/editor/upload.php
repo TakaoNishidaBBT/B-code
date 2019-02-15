@@ -89,11 +89,6 @@
 			$status = true;
 
 			try {
-				// Set path
-//				if($this->global_session[$this->session['relation']]['current_node'] != 'root') {
-//					$this->path = $this->global_session[$this->session['relation']]['current_node'];
-//				}
-
 				// Get file info
 				$file = B_Util::pathinfo($_FILES['Filedata']['name']);
 
@@ -181,7 +176,7 @@
 					if($status) {
 						chmod($path, 0777);
 						$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']), null, null, 1);
-						$node->createthumbnail($this->except);
+						$node->createthumbnail();
 						$response['node_info'][] = $node->getNodeList('', '', $this->request['node_id']);
 					}
 				}

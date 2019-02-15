@@ -407,7 +407,7 @@
 
 		public static function createMovieThumbnail($src) {
 			$ffmpeg = FFMPEG;
-			$output = B_RESOURCE_WORK_DIR . time() . 'tmp.jpg';
+			$output = B_ADMIN_FILES_DIR . time() . 'tmp.jpg';
 			$cmdline = "$ffmpeg -ss 3 -i $src -f image2 -vframes 1 $output";
 			B_Util::fork($cmdline, false);
 
