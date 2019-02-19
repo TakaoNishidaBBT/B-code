@@ -12,7 +12,7 @@
 	class B_DataFile {
 		function __construct($file_name, $table_name) {
 			global $g_data_set, ${$g_data_set};
-
+$this->log = new B_Log(B_LOG_FILE);
 			$this->file_name = $file_name;
 			if(file_exists($this->file_name)) {
 				$this->fp = fopen($this->file_name, 'rb');
@@ -30,6 +30,7 @@
 		}
 
 		function get($key) {
+$this->log->write('key', $key, $this->value[$key]);
 			return $this->value[$key];
 		}
 
@@ -47,7 +48,7 @@
 			if($param = $this->checkInsertValue($value)) {
 				$this->value[$this->max_key] = $param;
 				$this->max_key++;
-				return true;
+				return param;
 			}
 		}
 
@@ -62,7 +63,7 @@
 		function checkInsertValue($value) {
 			foreach($this->config as $key => $val) {
 				if($val[2] == '1') {
-					$param[$key] = $this->max_key;
+					$param[$key] = str_pad($this->max_key, $val[1], '0', STR_PAD_LEFT);
 					continue;
 				}
 				if(array_key_exists($key, $value) && $val[2] != '1') {

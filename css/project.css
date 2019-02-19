@@ -7,19 +7,6 @@ html, body {
 	-webkit-user-select: auto;
 	user-select: auto;
 }
-h2.project {
-	margin: 0;
-	padding: 30px 0;
-	font-size: 24px;
-	text-align: center;
-}
-h2.project span {
-	font-size: 11px;
-	font-weight: normal;
-	margin-left: 10px;
-	line-height: 24px;
-}
-
 #header {
 	padding: 0 80px;
 	min-width: 700px;
@@ -121,6 +108,8 @@ ul.list li .open-button a {
 ul.list li .open-button a:hover {
 	opacity: 0.8;
 }
+
+/* settings */
 ul.list li .settings a {
 	display: flex;
 	align-items: center;
@@ -129,16 +118,41 @@ ul.list li .settings a {
 	bottom: 0;
 	text-decoration: none;
 	color: #000;
+	font-size: 13px;
 	padding: 10px 20px;
 }
 ul.list li .settings a:hover {
-	opacity: 0.8;
+	opacity: 0.6;
 }
 ul.list li .settings a .gear {
 	margin-right: 7px;
 }
-ul.list li .settings a span {
-	font-size: 13px;
+
+/* delete */
+ul.list li .delete a {
+	display: flex;
+	align-items: center;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	text-decoration: none;
+	color: #000;
+	font-size: 12px;
+	padding: 10px 20px;
+	opacity: 0.1;
+}
+ul.list li .delete a:hover {
+	opacity: 0.5;
+	color: #f00;
+}
+ul.list li .delete a .sprite {
+	margin-right: 1px;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+ul.list li .delete a:hover .sprite img {
+	margin-top: -16px;
 }
 
 /* button elements */
@@ -146,9 +160,10 @@ ul.list li .settings a span {
 .clear-button {
 	display: inline-block;
 	line-height: 0;
-	padding: 5px;
+	padding: 10px;
 	border: 1px solid #d2d2d2;
 	vertical-align: middle;
+	margin-top: -2px;
 }
 .settings-button:hover,
 .clear-button:hover {
@@ -158,5 +173,5 @@ ul.list li .settings a span {
 /* form */
 #name,
 #directory {
-	width: 300px;
+	width: 400px;
 }

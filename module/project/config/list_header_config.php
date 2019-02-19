@@ -7,12 +7,6 @@
 */
 $list_header_config = array(
 	array(
-		'name'			=> 'title',
-		'start_html'	=> '<h2 class="project">',
-		'end_html'		=> '</h2>',
-		'value'			=> __('PROJECT'),
-	),
-	array(
 		'start_html'	=> '<div class="list-header">',
 		'end_html'		=> '</div>',
 		array(

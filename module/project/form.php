@@ -13,11 +13,8 @@
 
 			require_once('./config/form_config.php');
 			$this->form = new B_Element($form_config, $this->user_auth, $this->mode);
-			$this->input_control_config = $input_control_config;
-			$this->delete_control_config = $delete_control_config;
-			$this->confirm_control_config = $confirm_control_config;
-			$this->result_control_config = $result_control_config;
-			$this->result_config = $result_config;
+			$this->back_button = new B_Element($back_button_config, $this->user_auth);
+			$this->submit_button = new B_Element($submit_button_config, $this->user_auth);
 
 			$this->df = new B_DataFile(B_PROJECT_DATA, 'project');
 
@@ -29,7 +26,6 @@
 		function select() {
 			switch($this->mode) {
 			case 'insert':
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
 				$this->form->setFilterValue('select');
 				break;
 
@@ -38,7 +34,6 @@
 				$this->form->setValue($row);
 				$this->session['init_value'] = $row;
 
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
 				$this->form->setFilterValue('select');
 				break;
 
@@ -48,7 +43,6 @@
 				$this->session['post'] = $row;
 				$this->display_mode = 'confirm';
 
-				$this->control = new B_Element($this->delete_control_config, $this->user_auth);
 				break;
 			}
 		}
@@ -145,7 +139,7 @@
 				break;
 
 			case 'update':
-				$ret = $this->update($param);
+				$ret = $this->update();
 				if($ret) {
 					$message = __('was updated.');
 				}
@@ -177,23 +171,33 @@
 			$param['update_user'] = $this->user_id;
 			$param['update_datetime'] = time();
 
-			$this->df->insert($param);
+			$value = $this->df->insert($param);
 			$this->createThumbnail($param['name'], $param['directory']);
 
 			return true;
 		}
 
 		function update() {
-			$param = $this->df->get($param['id'], $param);
-			$directory_old = $param['directory'];
 			$param = $this->session['post'];
+			$value = $this->df->get($param['id']);
 
-			$param['update_user'] = $this->user_id;
-			$param['update_datetime'] = time();
+			$name_old = $value['name'];
+			$directory_old = $value['directory'];
+			$value = $this->session['post'];
 
-			$this->df->update($param['id'], $param);
-			if($param['directory'] != $directory_old) {
+			$value['update_user'] = $this->user_id;
+			$value['update_datetime'] = time();
+
+			$this->df->update($param['id'], $value);
+
+			// recraete thumbnail
+			if($value['directory'] != $directory_old) {
 				$this->createThumbnail($param['name'], $param['directory']);
+			}
+
+			// rename thmubnail directory
+			if($value['name'] != $name_old) {
+				rename(B_THUMBDIR . $name_old, B_THUMBDIR . $value['name']);
 			}
 
 			return true;

@@ -14,16 +14,16 @@ array(
 
 	'row'		=>
 	array(
-		'name'					=> 'data_list',
-		'start_html'			=> '<li>',
-		'empty_start_html'		=> '<li class="empty">',
-		'end_html'				=> '</li>',
-		'class'					=> 'B_Row',
+		'name'				=> 'data_list',
+		'class'				=> 'B_Row',
+		'start_html'		=> '<li>',
+		'empty_start_html'	=> '<li class="empty">',
+		'end_html'			=> '</li>',
 		array(
+			'name'			=> 'name',
+			'class'			=> 'B_Text',
 			'start_html'	=> '<div class="name">',
 			'end_html'		=> '</div>',
-			'class'			=> 'B_Text',
-			'name'			=> 'name',
 		),
 		array(
 			'start_html'	=> '<div class="open-button">',
@@ -34,10 +34,42 @@ array(
 				'link'			=> B_CURRENT_ROOT,
 				'attr'			=> 'class="open-button" target="_blank"',
 				array(
-					'value'			=> __('OPEN'),
 					'start_html'	=> '<span>',
 					'end_html'		=> '</span>',
+					'value'			=> __('OPEN'),
 				)
+			),
+		),
+		array(
+			'auth_filter'	=> 'super_admin',
+			'start_html'	=> '<div class="delete">',
+			'end_html'		=> '</div>',
+			array(
+				'name'			=> 'delete',
+				'class'			=> 'B_Link',
+				'link'			=> 'index.php',
+				'fixedparam'	=>
+				array(
+					'terminal_id'	=> TERMINAL_ID,
+					'module'		=> $this->module, 
+					'page'			=> 'form', 
+					'method'		=> 'select',
+					'mode'			=> 'delete',
+				),
+				'param'		=>
+				array(
+					'project_id'	=> 'id',
+				),
+				array(
+					'start_html'	=> '<span class="sprite">',
+					'end_html'		=> '</span>',
+					'value'			=> '<img class="delete" src="images/common/delete.png" alt="delete" />',
+				),
+				array(
+					'start_html'	=> '<span>',
+					'end_html'		=> '</span>',
+					'value'			=> __('Delete'),
+				),
 			),
 		),
 		array(
@@ -64,9 +96,9 @@ array(
 					'value'			=> '<img class="gear" src="images/common/gear.png" alt="settings" />',
 				),
 				array(
-					'value'			=> __('Settings'),
 					'start_html'	=> '<span>',
 					'end_html'		=> '</span>',
+					'value'			=> __('Settings'),
 				),
 			),
 		),

@@ -7,27 +7,73 @@ html, body {
 	-webkit-user-select: auto;
 	user-select: auto;
 }
-h2.user {
-	margin: 0;
-	padding-left: 10px;
-	font-size: 15px;
-	background-color: #779767;
-	color: #fff;
-	color: #fff;
-	line-height: 33px;
+#header {
+	padding: 0 80px;
+	min-width: 700px;
 }
-h2.user span {
-	font-size: 11px;
-	font-weight: normal;
-	margin-left: 10px;
-	line-height: 24px;
+div.list-header {
+	margin: 0 auto;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #d2d2d2;
+}
+div.list-header ul.search {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	list-style: none;
+	padding: 0;
+}
+div.list-header ul.search li.search {
+	display: flex;
+	position: relative;
+	background-color: #e3e3e3;
+}
+div.list-header ul.search li.search .keyword {
+	width: 300px;
+	padding: 8px 30px 8px 8px;
+	background-color: transparent;
+	border: none;
+	font-size: 14px;
+}
+div.list-header ul.search input:forcus {
+  outline: none;
+}
+#search-button {
+	display: block;
+	position: absolute;
+	right: 0;
+	padding: 8px 0 8px 30px;
+	font-size: 14px;
+	width: 30px;
+	overflow: hidden;
+	background: url(images/common/search.png) #e3e3e3 no-repeat center center;
+	border: none;
+	cursor: pointer;
+}
+#add-button {
+	display: block;
+	width: 120px;
+	padding: 10px 0;
+	text-align: center;
+	font-size: 14px;
+	position: absolute;
+	right: 0;
+	background: url(images/common/plus.png) #7b7b7b no-repeat 92% center;
+	background-size: 14px 14px;
+	color: #fff;
+	cursor: pointer;
+}
+#add-button:hover {
+	opacity: 0.8;
 }
 
-div.list-header {
-	background-color: #ececec;
-	margin: 0;
-	height: 52px;
+.list-container {
+	display: flex;
+	justify-content: center;
+	min-width: 600px;
+	padding: 0 80px;
+	margin: 0 auto;
 }
-span.user-id {
-	margin-right: 4px;
+.table-container {
+	margin-top: 30px;
 }

@@ -12,7 +12,7 @@ $form_config = array(
 	// Required message
 	array(
 		'class'			=> 'B_Guidance',
-		'start_html'	=> '<p>',
+		'start_html'	=> '<p class="require-guidance">',
 		'end_html'		=> '</p>',
 		array(
 			'class'			=> 'B_Guidance',
@@ -52,7 +52,6 @@ $form_config = array(
 				'start_html'	=> '<td>',
 				'end_html'		=> '</td>',
 				array(
-					'config_filter'		=> 'insert',
 					'name'				=> 'name',
 					'class'				=> 'B_InputText',
 					'attr'				=> 'class="textbox ime_off" maxlength="100" ',
@@ -74,11 +73,6 @@ $form_config = array(
 							'error_message'	=> __('This name is already in use'),
 						),
 					),
-				),
-				array(
-					'config_filter'		=> 'update/delete',
-					'class'				=> 'B_Text',
-					'name'				=> 'name',
 				),
 				array(
 					'name'				=> 'error_message',
@@ -157,7 +151,7 @@ $form_config = array(
 );
 
 // control
-$input_control_config = array(
+$back_button_config = array(
 	'start_html'	=> '<ul class="control">',
 	'end_html'		=> '</ul>',
 	array(
@@ -175,169 +169,29 @@ $input_control_config = array(
 			array(
 				'start_html'	=> '<span class="text">',
 				'end_html'		=> '</span>',
-				'value'			=> __('Back'),
+				'value'			=> __('Back To List'),
 			),
 		),
 	),
+);
+$submit_button_config = array(
+	'start_html'	=> '<ul class="control">',
+	'end_html'		=> '</ul>',
 	array(
-		'name'			=> 'confirm',
 		'start_html'	=> '<li>',
 		'end_html'		=> '</li>',
 		array(
-			'start_html'	=> '<span class="right-button" onclick="bframe.submit(\'F1\', \'' . $this->module . '\', \'form\', \'confirm\', \'\', true)">',
+			'start_html'	=> '<span class="right-button" onclick="bframe.submit(\'F1\', \'' . $this->module . '\', \'form\', \'register\', \'\', true)">',
 			'end_html'		=> '</span>',
 			array(
 				'start_html'	=> '<span class="text">',
 				'end_html'		=> '</span>',
-				'value'			=> __('Confirm'),
+				'value'			=> __('Register'),
 			),
 			array(
 				'start_html'	=> '<span class="img-cover">',
 				'end_html'		=> '</span>',
 				'value'			=> '<img src="images/common/right_arrow.png" alt="right arow" />',
-			),
-		),
-	),
-);
-
-//confirm control
-$confirm_control_config = array(
-	'start_html'	=> '<ul class="control">',
-	'end_html'		=> '</ul>',
-	array(
-		'name'			=> 'back',
-		'start_html'	=> '<li>',
-		'end_html'		=> '</li>',
-		array(
-			'start_html'	=> '<span class="left-button" onclick="bframe.submit(\'F1\', \'' . $this->module . '\', \'form\', \'back\', \'\')">',
-			'end_html'		=> '</span>',
-			array(
-				'start_html'	=> '<span class="img-cover">',
-				'end_html'		=> '</span>',
-				'value'			=> '<img src="images/common/left_arrow.png" alt="left arow" />',
-			),
-			array(
-				'start_html'	=> '<span class="text">',
-				'end_html'		=> '</span>',
-				'value'			=> __('Back'),
-			),
-		),
-	),
-	array(
-		'name'			=> 'register',
-		'start_html'	=> '<li>',
-		'end_html'		=> '</li>',
-		array(
-			'start_html'	=> '<span class="right-button" onclick="bframe.submit(\'F1\', \'' . $this->module . '\', \'form\', \'register\', \'\')">',
-			'end_html'		=> '</span>',
-			array(
-				'start_html'	=> '<span class="text">',
-				'end_html'		=> '</span>',
-				'value'			=> __('Save'),
-			),
-			array(
-				'start_html'	=> '<span class="img-cover">',
-				'end_html'		=> '</span>',
-				'value'			=> '<img src="images/common/right_arrow.png" alt="right arow" />',
-			),
-		),
-	),
-);
-
-// control
-$delete_control_config = array(
-	'start_html'	=> '<ul class="control">',
-	'end_html'		=> '</ul>',
-	array(
-		'name'			=> 'back',
-		'start_html'	=> '<li>',
-		'end_html'		=> '</li>',
-		array(
-			'start_html'	=> '<span class="left-button" onclick="bframe.submit(\'F1\', \'' . $this->module . '\', \'list\', \'back\', \'\')">',
-			'end_html'		=> '</span>',
-			array(
-				'start_html'	=> '<span class="img-cover">',
-				'end_html'		=> '</span>',
-				'value'			=> '<img src="images/common/left_arrow.png" alt="left arow" />',
-			),
-			array(
-				'start_html'	=> '<span class="text">',
-				'end_html'		=> '</span>',
-				'value'			=> __('Back'),
-			),
-		),
-	),
-	array(
-		'name'			=> 'register',
-		'start_html'	=> '<li>',
-		'end_html'		=> '</li>',
-		array(
-			'start_html'	=> '<span class="right-button" onclick="return bframe.confirmSubmit(\'' . __('Are you sure you want to delete?') . '\', \'F1\', \'' . $this->module . '\', \'form\', \'register\', \'delete\')">',
-			'end_html'		=> '</span>',
-			array(
-				'start_html'	=> '<span class="text">',
-				'end_html'		=> '</span>',
-				'value'			=> __('Delete'),
-			),
-			array(
-				'start_html'	=> '<span class="img-cover">',
-				'end_html'		=> '</span>',
-				'value'			=> '<img src="images/common/right_arrow.png" alt="right arow" />',
-			),
-		),
-	),
-);
-
-//control
-$result_control_config = array(
-	'start_html'	=> '<ul class="control">',
-	'end_html'		=> '</ul>',
-	array(
-		'name'			=> 'backToList',
-		'start_html'	=> '<li>',
-		'end_html'		=> '</li>',
-		array(
-			'start_html'	=> '<span class="left-button" onclick="bframe.submit(\'F1\', \'' . $this->module . '\', \'list\', \'back\', \'\')">',
-			'end_html'		=> '</span>',
-			array(
-				'start_html'	=> '<span class="img-cover">',
-				'end_html'		=> '</span>',
-				'value'			=> '<img src="images/common/left_arrow.png" alt="left arow" />',
-			),
-			array(
-				'start_html'	=> '<span class="text">',
-				'end_html'		=> '</span>',
-				'value'			=> __('Back to list'),
-			),
-		),
-	),
-);
-
-//result
-$result_config = array(
-	array(
-		'start_html'	=> '<form name="F1" method="post" action="index.php">',
-		'end_html'		=> '</form>',
-		array(
-			'start_html'	=> '<p>',
-			'end_html'		=> '</p>',
-			array(
-				array(
-					'start_html'	=> '<span class="user-id">',
-					'end_html'		=> '</span>',
-					array(
-						'value'			=> __('User ID: '),
-					),
-					array(
-						'name'			=> 'user_id',
-						'class'			=> 'B_Text',
-						'start_html'	=> '<span class="bold">',
-						'end_html'		=> '</span>',
-					),
-				),
-				array(
-					'name'		=> 'action_message',
-				),
 			),
 		),
 	),

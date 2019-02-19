@@ -54,9 +54,9 @@ array(
 		),
 		array(
 			'name'				=> 'user_name',
-			'start_html'		=> '<th class="sortable" style="width:80px">',
-			'start_html_asc'	=> '<th class="sortable asc" style="width:80px">',
-			'start_html_desc'	=> '<th class="sortable desc" style="width:80px">',
+			'start_html'		=> '<th class="sortable" style="width:120px">',
+			'start_html_asc'	=> '<th class="sortable asc" style="width:120px">',
+			'start_html_desc'	=> '<th class="sortable desc" style="width:120px">',
 			'end_html'			=> '</th>',
 			'value'				=> __('Name'),
 			'class'				=> 'B_Link',
@@ -67,9 +67,9 @@ array(
 		),
 		array(
 			'name'				=> 'user_auth',
-			'start_html'		=> '<th class="sortable" style="width:90px">',
-			'start_html_asc'	=> '<th class="sortable asc" style="width:90px">',
-			'start_html_desc'	=> '<th class="sortable desc" style="width:90px">',
+			'start_html'		=> '<th class="sortable" style="width:100px">',
+			'start_html_asc'	=> '<th class="sortable asc" style="width:100px">',
+			'start_html_desc'	=> '<th class="sortable desc" style="width:100px">',
 			'end_html'			=> '</th>',
 			'value'				=> __('User type'),
 			'class'				=> 'B_Link',
@@ -80,9 +80,9 @@ array(
 		),
 		array(
 			'name'				=> 'user_status',
-			'start_html'		=> '<th class="sortable" style="width:80px">',
-			'start_html_asc'	=> '<th class="sortable asc" style="width:80px">',
-			'start_html_desc'	=> '<th class="sortable desc" style="width:80px">',
+			'start_html'		=> '<th class="sortable" style="width:100px">',
+			'start_html_asc'	=> '<th class="sortable asc" style="width:100px">',
+			'start_html_desc'	=> '<th class="sortable desc" style="width:100px">',
 			'end_html'			=> '</th>',
 			'value'				=> __('Status'),
 			'class'				=> 'B_Link',
@@ -234,5 +234,5 @@ array(
 	),
 
 	// pager
-	'pager'		=> $this->pager_config,
+//	'pager'		=> $this->pager_config,
 );
