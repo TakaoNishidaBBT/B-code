@@ -62,11 +62,15 @@ body {
 	text-decoration: none;
 }
 .side_menu ul  li a:hover {
-	background-color: #6e6e6e;
+	background-color: #484848;
 }
 .side_menu ul  li a .menu-icon {
 	margin-left: 20px;
 }
 .side_menu ul  li a .right-arrow {
 	margin-right: 20px;
+}
+.side_menu ul  li.current,
+.side_menu ul  li.current a:hover {
+	background-color: #6e6e6e;
 }

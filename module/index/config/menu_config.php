@@ -9,7 +9,7 @@ $menu_config = array(
 	'start_html'	=> '<div class="side_menu">',
 	'end_html'		=> '</div>',
 	array(
-		'start_html'	=> '<ul>',
+		'start_html'	=> '<ul class="bframe_navi">',
 		'end_html'		=> '</ul>',
 		array(
 			'start_html'	=> '<li>',

@@ -140,3 +140,13 @@
 	bstudio.mousedownBody = function() {
 		bframe.fireEvent(document.body, 'mousedown');
 	}
+
+	bstudio.setNavi = function() {
+		setTimeout(bstudio._setNavi, 10);
+	}
+
+	bstudio._setNavi = function() {
+		if(parent.bframe.gnavi && location.search) {
+			parent.bframe.gnavi.set(location.search.substr(1));
+		}
+	}
