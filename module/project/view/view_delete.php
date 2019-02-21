@@ -22,10 +22,9 @@
 				<div id="hidden-form">
 					<?php echo $this->form->getHiddenHtml(); ?>
 				</div>
-
 				<ul class="submit">
-					<li id="submit-button" class="submit-button" onclick="bframe.ajaxSubmit.submit('F1', 'project', 'form', 'register', 'confirm', true)">
-						<span>Register</span>
+					<li class="submit-button delete" onclick="bframe.confirmSubmit('<?php echo __('Are you sure you want to delete?'); ?>', 'F1', 'project', 'form', 'delete', '')">
+						<span>Delete</span>
 					</li>
 				</ul>
 			</div>

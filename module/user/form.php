@@ -9,16 +9,8 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			$this->mode = $this->request['mode'];
-
 			require_once('./config/form_config.php');
 			$this->form = new B_Element($form_config, $this->user_auth, $this->mode);
-			$this->input_control_config = $input_control_config;
-			$this->delete_control_config = $delete_control_config;
-			$this->confirm_control_config = $confirm_control_config;
-			$this->result_control_config = $result_control_config;
-			$this->result_config = $result_config;
-
 			$this->df = new B_DataFile(B_USER_DATA, 'user');
 
 			// Set mode to HTML
@@ -27,61 +19,61 @@
 		}
 
 		function select() {
-			switch($this->mode) {
+			$this->session['mode'] = $this->request['mode'];
+
+			switch($this->request['mode']) {
 			case 'insert':
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
+				$this->view_file = './view/view_form.php';
 				break;
 
 			case 'update':
-				$row = $this->df->get($this->request['id']);
+				$row = $this->df->selectByPk($this->request['id']);
 				$this->form->setValue($row);
 				$this->session['init_value'] = $row;
-
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
+				$this->view_file = './view/view_form.php';
 				break;
 
 			case 'delete':
-				$row = $this->df->get($this->request['id']);
+				$row = $this->df->selectByPk($this->request['id']);
 				$this->form->setValue($row);
-				$this->session['post'] = $row;
 				$this->display_mode = 'confirm';
-
-				$this->control = new B_Element($this->delete_control_config, $this->user_auth);
+				$this->view_file = './view/view_delete.php';
 				break;
 			}
-			$this->form->setFilterValue('form');
+			$this->form->setFilterValue($this->session['mode']);
 		}
 
-		function confirm() {
+		function validate() {
 			$this->form->setValue($this->post);
 
 			if(!$this->checkAlt($this->post)) {
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
-				return;
+				$this->message = __('Another user has updated this record');
+				return false;
 			}
 
 			if(!$this->form->validate()) {
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
-				return;
+				$this->message = __('This is an error in your entry');
+				return false;
 			}
 
-			$this->form->getValue($post_value);
-			$this->session['post'] = $post_value;
-			$this->control = new B_Element($this->confirm_control_config, $this->user_auth);
-
-			// Set display mode
-			$this->display_mode = 'confirm';
+			return true;
 		}
 
 		function _validate_callback($param) {
+			if($this->session['mode'] == 'insert') {
+				if($this->df->select('login_id', $param['value'])) {
+					return false;
+				}
+			}
 			return true;
 		}
 
 		function _validate_callback2($param) {
 			// Check the user id in built-in user
 			global $g_auth_users;
+
 			foreach($g_auth_users as $value) {
-				if($value['user_id'] == $param['value']) {
+				if($value['login_id'] == $param['value']) {
 					return false;
 				}
 			}
@@ -89,78 +81,69 @@
 		}
 
 		function checkAlt($value) {
-			if($this->request['mode'] == 'update') {
-/*
-				$row = $this->table->selectByPk($value);
+			if($this->request['mode'] != 'update') {
+				$row = $this->df->selectByPk($value['id']);
 				if($this->session['init_value']['update_datetime'] < $row['update_datetime']) {
 					$error_message = __('Another user has updated this record');
-					$this->form->setValue($this->session['init_value']);
-					$this->form->checkAlt($row, $error_message);
-					$this->form->setValue($value);
-					$this->control = new B_Element($this->input_control_config, $this->user_auth);
-
 					return false;
 				}
-*/
 			}
 
 			return true;
 		}
 
-		function back() {
-			$this->form->setValue($this->session['post']);
-			$this->control = new B_Element($this->input_control_config, $this->user_auth, $this->mode);
-		}
-
 		function register() {
-			$ret = $this->_register($message);
-			if($ret) $this->df->save();
+			try {
+				if($this->validate()) {
+					$status = $this->_register($this->message);
+				}
+				else {
+					$status = false;
+				}
+			}
+			catch(Exception $e) {
+				$status = false;
+				$mode = 'alert';
+				$this->message = $e->getMessage();
+			}
 
+			$this->form->setFilterValue($this->session['mode']);
 
-			$this->result = new B_Element($this->result_config, $this->user_auth);
-			$this->result_control = new B_Element($this->result_control_config, $this->user_auth);
+			$response['innerHTML'] = array(
+				'user-form'		=> $this->form->getHtml(),
+				'hidden-form'	=> $this->form->getHiddenHtml(),
+			);
 
-			$param['user_id'] = $this->session['post']['user_id'];
-			$param['action_message'] = $message;
-			$this->result->setValue($param);
+			$response['status'] = $status;
+			$response['mode'] = $mode;
+			$response['message_obj'] = 'message';
+			$response['message'] = $this->message;
 
-			$this->setView('result_view');
+			header('Content-Type: application/x-javascript charset=utf-8');
+			echo json_encode($response);
+			exit;
 		}
 
 		function _register(&$message) {
-			if(!$this->checkAlt($this->session['post'])) {
-				$message = __('Another user has updated this record');
-				return false;
-			}
-
-			switch($this->mode) {
+			switch($this->session['mode']) {
 			case 'insert':
 				$ret = $this->insert();
 				if($ret) {
-					$message = __('was saved.');
+					$message = __('saved.');
+					$this->session['mode'] = 'update';
 				}
 				else {
-					$message = __('was faild to register.');
+					$message = __('faild to register.');
 				}
 				break;
 
 			case 'update':
-				$ret = $this->update($param);
+				$ret = $this->update();
 				if($ret) {
-					$message = __('was updated.');
+					$message = __('updated.');
 				}
 				else {
-					$message = __('was faild to update.');
-				}
-				break;
-
-			case 'delete':
-				$ret = $this->delete($param);
-				if($ret) {
-					$message = __('was deleted.');
-				}
-				else {
-					$message = __('was faild to delete.');
+					$message = __('faild to update.');
 				}
 				break;
 			}
@@ -169,7 +152,7 @@
 		}
 
 		function insert() {
-			$param = $this->session['post'];
+			$param = $this->post;
 
 			$param['del_flag'] = '0';
 			$param['create_user'] = $this->user_id;
@@ -177,33 +160,49 @@
 			$param['update_user'] = $this->user_id;
 			$param['update_datetime'] = time();
 
-			return $this->df->insert($param);
+			$new_id = $this->df->insert($param);
+			$this->df->save();
+
+			$obj = $this->form->getElementByName('id');
+			$obj->value = $new_id;
+			$obj = $this->form->getElementByName('mode');
+			$obj->value = 'update';
+
+			$row = $this->df->selectByPk($new_id);
+			$this->session['init_value'] = $row;
+
+			return true;
 		}
 
 		function update() {
-			$param = $this->df->get($param['id'], $param);
-			$param = $this->session['post'];
-
+			$this->form->getValue($param);
 			$param['update_user'] = $this->user_id;
 			$param['update_datetime'] = time();
 
-			$this->df->update($param['id'], $param);
+			$this->df->updateByPk($param['id'], $param);
+			$this->df->save();
+
+			$row = $this->df->selectByPk($param['id']);
+			$this->session['init_value'] = $row;
 
 			return true;
 		}
 
 		function delete() {
-			$param = $this->session['post'];
-			$this->df->delete($param['id']);
+			$value = $this->df->selectByPk($this->post['id']);
+			$this->user_name = $value['user_name'];
 
-			return true;
+			$this->df->deleteByPk($this->post['id']);
+			$this->df->save();
+
+			$this->setView('resultView');
 		}
 
 		function view() {
 			// Start buffering
 			ob_start();
 
-			require_once('./view/view_form.php');
+			require_once($this->view_file);
 
 			// Get buffer
 			$contents = ob_get_clean();
@@ -223,11 +222,11 @@
 			echo $contents;
 		}
 
-		function result_view() {
+		function resultView() {
 			// Start buffering
 			ob_start();
 
-			require_once('./view/view_result.php');
+			require_once('./view/view_delete_result.php');
 
 			// Get buffer
 			$contents = ob_get_clean();

@@ -77,3 +77,14 @@ div.list-header ul.search input:forcus {
 .table-container {
 	margin-top: 30px;
 }
+.delete-complete {
+	text-align: center;
+	padding: 30px 0;
+	font-size: 15px;
+}
+.delete-complete .user-name {
+	font-weight: bold;
+	font-size: 16px;
+	margin-right: 3px;
+	color: #c00;
+}

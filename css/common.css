@@ -145,7 +145,7 @@ div#main {
 	height: 100%;
 }
 div.main-container {
-	margin: 0 auto;
+	margin: 40px auto;
 	padding: 0 80px;
 	max-width: 1200px;
 	min-width: 760px;
@@ -161,6 +161,14 @@ div.list-container {
 	margin: 30px 8px;
 }
 
+/* form */
+div.form-header {
+	margin: 0 auto;
+	padding: 0;
+	max-width: 1200px;
+	min-width: 760px;
+	overflow: hidden;
+}
 /* message */
 p.select-status {
 	margin: 10px 0 10px 4px;
@@ -189,7 +197,7 @@ span.error-message {
 ul.control {
 	list-style: none;
 	padding: 0;
-	margin: 20px 0 40px 0;
+	margin: 20px 0 20px 0;
 }
 li.back-button {
 	display: flex;
@@ -209,13 +217,24 @@ li.back-button img {
 	margin-right: 4px;
 }
 
+.message-container {
+	float: left;
+	width: 100%;
+	margin-top: -50px;
+	text-align: center;
+	font-size: 15px;
+}
+#message {
+	color: #c00;
+}
+
 /* submit */
 ul.submit {
 	display: flex;
 	justify-content: center;
 	list-style: none;
 	padding: 0;
-	margin-top: 50px;
+	margin: 50px 0;
 }
 ul.submit li {
 	display: flex;
@@ -229,8 +248,15 @@ ul.submit li {
 	cursor: pointer;
 	box-sizing: border-box;
 }
+ul.submit li.delete {
+	background-color: #f00;
+}
+
 ul.submit li:hover {
 	opacity: 0.8;
+}
+ul.submit li.delete:hover {
+	opacity: 0.7;
 }
 
 /* condition */

@@ -101,7 +101,7 @@ $form_config = array(
 					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
 				),
 				array(
-					'filter'		=> 'select',
+					'filter'		=> 'insert/update',
 					'name'			=> 'open_select',
 					'class'			=> 'B_Link',
 					'link'			=> 'index.php',
@@ -116,7 +116,7 @@ $form_config = array(
 					'value'			=> '<img alt="' . __('Directory') . '" src="images/common/gear.png" />',
 				),
 				array(
-					'filter'		=> 'select',
+					'filter'		=> 'insert/update',
 					'class'			=> 'B_Link',
 					'link'			=> '#',
 					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bstudio.clearText(\'directory\'); return false;" ',

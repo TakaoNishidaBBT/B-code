@@ -66,6 +66,15 @@ div.list-header ul.search input:forcus {
 #add-button:hover {
 	opacity: 0.8;
 }
+
+.list-container {
+	display: flex;
+	justify-content: center;
+	min-width: 600px;
+	padding: 0 80px;
+	margin: 0 auto;
+}
+
 ul.list {
 	margin: 0;
 	padding: 0;
@@ -152,7 +161,7 @@ ul.list li .delete a .sprite {
 	overflow: hidden;
 }
 ul.list li .delete a:hover .sprite img {
-	margin-top: -16px;
+	margin-top: -48px;
 }
 
 /* button elements */
@@ -174,4 +183,16 @@ ul.list li .delete a:hover .sprite img {
 #name,
 #directory {
 	width: 400px;
+}
+
+.delete-complete {
+	text-align: center;
+	padding: 30px 0;
+	font-size: 15px;
+}
+.delete-complete .project-name {
+	font-weight: bold;
+	font-size: 16px;
+	margin-right: 3px;
+	color: #c00;
 }

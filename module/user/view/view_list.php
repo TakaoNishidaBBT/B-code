@@ -6,12 +6,10 @@
 
 	<div id="list-main" class="bframe_adjustparent bframe_scroll" data-param="margin:162">
 		<div class="list-container">
-			<form name="F1" id="F1" method="post" action="index.php" target="main">
-				<?php
-					if($this->select_message) echo $this->select_message;
-					echo $this->dg->getHtml($this->page_no);
-				?>
-			</form>
+			<?php
+				if($this->select_message) echo $this->select_message;
+				echo $this->dg->getHtml($this->page_no);
+			?>
 		</div>
 	</div>
 </body>

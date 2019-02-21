@@ -13,9 +13,6 @@
 
 			require_once('./config/form_config.php');
 			$this->form = new B_Element($form_config, $this->user_auth, $this->mode);
-			$this->back_button = new B_Element($back_button_config, $this->user_auth);
-			$this->submit_button = new B_Element($submit_button_config, $this->user_auth);
-
 			$this->df = new B_DataFile(B_PROJECT_DATA, 'project');
 
 			// Set mode to HTML
@@ -24,137 +21,116 @@
 		}
 
 		function select() {
+			$this->session['mode'] = $this->request['mode'];
+
 			switch($this->mode) {
 			case 'insert':
-				$this->form->setFilterValue('select');
+				$this->view_file = './view/view_form.php';
 				break;
 
 			case 'update':
-				$row = $this->df->get($this->request['project_id']);
+				$row = $this->df->selectByPk($this->request['id']);
 				$this->form->setValue($row);
 				$this->session['init_value'] = $row;
-
-				$this->form->setFilterValue('select');
+				$this->view_file = './view/view_form.php';
 				break;
 
 			case 'delete':
-				$row = $this->df->get($this->request['project_id']);
+				$row = $this->df->selectByPk($this->request['id']);
 				$this->form->setValue($row);
-				$this->session['post'] = $row;
 				$this->display_mode = 'confirm';
-
+				$this->view_file = './view/view_delete.php';
 				break;
 			}
+			$this->form->setFilterValue($this->session['mode']);
 		}
 
-		function confirm() {
+		function validate() {
 			$this->form->setValue($this->post);
 
 			if(!$this->checkAlt($this->post)) {
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
-				return;
+				$this->message = __('Another user has updated this record');
+				return false;
 			}
 
 			if(!$this->form->validate()) {
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
-				return;
+				$this->message = __('This is an error in your entry');
+				return false;
 			}
 
-			$this->form->getValue($post_value);
-			$this->session['post'] = $post_value;
-			$this->control = new B_Element($this->confirm_control_config, $this->user_auth);
-
-			// Set display mode
-			$this->display_mode = 'confirm';
+			return true;
 		}
 
 		function _validate_callback($param) {
 			return true;
 		}
 
-		function _validate_callback2($param) {
-			// Check the user id in built-in user
-			global $g_auth_users;
-			foreach($g_auth_users as $value) {
-				if($value['user_id'] == $param['value']) {
-					return false;
-				}
-			}
-			return true;
-		}
-
 		function checkAlt($value) {
-			if($this->request['mode'] == 'update') {
-/*
-				$row = $this->table->selectByPk($value);
+			if($this->request['mode'] != 'update') {
+				$row = $this->df->selectByPk($value['id']);
 				if($this->session['init_value']['update_datetime'] < $row['update_datetime']) {
 					$error_message = __('Another user has updated this record');
-					$this->form->setValue($this->session['init_value']);
-					$this->form->checkAlt($row, $error_message);
-					$this->form->setValue($value);
-					$this->control = new B_Element($this->input_control_config, $this->user_auth);
-
 					return false;
 				}
-*/
 			}
 
 			return true;
-		}
-
-		function back() {
-			$this->form->setValue($this->session['post']);
-			$this->control = new B_Element($this->input_control_config, $this->user_auth, $this->mode);
 		}
 
 		function register() {
-			$ret = $this->_register($message);
-			if($ret) $this->df->save();
+$this->log->write('register');
+			try {
+				if($this->validate()) {
+					$status = $this->_register($this->message);
+				}
+				else {
+					$status = false;
+				}
+			}
+			catch(Exception $e) {
+				$status = false;
+				$mode = 'alert';
+				$this->message = $e->getMessage();
+			}
 
-			$this->result = new B_Element($this->result_config, $this->user_auth);
-			$this->result_control = new B_Element($this->result_control_config, $this->user_auth);
+			$this->form->setFilterValue($this->session['mode']);
 
-			$param['user_id'] = $this->session['post']['user_id'];
-			$param['action_message'] = $message;
-			$this->result->setValue($param);
+			$response['innerHTML'] = array(
+				'user-form'		=> $this->form->getHtml(),
+				'hidden-form'	=> $this->form->getHiddenHtml(),
+			);
 
-			$this->setView('result_view');
+			$response['status'] = $status;
+			$response['mode'] = $mode;
+			$response['message_obj'] = 'message';
+			$response['message'] = $this->message;
+$this->log->write('$response', $response);
+			header('Content-Type: application/x-javascript charset=utf-8');
+			echo json_encode($response);
+			exit;
 		}
 
 		function _register(&$message) {
-			if(!$this->checkAlt($this->session['post'])) {
-				$message = __('Another user has updated this record');
-				return false;
-			}
-
-			switch($this->mode) {
+$this->log->write('_register');
+			switch($this->session['mode']) {
 			case 'insert':
 				$ret = $this->insert();
 				if($ret) {
-					$message = __('was saved.');
+					$message = __('saved.');
+					$this->session['mode'] = 'update';
 				}
 				else {
-					$message = __('was faild to register.');
+					$message = __('faild to register.');
 				}
 				break;
 
 			case 'update':
 				$ret = $this->update();
 				if($ret) {
-					$message = __('was updated.');
+					$message = __('updated.');
 				}
 				else {
-					$message = __('was faild to update.');
-				}
-				break;
-
-			case 'delete':
-				$ret = $this->delete($param);
-				if($ret) {
-					$message = __('was deleted.');
-				}
-				else {
-					$message = __('was faild to delete.');
+					$message = __('faild to update.');
 				}
 				break;
 			}
@@ -163,7 +139,7 @@
 		}
 
 		function insert() {
-			$param = $this->session['post'];
+			$param = $this->post;
 
 			$param['del_flag'] = '0';
 			$param['create_user'] = $this->user_id;
@@ -171,45 +147,65 @@
 			$param['update_user'] = $this->user_id;
 			$param['update_datetime'] = time();
 
-			$value = $this->df->insert($param);
+			$new_id = $this->df->insert($param);
+			$this->df->save();
+
+			$obj = $this->form->getElementByName('id');
+			$obj->value = $new_id;
+			$obj = $this->form->getElementByName('mode');
+			$obj->value = 'update';
+
+			$row = $this->df->selectByPk($new_id);
+			$this->session['init_value'] = $row;
+
 			$this->createThumbnail($param['name'], $param['directory']);
 
 			return true;
 		}
 
 		function update() {
-			$param = $this->session['post'];
-			$value = $this->df->get($param['id']);
+			$this->form->getValue($param);
+$this->log->write('update', $param);
+			$param['update_user'] = $this->user_id;
+			$param['update_datetime'] = time();
 
-			$name_old = $value['name'];
-			$directory_old = $value['directory'];
-			$value = $this->session['post'];
+			$this->df->updateByPk($param['id'], $param);
+			$this->df->save();
+$this->log->write('directory', $param['directory'], $this->session['init_value']['directory']);
 
-			$value['update_user'] = $this->user_id;
-			$value['update_datetime'] = time();
-
-			$this->df->update($param['id'], $value);
-
-			// recraete thumbnail
-			if($value['directory'] != $directory_old) {
+			// recreate thumbnail
+			if($param['directory'] != $this->session['init_value']['directory']) {
 				$this->createThumbnail($param['name'], $param['directory']);
 			}
 
 			// rename thmubnail directory
-			if($value['name'] != $name_old) {
-				rename(B_THUMBDIR . $name_old, B_THUMBDIR . $value['name']);
+$this->log->write('name', $param['name'], $this->session['init_value']['name']);
+			if($param['name'] != $this->session['init_value']['name']) {
+				rename(B_THUMBDIR . $this->session['init_value']['name'], B_THUMBDIR . $param['name']);
 			}
+
+			$row = $this->df->selectByPk($param['id']);
+			$this->session['init_value'] = $row;
+$this->log->write('last init_value', $this->session['init_value']);
 
 			return true;
 		}
 
 		function delete() {
-			$param = $this->session['post'];
-			$this->df->delete($param['id']);
+			$value = $this->df->selectByPk($this->post['id']);
+			$this->project_name = $value['name'];
 
-			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $param['name'] . '/');
+			$this->df->deleteByPk($this->post['id']);
+			$this->df->save();
+
+			$this->setView('resultView');
+
+			define('B_UPLOAD_THUMBDIR', B_Util::getPath(B_THUMBDIR, $value['name']) . '/');
+$this->log->write('B_UPLOAD_THUMBDIR', B_UPLOAD_THUMBDIR);
 			$this->removeThumbnail();
 			if(file_exists(B_UPLOAD_THUMBDIR)) rmdir(B_UPLOAD_THUMBDIR);
+
+			$this->setView('resultView');
 
 			return true;
 		}
@@ -250,7 +246,7 @@
 			// Start buffering
 			ob_start();
 
-			require_once('./view/view_form.php');
+			require_once($this->view_file);
 
 			// Get buffer
 			$contents = ob_get_clean();
@@ -270,11 +266,11 @@
 			echo $contents;
 		}
 
-		function result_view() {
+		function resultView() {
 			// Start buffering
 			ob_start();
 
-			require_once('./view/view_result.php');
+			require_once('./view/view_delete_result.php');
 
 			// Get buffer
 			$contents = ob_get_clean();

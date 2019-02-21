@@ -5,7 +5,7 @@ body {
 }
 h1 {
 	margin: 0;
-	padding-left: 10px;
+	padding: 0;
 	background: #bbb;
 	height: 32px;
 	line-height: 32px;
@@ -36,6 +36,7 @@ div.login table th {
 	padding: 0 6px 0 20px;
 	height: 30px;
 	color: #333;
+	font-size: 12px;
 	font-weight: normal;
 }
 div.login table th.user {
@@ -53,15 +54,17 @@ div.login table td {
 	color: #fff;
 }
 div.login table td input {
+	padding: 2px 5px;
+	height: 22px;
 	width: 180px;
-	color: #fff;
-	background-color: #fafafa;
 	color: #333;
+	background-color: #fafafa;
 	border-top: 1px solid #888;
 	border-left: 1px solid #888;
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 	outline: none;
+	box-sizing: content-box;
 }
 
 /* icon */
@@ -101,7 +104,9 @@ ul.submit, ul.transition {
 ul.submit li, ul.transition li {
 	margin: 0 auto;
 	padding: 0;
-	width: 240px;
+	width: 250px;
+	height: 42px;
+	background-color: transparent;
 }
 ul.submit li input, ul.transition li input {
 	margin: 0;

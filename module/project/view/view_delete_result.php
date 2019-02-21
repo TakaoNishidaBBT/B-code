@@ -10,24 +10,14 @@
 						<span>Back To List</span>
 					</li>
 				</ul>
-				<div class="message-container"><span id="message"></span></div>
 			</div>
 		</div>
 
 		<div id="main" class="bframe_adjustparent bframe_scroll" data-param="margin:168">
 			<div class="main-container">
-				<div id="user-form">
-					<?php echo $this->form->getHtml($this->display_mode); ?>
+				<div class="delete-complete">
+					<span class="project-name"><?php echo $this->project_name; ?></span> was deleted!
 				</div>
-				<div id="hidden-form">
-					<?php echo $this->form->getHiddenHtml(); ?>
-				</div>
-
-				<ul class="submit">
-					<li id="submit-button" class="submit-button" onclick="bframe.ajaxSubmit.submit('F1', 'project', 'form', 'register', 'confirm', true)">
-						<span>Register</span>
-					</li>
-				</ul>
 			</div>
 		</div>
 	</form>

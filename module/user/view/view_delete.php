@@ -1,11 +1,11 @@
 <body>
 	<form name="F1" method="post" action="index.php">
 		<div id="header">
-			<h1><?php echo __('PROJECT'); ?></h1>
+			<h1><?php echo __('USER'); ?></h1>
 
 			<div class="form-header">
 				<ul class="control">
-					<li class="back-button" onclick="bframe.submit('F1', 'project', 'list', 'back', '')">
+					<li class="back-button" onclick="bframe.submit('F1', 'user', 'list', 'back', '')">
 						<img src="images/common/left_arrow_white.png" alt="left arow" />
 						<span>Back To List</span>
 					</li>
@@ -22,10 +22,9 @@
 				<div id="hidden-form">
 					<?php echo $this->form->getHiddenHtml(); ?>
 				</div>
-
 				<ul class="submit">
-					<li id="submit-button" class="submit-button" onclick="bframe.ajaxSubmit.submit('F1', 'project', 'form', 'register', 'confirm', true)">
-						<span>Register</span>
+					<li class="submit-button delete" onclick="bframe.confirmSubmit('<?php echo __('Are you sure you want to delete?'); ?>', 'F1', 'user', 'form', 'delete', '')">
+						<span>Delete</span>
 					</li>
 				</ul>
 			</div>

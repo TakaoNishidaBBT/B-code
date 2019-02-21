@@ -12,8 +12,10 @@
 	class B_DataFile {
 		function __construct($file_name, $table_name) {
 			global $g_data_set, ${$g_data_set};
-$this->log = new B_Log(B_LOG_FILE);
+//$this->log = new B_Log(B_LOG_FILE);
+
 			$this->file_name = $file_name;
+
 			if(file_exists($this->file_name)) {
 				$this->fp = fopen($this->file_name, 'rb');
 			    $serializedString = fread($this->fp, 200000);
@@ -21,16 +23,33 @@ $this->log = new B_Log(B_LOG_FILE);
 				fclose($this->fp);
 				unset($this->fp);
 			}
-			if(is_array($this->value) && array_keys($this->value)) $this->max_key = max(array_keys($this->value));
-			if(!$this->max_key) $this->max_key = 0;
-			$this->max_key++;
 
 			$this->table = $table_name;
 			$this->config = ${$g_data_set}['table'][$this->table];
+			$this->getPk();
+		}
+
+		function getPk() {
+			foreach($this->config as $key => $val) {
+				if($val[2] == '1') {
+					$this->pk = $key;
+					$this->pk_length = $val[1];
+				}
+			}
+		}
+
+		function getNextPkValue($pk) {
+			$max = 0;
+			if(is_array($this->value)) {
+				foreach($this->value as $val) {
+					$max = max($val[$pk], $max);
+				}
+			}
+			$max = str_pad($max+1, $this->pk_length, '0', STR_PAD_LEFT);
+			return $max;
 		}
 
 		function get($key) {
-$this->log->write('key', $key, $this->value[$key]);
 			return $this->value[$key];
 		}
 
@@ -44,26 +63,41 @@ $this->log->write('key', $key, $this->value[$key]);
 			}
 		}
 
+		function selectByPk($index) {
+			return $this->value[$index];
+		}
+
 		function insert($value) {
-			if($param = $this->checkInsertValue($value)) {
-				$this->value[$this->max_key] = $param;
-				$this->max_key++;
-				return param;
+			$this->max = $this->getNextPkValue($this->pk);
+			if($param = $this->getInsertValue($value)) {
+				$this->value[$this->max] = $param;
+			}
+
+			return $this->max;
+		}
+
+		function update($where, $value) {
+			if(!is_array($where)) return;
+
+			foreach($this->value as $key => $row) {
+				if($row[$where[0]] == $where[1]) {
+					$this->value[$key] = $value;
+				}
 			}
 		}
 
-		function update($key, $value) {
-			$this->value[$key] = $value;
+		function updateByPk($index, $value) {
+			$this->value[$index] = $this->getUpdateValue($index, $value);
 		}
 
-		function delete($key) {
-			unset($this->value[$key]);
+		function deleteByPk($index) {
+			unset($this->value[$index]);
 		}
 
-		function checkInsertValue($value) {
+		function getInsertValue($value) {
 			foreach($this->config as $key => $val) {
 				if($val[2] == '1') {
-					$param[$key] = str_pad($this->max_key, $val[1], '0', STR_PAD_LEFT);
+					$param[$key] = str_pad($this->max, $val[1], '0', STR_PAD_LEFT);
 					continue;
 				}
 				if(array_key_exists($key, $value) && $val[2] != '1') {
@@ -71,6 +105,18 @@ $this->log->write('key', $key, $this->value[$key]);
 				}
 				else {
 					$param[$key] = '';
+				}
+			}
+			return $param;
+		}
+
+		function getUpdateValue($index, $value) {
+			foreach($this->config as $key => $val) {
+				if(array_key_exists($key, $value)) {
+					$param[$key] = $value[$key];
+				}
+				else {
+					$param[$key] = $this->value[$index][$key];
 				}
 			}
 			return $param;

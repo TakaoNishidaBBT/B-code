@@ -141,7 +141,7 @@
 	${$g_data_set}['table']['user'] =
 		array(							// Data Types			Length	PK		Auto-Increment
 			'id'						=> array('char', 		'5', 	'1', 	'1'),
-			'user_id'					=> array('char', 		'30', 	'', 	''),
+			'login_id'					=> array('char', 		'30', 	'', 	''),
 			'pwd'						=> array('char', 		'30', 	'', 	''),
 			'user_status'				=> array('text', 		'', 	'', 	''),
 			'user_auth'					=> array('text', 		'', 	'', 	''),
