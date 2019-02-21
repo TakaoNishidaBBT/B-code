@@ -16,7 +16,7 @@ array(
 	array(
 		'name'				=> 'data_list',
 		'class'				=> 'B_Row',
-		'start_html'		=> '<li>',
+		'start_html'		=> '<li class="project">',
 		'empty_start_html'	=> '<li class="empty">',
 		'end_html'			=> '</li>',
 		array(
