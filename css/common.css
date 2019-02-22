@@ -185,13 +185,17 @@ p.action-message {
 p.back {
 	margin: 10px 0;
 }
-span.require,
 span.error-message {
-	margin-left: 4px;
+	display: inline-block;
+	margin: 7px 0 0 4px;
 	color: #c00;
 }
-.require-guidance {
+span.require {
+	display: inline-block;
+	margin: 0 0 0 4px;
+	color: #c00;
 }
+
 
 /* control */
 ul.control {
