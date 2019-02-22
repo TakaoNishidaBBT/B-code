@@ -106,7 +106,6 @@
 
 	${$g_data_set}['table']['settings'] =
 		array(							// Data Types			Length	PK		Auto-Increment
-			'id'						=> array('char',	 	'5', 	'1', 	'1'),
 			'site_title'				=> array('text', 		'', 	'', 	''),
 			'admin_site_title'			=> array('text', 		'', 	'', 	''),
 			'notes'						=> array('text', 		'', 	'', 	''),
@@ -121,7 +120,6 @@
 
 	${$g_data_set}['table']['project'] =
 		array(							// Data Types			Length	PK		Auto-Increment
-			'id'						=> array('char', 		'5', 	'1', 	'1'),
 			'name'						=> array('text', 		'', 	'', 	''),
 			'directory'					=> array('text', 		'', 	'', 	''),
 			'path'						=> array('text', 		'', 	'', 	''),
@@ -140,8 +138,7 @@
 
 	${$g_data_set}['table']['user'] =
 		array(							// Data Types			Length	PK		Auto-Increment
-			'id'						=> array('char', 		'5', 	'1', 	'1'),
-			'login_id'					=> array('char', 		'30', 	'', 	''),
+			'user_id'					=> array('char', 		'30', 	'', 	''),
 			'pwd'						=> array('char', 		'30', 	'', 	''),
 			'user_status'				=> array('text', 		'', 	'', 	''),
 			'user_auth'					=> array('text', 		'', 	'', 	''),

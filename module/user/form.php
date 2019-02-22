@@ -21,20 +21,20 @@
 		function select() {
 			$this->session['mode'] = $this->request['mode'];
 
-			switch($this->request['mode']) {
+			switch($this->session['mode']) {
 			case 'insert':
 				$this->view_file = './view/view_form.php';
 				break;
 
 			case 'update':
-				$row = $this->df->selectByPk($this->request['id']);
+				$row = $this->df->selectByPk($this->request['rowid']);
 				$this->form->setValue($row);
 				$this->session['init_value'] = $row;
 				$this->view_file = './view/view_form.php';
 				break;
 
 			case 'delete':
-				$row = $this->df->selectByPk($this->request['id']);
+				$row = $this->df->selectByPk($this->request['rowid']);
 				$this->form->setValue($row);
 				$this->display_mode = 'confirm';
 				$this->view_file = './view/view_delete.php';
@@ -81,7 +81,7 @@
 		}
 
 		function checkAlt($value) {
-			if($this->request['mode'] != 'update') {
+			if($this->request['mode'] == 'update') {
 				$row = $this->df->selectByPk($value['id']);
 				if($this->session['init_value']['update_datetime'] < $row['update_datetime']) {
 					$error_message = __('Another user has updated this record');
@@ -163,7 +163,7 @@
 			$new_id = $this->df->insert($param);
 			$this->df->save();
 
-			$obj = $this->form->getElementByName('id');
+			$obj = $this->form->getElementByName('rowid');
 			$obj->value = $new_id;
 			$obj = $this->form->getElementByName('mode');
 			$obj->value = 'update';
@@ -179,20 +179,20 @@
 			$param['update_user'] = $this->user_id;
 			$param['update_datetime'] = time();
 
-			$this->df->updateByPk($param['id'], $param);
+			$this->df->updateByPk($param['rowid'], $param);
 			$this->df->save();
 
-			$row = $this->df->selectByPk($param['id']);
+			$row = $this->df->selectByPk($param['rowid']);
 			$this->session['init_value'] = $row;
 
 			return true;
 		}
 
 		function delete() {
-			$value = $this->df->selectByPk($this->post['id']);
+			$value = $this->df->selectByPk($this->post['rowid']);
 			$this->user_name = $value['user_name'];
 
-			$this->df->deleteByPk($this->post['id']);
+			$this->df->deleteByPk($this->post['rowid']);
 			$this->df->save();
 
 			$this->setView('resultView');
@@ -214,6 +214,7 @@
 			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/selectbox.css">');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_selectbox.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_edit_check.js"></script>');
+			$this->html_header->appendProperty('script', '<script src="js/bframe_progress_bar.js"></script>');
 
 			// Show HTML header
 			$this->showHtmlHeader();

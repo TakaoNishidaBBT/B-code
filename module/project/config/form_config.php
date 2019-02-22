@@ -7,7 +7,7 @@
 */
 $form_config = array(
 	array('class' => 'B_Hidden', 'name' => 'mode'),
-	array('class' => 'B_Hidden', 'name' => 'id'),
+	array('class' => 'B_Hidden', 'name' => 'rowid'),
 
 	// Required message
 	array(
@@ -85,12 +85,20 @@ $form_config = array(
 
 		// Directory
 		array(
+			'error_group'	=> true,
 			'start_html'	=> '<tr>',
 			'end_html'		=> '</tr>',
 			array(
 				'start_html'	=> '<th>',
 				'end_html'		=> '</th>',
-				'value'			=> __('Directory'),
+				'invalid_start_html'=> '<th class="error">',
+				array(
+					'value'			=> __('Directory'),
+				),
+				array(
+					'class'			=> 'B_Guidance',
+					'value'			=> '<span class="require">' . __('*') . '</span>',
+				),
 			),
 			array(
 				'start_html'	=> '<td>',
@@ -99,6 +107,13 @@ $form_config = array(
 					'name'			=> 'directory',
 					'class'			=> 'B_InputText',
 					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
+					'validate'			=>
+					array(
+						array(
+							'type' 			=> 'required',
+							'error_message'	=> __('Please select directory'),
+						),
+					),
 				),
 				array(
 					'filter'		=> 'insert/update',
@@ -122,6 +137,12 @@ $form_config = array(
 					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bstudio.clearText(\'directory\'); return false;" ',
 					'specialchars'	=> 'none',
 					'value'			=> '<img alt="' . __('Clear') . '" src="images/common/clear.png" />',
+				),
+				array(
+					'name'				=> 'error_message',
+					'class'				=> 'B_ErrMsg',
+					'start_html'		=> '<span class="error-message">',
+					'end_html'			=> '</span>',
 				),
 			),
 		),

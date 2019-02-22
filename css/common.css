@@ -480,6 +480,11 @@ table.form td {
 	border-bottom: 1px solid #ccc;
 	padding: 15px 12px;
 }
+table.form input {
+	font-size: 14px;
+	line-height: 16px;
+	vertical-align: top;
+}
 
 /* page-locator */
 ul.page-locator {

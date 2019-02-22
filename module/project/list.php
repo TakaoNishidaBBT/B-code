@@ -121,7 +121,7 @@
 			$this->dg->setRowPerPage($this->row_per_page);
 */
 			$this->data = $this->df->getAll();
-			$this->data = array_merge($this->data, array('', '', '', '', ''));
+			if(is_array($this->data)) $this->data = array_merge($this->data, array('', '', '', '', ''));
 			$this->dg->setPage($this->page_no);
 			$this->dg->bind($this->data);
 		}

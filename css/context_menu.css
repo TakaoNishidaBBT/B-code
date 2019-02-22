@@ -21,6 +21,7 @@ table.context_menu td {
 	background: url(../images/common/popup_menu_back.png) repeat-x;
 	color: #333;
 	vertical-align: middle;
+	font-size: 12px;
 }
 table.context_menu td.selected {
 	background-position: 0 -30px;

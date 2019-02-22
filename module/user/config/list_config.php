@@ -10,16 +10,6 @@ array(
 	'start_html'	=> '<table class="list bframe_elastic" id="entry_list">',
 	'end_html'		=> '</table>',
 
-	'select_sql'	=> "select   id
-								,user_id
-								,user_name
-								,user_auth
-								,user_status
-								,language
-								,notes
-						from " . B_DB_PREFIX . "user
-						where 1=1 ",
-
 	'empty_message'	=> '<span class="bold">　' . __('No record found') . '</span>',
 
 	'thead'	=>
@@ -40,17 +30,17 @@ array(
 		'end_html'		=> '</tr>',
 		'class'			=> 'B_Row',
 		array(
-			'name'				=> 'login_id',
+			'name'				=> 'User_id',
 			'start_html'		=> '<th class="sortable" style="width:80px">',
 			'start_html_asc'	=> '<th class="sortable asc" style="width:80px">',
 			'start_html_desc'	=> '<th class="sortable desc" style="width:80px">',
 			'end_html'			=> '</th>',
-			'value'				=> __('Login ID'),
+			'value'				=> __('User ID'),
 			'class'				=> 'B_Link',
 			'link'				=> DISPATCH_URL,
 			'cond_html'			=> 'class="current-key"',
-			'sort_key'			=> 'login_id',
-			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=login_id',
+			'sort_key'			=> 'user_id',
+			'param'				=> '&amp;module=' . $this->module . '&amp;page=list&amp;method=sort&amp;sort_key=user_id',
 		),
 		array(
 			'name'				=> 'user_name',
@@ -139,7 +129,7 @@ array(
 			'start_html'	=> '<td class="left">',
 			'end_html'		=> '</td>',
 			'class'			=> 'B_Text',
-			'name'			=> 'login_id',
+			'name'			=> 'user_id',
 		),
 		array(
 			'start_html'	=> '<td class="left">',
@@ -194,7 +184,7 @@ array(
 				),
 				'param'		=>
 				array(
-					'id'	=> 'id',
+					'rowid'		=> 'rowid',
 				),
 				array(
 					'value'			=> __('Edit'),
@@ -222,7 +212,7 @@ array(
 				),
 				'param'		=>
 				array(
-					'id'	=> 'id',
+					'rowid'		=> 'rowid',
 				),
 				array(
 					'value'			=> __('Delete'),
@@ -232,7 +222,4 @@ array(
 			),
 		),
 	),
-
-	// pager
-//	'pager'		=> $this->pager_config,
 );

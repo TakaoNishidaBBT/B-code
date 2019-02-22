@@ -58,7 +58,7 @@ array(
 				),
 				'param'		=>
 				array(
-					'id'			=> 'id',
+					'rowid'			=> 'rowid',
 				),
 				array(
 					'start_html'	=> '<span class="sprite">',
@@ -90,7 +90,7 @@ array(
 				),
 				'param'		=>
 				array(
-					'id'			=> 'id',
+					'rowid'			=> 'rowid',
 				),
 				array(
 					'value'			=> '<img class="gear" src="images/common/gear.png" alt="settings" />',
@@ -103,7 +103,4 @@ array(
 			),
 		),
 	),
-
-	// pager
-//	'pager'		=> $this->pager_config,
 );

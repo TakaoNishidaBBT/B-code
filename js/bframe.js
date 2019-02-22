@@ -163,6 +163,14 @@
 
 			httpObj.open('POST','index.php');
 			httpObj.send(form_data);
+
+			var params = {
+				'id': 				'backupDialog', 
+				'icon': 			'images/common/process.png',
+				'complete_icon': 	'images/common/complete.png',
+			}
+			progress = new bframe.progressBar(params);
+
 			bframe.response_wait = true;
 		}
 
@@ -196,6 +204,40 @@
 		ajaxResponse = function() {
 			var obj;
 
+			if((httpObj.readyState == 3) && httpObj.status == 200) {
+				var response = eval('('+httpObj.responseText+')');
+				var animate = '';
+
+				switch(response['status']) {
+				case 'show':
+					progress.show();
+					if(response['message']) progress.setMessage(response['message']);
+
+				case 'progress':
+					if(response['progress']) var animate = ' animate';
+					progress.setProgress(response['progress'], animate);
+					progress.setStatus(Math.round(response['progress']) + '%');
+					if(response['message']) progress.setMessage(response['message']);
+					break;
+
+				case 'message':
+					progress.setMessage(response['message']);
+					if(response['icon']) progress.setIcon(response['icon']);
+					break;
+
+				case 'complete':
+					if(response['progress']) var animate = ' animate';
+					progress.setProgress(response['progress'], animate);
+					progress.setStatus(Math.round(response['progress']) + '%');
+					progress.complete(response['message']);
+					break;
+
+				case 'error':
+					alert(response['message']);
+					break;
+				}
+			}
+
 			if(httpObj.readyState == 4 && httpObj.status == 200 && bframe.response_wait) {
 				try {
 					bframe.response_wait = false;
@@ -209,6 +251,8 @@
 					alert(message);
 					return;
 				}
+
+				progress.remove();
 
 				if(response.status && response.mode && response.mode == 'confirm') {
 					if(confirm(response.message)) {

@@ -7,7 +7,7 @@
 */
 $form_config = array(
 	array('class' => 'B_Hidden', 'name' => 'mode'),
-	array('class' => 'B_Hidden', 'name' => 'id'),
+	array('class' => 'B_Hidden', 'name' => 'rowid'),
 
 	// Required message
 	array(
@@ -41,7 +41,7 @@ $form_config = array(
 				'end_html'			=> '</th>',
 				'invalid_start_html'=> '<th class="error">',
 				array(
-					'value'			=> __('Login ID'),
+					'value'			=> __('User ID'),
 				),
 				array(
 					'class'			=> 'B_Guidance',
@@ -53,19 +53,19 @@ $form_config = array(
 				'end_html'		=> '</td>',
 				array(
 					'filter'			=> 'insert',
-					'name'				=> 'login_id',
+					'name'				=> 'user_id',
 					'class'				=> 'B_InputText',
 					'attr'				=> 'class="textbox ime_off" maxlength="10" ',
 					'validate'			=>
 					array(
 						array(
 							'type' 			=> 'required',
-							'error_message'	=> __('Please enter login ID'),
+							'error_message'	=> __('Please enter User ID'),
 						),
 						array(
 							'type' 			=> 'pattern',
 							'pattern'		=> '^[a-zA-Z0-9\_\-]+$',
-							'error_message'	=> __('Please enter login ID using only alphanumeric, hyphen(-) and underbar(_)'),
+							'error_message'	=> __('Please enter User ID using only alphanumeric, hyphen(-) and underbar(_)'),
 						),
 						array(
 							'type'			=> 'callback',
@@ -84,7 +84,7 @@ $form_config = array(
 				array(
 					'filter'			=> 'update/delete',
 					'class'				=> 'B_Text',
-					'name'				=> 'login_id',
+					'name'				=> 'user_id',
 				),
 				array(
 					'name'				=> 'error_message',
