@@ -33,7 +33,6 @@
 
 			$this->setProperty();
 			$this->setHeader();
-			$this->setSqlWhere();
 			$this->setData();
 		}
 
@@ -41,14 +40,12 @@
 			$this->setRequest();
 			$this->setProperty();
 			$this->setHeader();
-			$this->setSqlWhere();
 			$this->setData();
 		}
 
 		function back() {
 			$this->setProperty();
 			$this->setHeader();
-			$this->setSqlWhere();
 			$this->setData();
 		}
 
@@ -56,7 +53,6 @@
 			$this->_setRequest('page_no');
 			$this->setProperty();
 			$this->setHeader();
-			$this->setSqlWhere();
 			$this->setData();
 		}
 
@@ -79,7 +75,6 @@
 			$this->setProperty();
 
 			$this->setHeader();
-			$this->setSqlWhere();
 			$this->setData();
 		}
 
@@ -107,39 +102,9 @@
 		}
 
 		function setData() {
-/*
-			$this->dg->setSqlWhere($this->sql_where);
-
-			if($this->sort_key) {
-				$this->dg->setSortKey($this->sort_key);
-				$this->dg->setSortOrder($this->order);
-
-				$sql_order_by = ' order by ' . $this->sort_key;
-				$sql_order_by.= $this->order;
-				$this->dg->setSqlOrderBy($sql_order_by);
-			}
-			$this->dg->setRowPerPage($this->row_per_page);
-*/
-			$this->data = $this->df->getAll();
-			if(is_array($this->data)) $this->data = array_merge($this->data, array('', '', '', '', ''));
-			$this->dg->setPage($this->page_no);
-			$this->dg->bind($this->data);
-		}
-
-		function setSqlWhere() {
-			if($this->keyword) {
-				$sql_where.= " and (user_id like '%KEYWORD%' or user_name like '%KEYWORD%' or notes like '%KEYWORD%') ";
-				$sql_where = str_replace("%KEYWORD%", "%" . $this->db->real_escape_string_for_like($this->keyword) . "%", $sql_where);
-
-				$select_message.= __('Keyword: ') . ' <em>' . htmlspecialchars($this->keyword, ENT_QUOTES) . '</em>　';
-			}
-
-			if($select_message) {
-				$select_message = '<p class="condition"><span class="bold">' . __('Search conditions') . '&nbsp;</span>' . $select_message . '</p>';
-			}
-
-			$this->sql_where = $sql_where;
-			$this->select_message = $select_message;
+			$data = $this->df->selectByKeyword(array('name', 'directory', 'notes'), $this->keyword);
+			if(is_array($data)) $data = array_merge($data, array('', '', '', '', ''));
+			$this->dg->bind($data);
 		}
 
 		function _list_callback(&$array) {

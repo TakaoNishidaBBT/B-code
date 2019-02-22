@@ -47,6 +47,19 @@
 			return $this->data[$index];
 		}
 
+		function selectByKeyword($fields, $keyword) {
+			foreach($this->data as $key => $row) {
+				foreach($fields as $field) {
+					if(preg_match('/' . $keyword . '/', $row[$field])) {
+						$collection[] = $row;
+						break;
+					}
+				}
+			}
+
+			return $collection;
+		}
+
 		function insert($value) {
 			if($param = $this->getInsertValue($value)) {
 				$this->max++;
