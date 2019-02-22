@@ -21,6 +21,7 @@
 <script src="js/bframe_adjustwindow.js"></script>
 <script src="js/bframe_modal_window.js"></script>
 <script src="js/bframe_navi.js"></script>
+<script src="js/bframe_progress_bar.js"></script>
 <script src="js/bstudio.js"></script>
 <script src="js/identicon/sha256.js"></script>
 <script src="js/identicon/identicon.js"></script>
