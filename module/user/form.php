@@ -214,7 +214,6 @@
 			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/selectbox.css">');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_selectbox.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_edit_check.js"></script>');
-			$this->html_header->appendProperty('script', '<script src="js/bframe_progress_bar.js"></script>');
 
 			// Show HTML header
 			$this->showHtmlHeader();
