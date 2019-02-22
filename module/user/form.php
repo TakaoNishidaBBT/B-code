@@ -61,7 +61,7 @@
 
 		function _validate_callback($param) {
 			if($this->session['mode'] == 'insert') {
-				if($this->df->select('login_id', $param['value'])) {
+				if($this->df->select('user_id', $param['value'])) {
 					return false;
 				}
 			}
@@ -73,7 +73,7 @@
 			global $g_auth_users;
 
 			foreach($g_auth_users as $value) {
-				if($value['login_id'] == $param['value']) {
+				if($value['user_id'] == $param['value']) {
 					return false;
 				}
 			}
