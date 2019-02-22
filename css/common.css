@@ -484,6 +484,7 @@ table.form input {
 	font-size: 14px;
 	line-height: 16px;
 	vertical-align: top;
+	margin: 0;
 }
 
 /* page-locator */
