@@ -26,7 +26,8 @@
 
 			$this->table = $table_name;
 			$this->config = ${$g_data_set}['table'][$this->table];
-			$this->max = max(array_keys($this->data));
+			$this->max = 0;
+			if(is_array($this->data) && count($this->data)) $this->max = max(array_keys($this->data));
 		}
 
 		function get($index) {
