@@ -17,11 +17,11 @@
 			$this->file_name = $file_name;
 
 			if(file_exists($this->file_name)) {
-				$this->fp = fopen($this->file_name, 'rb');
-			    $serializedString = fread($this->fp, 200000);
+				$fp = fopen($this->file_name, 'rb');
+			    $serializedString = fread($fp, 200000);
 	    		$this->data = unserialize($serializedString);
-				fclose($this->fp);
-				unset($this->fp);
+				fclose($fp);
+				unset($fp);
 			}
 
 			$this->table = $table_name;
@@ -47,6 +47,8 @@
 		}
 
 		function select($field, $value) {
+			if(!is_array($this->data)) return;
+
 			foreach($this->data as $key => $row) {
 				if($row[$field] == $value) return $row;
 			}
@@ -57,6 +59,8 @@
 		}
 
 		function selectByKeyword($fields, $keyword) {
+			if(!is_array($this->data)) return;
+
 			foreach($this->data as $key => $row) {
 				foreach($fields as $field) {
 					if(preg_match('/' . $keyword . '/', $row[$field])) {
@@ -131,8 +135,12 @@
 		}
 
 		function save() {
-			$this->fp = fopen($this->file_name, 'w');
-	        fwrite($this->fp, serialize($this->data));
-			fclose($this->fp);
+			if(!file_exists(dirname($this->file_name))) {
+				mkdir(dirname($this->file_name));
+			}
+
+			$fp = fopen($this->file_name, 'w');
+	        fwrite($fp, serialize($this->data));
+			fclose($fp);
 		}
 	}

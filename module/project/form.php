@@ -229,6 +229,10 @@
 			$response['message'] = 'Creating Thumbnail files';
 			$this->sendChunk(json_encode($response));
 
+			if(!file_exists(B_THUMBDIR)) {
+				mkdir(B_THUMBDIR);
+			}
+
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $name . '/');
 			if(file_exists(B_UPLOAD_THUMBDIR)) {
 				$this->removeThumbnail();
