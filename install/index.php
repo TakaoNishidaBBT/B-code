@@ -124,20 +124,12 @@
 
 	function confirmPermission(&$message) {
 		$status  = checkWritePermission(B_CURRENT_DIR . '.htaccess', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/.htaccess', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/.htpassword', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/archive', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/cache', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/config/core_config.php', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/config/lang_config.php', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/download', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/log', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin/user/users.php', $message);
+		$status &= checkWritePermission(B_CURRENT_DIR . '.htpassword', $message);
+		$status &= checkWritePermission(B_CURRENT_DIR . 'config/lang_config.php', $message);
+		$status &= checkWritePermission(B_CURRENT_DIR . 'download', $message);
+		$status &= checkWritePermission(B_CURRENT_DIR . 'log', $message);
+		$status &= checkWritePermission(B_CURRENT_DIR . 'user/users.php', $message);
 		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin-files', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin-files/.htaccess', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin-files/files', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'bs-admin-files/thumbs', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'files', $message);
 		$status &= checkExecutePermission(FFMPEG, $message);
 		return $status;
 	}
