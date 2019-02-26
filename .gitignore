@@ -4,9 +4,8 @@
 /user
 
 # git update-index --skip-worktree .htaccess
-# git update-index --skip-worktree bs-admin-files/.htaccess
-# git update-index --skip-worktree .htaccess
 # git update-index --skip-worktree .htpassword
+# git update-index --skip-worktree bs-admin-files/.htaccess
 # git update-index --skip-worktree user/users.php
 
 # git update-index --no-skip-worktree [file-name]
