@@ -48,6 +48,7 @@
 					// Menu
 					require_once('./config/menu_config.php');
 					$this->menu = new B_Element($menu_config, $this->user_auth);
+					$this->admin_profile = '<li id="user-settings"><a href="' . DISPATCH_URL . '&amp;module=siteadmin&amp;page=form" target="main"><img src="images/common/gear_white.png" alt="user settings" /></a></li>';
 				}
 
 				$this->initial_page = DISPATCH_URL . '&amp;module=project&amp;page=list';

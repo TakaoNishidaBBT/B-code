@@ -104,12 +104,12 @@ $form_config = array(
 							'pattern'		=> '^[a-zA-Z0-9\_\-]+$',
 							'error_message'	=> __('Please enter login ID using only alphanumeric, hyphen(-) and underbar(_)'),
 						),
-//						array(
-//							'type'			=> 'callback',
-//							'obj'			=> $this,
-//							'method'		=> '_validate_callback',
-//							'error_message'	=> __('This ID is already exists'),
-//						),
+						array(
+							'type'			=> 'callback',
+							'obj'			=> $this,
+							'method'		=> '_validate_callback',
+							'error_message'	=> __('This ID is already exists'),
+						),
 					),
 				),
 				array(

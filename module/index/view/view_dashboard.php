@@ -32,7 +32,7 @@
 		<ul class="login-user">
 			<li id="small-identicon"></li>
 			<li id="user-name"><?php echo $this->user_name ?></li>
-			<li id="user-settings"><a href="<?php echo DISPATCH_URL ?>&amp;module=siteadmin&amp;page=form" target="main"><img src="images/common/gear_white.png" alt="user settings" /></a></li>
+			<?php echo $this->admin_profile; ?>
 			<li id="user-id" style="display:none"><?php echo $this->user_id ?></li>
 			<li id="logout"><a href="<?php echo DISPATCH_URL ?>&amp;module=index&amp;page=logout" target="_top"><?php echo __('Log out'); ?><img class="logout" src="images/common/logout.png" alt="logout" /></a></li>
 		</ul>

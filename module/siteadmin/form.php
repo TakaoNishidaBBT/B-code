@@ -13,11 +13,7 @@
 
 			require_once('./config/form_config.php');
 			$this->form = new B_Element($form_config);
-
-			$this->result_config = $result_config;
-			$this->result_control_config = $result_control_config;
-			$this->input_control_config = $input_control_config;
-			$this->confirm_control_config = $confirm_control_config;
+			$this->df = new B_DataFile(B_USER_DATA, 'user');
 		}
 
 		function func_default() {
@@ -30,47 +26,81 @@
 			$param['admin_user_name'] = $g_auth_users[0]['user_name'];
 			$param['admin_user_id'] = $g_auth_users[0]['user_id'];
 			$param['language'] = $g_auth_users[0]['language'];
-
 			$this->form->setValue($param);
-			$this->control = new B_Element($this->input_control_config);
+			$this->session['init_value'] = $param;
 		}
 
-		function confirm() {
-			$this->form->setValue($this->request);
+		function validate() {
+			$this->form->setValue($this->post);
 
-			$this->status = $this->form->validate();
-
-			if(!$this->form->validate()) {
-				$this->control = new B_Element($this->input_control_config, $this->user_auth);
-				return;
+			if(!$this->checkAlt($this->post)) {
+				$this->message = __('Another user has updated this record');
+				return false;
 			}
 
-			$this->form->getValue($param);
-			$this->session['request'] = $param;
+			if(!$this->form->validate()) {
+				$this->message = __('This is an error in your entry');
+				return false;
+			}
 
-			$this->control = new B_Element($this->confirm_control_config);
+			return true;
+		}
 
-			// Set display mode
-			$this->display_mode = 'confirm';
+		function checkAlt($value) {
+			$row = $this->df->selectByPk($value['id']);
+			if($this->session['init_value']['update_datetime'] < $row['update_datetime']) {
+				$error_message = __('Another user has updated this record');
+				return false;
+			}
+
+			return true;
 		}
 
 		function _validate_callback($param) {
 			// Check user id already exists
-			$sql = "select count(*) cnt from " . B_DB_PREFIX . "user where user_id = binary '" . $param['value'] . "'";
-			$rs = $this->db->query($sql);
-			$row = $this->db->fetch_assoc($rs);
-			if($row['cnt'] == 0) {
-				return true;
+			if($this->df->select('user_id', $param['value'])) {
+				return false;
 			}
-			return false;
+
+			return true;
 		}
 
 		function register() {
+			try {
+				if($this->validate()) {
+					$status = $this->_register();
+					$this->message = __('saved.');
+				}
+				else {
+					$status = false;
+				}
+			}
+			catch(Exception $e) {
+				$status = false;
+				$mode = 'alert';
+				$this->message = $e->getMessage();
+			}
+
+			$response['innerHTML'] = array(
+				'admin-form'	=> $this->form->getHtml(),
+				'hidden-form'	=> $this->form->getHiddenHtml(),
+			);
+
+			$response['status'] = $status;
+			$response['mode'] = $mode;
+			$response['message_obj'] = 'message';
+			$response['message'] = $this->message;
+
+			header('Content-Type: application/x-javascript charset=utf-8');
+			echo json_encode($response);
+			exit;
+		}
+
+		function _register() {
 			global $g_auth_users;
 
-			$param = $this->session['request'];
-
 			// Set up admin user file
+			$this->form->getValue($param);
 			$contents = file_get_contents(B_CURRENT_DIR . 'user/config/_users.php');
 			$contents = str_replace('%USER_NAME%',  $param['admin_user_name'], $contents);
 			$contents = str_replace('%USER_ID%',  $param['admin_user_id'], $contents);
@@ -84,19 +114,7 @@
 
 			file_put_contents(B_CURRENT_DIR . 'user/users.php', $contents);
 
-			$param['action_message'] = '<p><span class="bold">' . __('The site admin settings has been updated') . '</span></p>';
-
-			$this->result = new B_Element($this->result_config);
-			$this->result_control = new B_Element($this->result_control_config);
-
-			$this->result->setValue($param);
-
-			$this->setView('result_view');
-		}
-
-		function back() {
-			$this->form->setValue($this->session['request']);
-			$this->control = new B_Element($this->input_control_config);
+			return true;
 		}
 
 		function view() {
@@ -115,27 +133,6 @@
 			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/selectbox.css">');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_selectbox.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_edit_check.js"></script>');
-
-			// Show HTML header
-			$this->showHtmlHeader();
-
-			// Show HTML body
-			echo $contents;
-		}
-
-		function result_view() {
-			// Start buffering
-			ob_start();
-
-			require_once('./view/view_result.php');
-
-			// Get buffer
-			$contents = ob_get_clean();
-
-			// Send HTTP header
-			$this->sendHttpHeader();
-
-			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/siteadmin.css">');
 
 			// Show HTML header
 			$this->showHtmlHeader();
