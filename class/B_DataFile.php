@@ -30,6 +30,14 @@
 			if(is_array($this->data) && count($this->data)) $this->max = max(array_keys($this->data));
 		}
 
+		function setSortKey($key) {
+			$this->sort_key = $key;
+		}
+
+		function setSortOrder($order) {
+			$this->sort_order = $order;
+		}
+
 		function get($index) {
 			return $this->data[$index];
 		}
@@ -58,6 +66,8 @@
 				}
 			}
 
+			$this->sort($collection);
+
 			return $collection;
 		}
 
@@ -69,6 +79,22 @@
 			}
 
 			return $this->max;
+		}
+
+		function sort(&$data) {
+			if(!is_array($data)) return;
+			if(!$this->sort_key) return;
+			if(!$data[0][$this->sort_key]) return;
+			uasort($data, array($this, '_sort_callback'));
+		}
+
+		function _sort_callback($a, $b) {
+			if($this->sort_order == 'asc') {
+				return ($a[$this->sort_key] < $b[$this->sort_key]) ? -1 : 1;
+			}
+			else {
+				return ($a[$this->sort_key] > $b[$this->sort_key]) ? -1 : 1;
+			}
 		}
 
 		function updateByPk($index, $value) {

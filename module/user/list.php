@@ -60,20 +60,19 @@
 			if($this->request['sort_key']) {
 				if(isset($this->session['sort_key']) && 
 					$this->session['sort_key'] == $this->request['sort_key']) {
-					if($this->session['order'] == ' asc') {
-						$this->session['order'] = ' desc';
+					if($this->session['order'] == 'asc') {
+						$this->session['order'] = 'desc';
 					}
 					else {
-						$this->session['order'] = ' asc';
+						$this->session['order'] = 'asc';
 					}
 				}
 				else {
 					$this->session['sort_key'] = $this->request['sort_key'];
-					$this->session['order'] = ' asc';
+					$this->session['order'] = 'asc';
 				}
 			}
 			$this->setProperty();
-
 			$this->setHeader();
 			$this->setData();
 		}
@@ -102,6 +101,14 @@
 		}
 
 		function setData() {
+			if($this->sort_key) {
+				$this->dg->setSortKey($this->sort_key);
+				$this->dg->setSortOrder($this->order);
+
+				$this->df->setSortKey($this->sort_key);
+				$this->df->setSortOrder($this->order);
+			}
+
 			$data = $this->df->selectByKeyword(array('user_id', 'user_name', 'notes'), $this->keyword);
 			$this->dg->bind($data);
 		}
