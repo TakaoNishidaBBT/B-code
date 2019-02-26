@@ -1,9 +1,6 @@
 /bs-admin-files/
-/archive
-/cache
 /config
 /log
-/session
 /user
 
 # git update-index --skip-worktree .htaccess
