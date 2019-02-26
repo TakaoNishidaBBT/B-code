@@ -95,11 +95,6 @@
 			$contents = str_replace('%PASSWORD%', md5($param['admin_user_pwd']), $contents);
 			$contents = str_replace('%LANGUAGE%', $_SESSION['language'], $contents);
 			file_put_contents('../user/users.php', $contents);
-
-			// Set up lang_config
-			$contents = file_get_contents('./config/_lang_config.php');
-			$contents = str_replace('%LANGUAGE%', $_SESSION['language'], $contents);
-			file_put_contents('../config/lang_config.php', $contents);
 		}
 		catch(Exception $e) {
 			$error_message = '<p class="error-message">' . $e->getMessage() . '</p>';

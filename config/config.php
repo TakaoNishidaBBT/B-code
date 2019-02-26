@@ -96,14 +96,13 @@
 	define('B_TITLE_PREFIX', '');
 	define('B_ARCHIVE_LOG_MODE', '');
 
-	// Debaug Mode
-	define('B_DEBUG_MODE', 'OFF');
+	// Language
+	define('LANG', 'en');
 
 	// Language Files Directory
 	define('B_LNGUAGE_DIR', B_CURRENT_DIR . 'language/');
 
-	// Language config
-	require_once(B_CURRENT_DIR . 'config/lang_config.php');
+	// Require Language.php
 	require_once(B_CURRENT_DIR . 'language/language.php');
 
 	// Globa Data File

@@ -125,7 +125,6 @@
 	function confirmPermission(&$message) {
 		$status  = checkWritePermission(B_CURRENT_DIR . '.htaccess', $message);
 		$status &= checkWritePermission(B_CURRENT_DIR . '.htpassword', $message);
-		$status &= checkWritePermission(B_CURRENT_DIR . 'config/lang_config.php', $message);
 		$status &= checkWritePermission(B_CURRENT_DIR . 'download', $message);
 		$status &= checkWritePermission(B_CURRENT_DIR . 'log', $message);
 		$status &= checkWritePermission(B_CURRENT_DIR . 'user/users.php', $message);
