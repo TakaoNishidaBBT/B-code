@@ -1,4 +1,4 @@
-<body>
+<body onload="bcode.setNavi()">
 	<form name="F1" method="post" action="index.php">
 		<div id="header">
 			<h1><?php echo __('ADMIN PROFILE'); ?></h1>
