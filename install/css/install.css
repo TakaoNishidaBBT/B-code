@@ -1,0 +1,194 @@
+@charset 'UTF-8';
+
+body {
+	background-color: #fff;
+	margin-left: 8%;
+	margin-right: 8%;
+	padding-top: 13px;
+	color: #222;
+	font-family: "メイリオ", "Meiryo", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Osaka", "ＭＳ Ｐゴシック", "MS PGothic", "IPA UIGothic", "IPA mona UIGothic", "VL PGothic", "Sazanami Gothic", "DynaLab-dfghsgothic w5-jisx0208.1990-0", "DynaLab-dfggothic w5-iso8859-1", "Trebuchet MS", "Bitstream Vera Sans", verdana, lucida, arial, helvetica, sans-serif;
+	font-size: small;
+}
+pre {
+	font-family: "メイリオ", "Meiryo", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Osaka", "ＭＳ Ｐゴシック", "MS PGothic", "IPA UIGothic", "IPA mona UIGothic", "VL PGothic", "Sazanami Gothic", "DynaLab-dfghsgothic w5-jisx0208.1990-0", "DynaLab-dfggothic w5-iso8859-1", "Trebuchet MS", "Bitstream Vera Sans", verdana, lucida, arial, helvetica, sans-serif;
+}
+img {
+	border: none;
+}
+a:link, a:visited {
+	color: #1D3565; 
+	font-weight: bold;
+	text-decoration: none;
+}
+a: hover {
+	text-decoration: underline;
+}
+.heading {
+	text-align: center;
+	font-size: xx-large;
+	font-weight: bold;
+	color: gray;
+	letter-spacing:3px;
+	margin: 15px 0 20px;
+}
+.heading i {
+	position: absolute;
+	top: 15px;
+	right: 5px;
+	font-size: small;
+	font-style: normal;
+	font-weight: normal;
+}
+p {
+	text-indent: 10px;
+	margin: 20px;
+}
+h1 {
+	color: #555;
+}
+h2 {
+	border-bottom: 1px dotted gray;
+	font-size: 145%;
+	color: #333;
+	font-weight:normal;
+	letter-spacing:2px;
+	margin-top: 30px;
+}
+h3 {
+	margin-left: 12px;
+	border-bottom:1px dotted #666;
+	font-size:100%;
+	color:#555;
+	letter-spacing:1px;
+}
+
+/* select language */
+#select-language {
+	position: absolute;
+	top: 45px;
+	right: 11%;
+}
+/* form */
+table.form {
+	width: 100%;
+	border-left: none;
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+table.form th {
+	width: 21%;
+	padding: 12px 15px 8px 15px;
+	border-top: 1px solid #aaa;
+	border-left: none;
+	border-bottom: 1px solid #808080;
+	border-right: none;
+	background: #888;
+	color: #fff;
+	font-weight: normal;
+	text-align: left;
+}
+table.form tr:first-child th {
+	border-top: 1px solid #aaa;
+}
+table.form tr:first-child td {
+	border-top: 1px solid #ccc;
+}
+table.form td {
+	padding: 5px;
+	border: 1px solid #bbb;
+	border-top: 1px solid #fff;
+	border-left: none;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	font-weight: normal;
+}
+
+input.textbox {
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	height: 22px;
+	padding: 2px 5px;
+	vertical-align: middle;
+}
+input.prefix {
+	width: 80px;
+}
+
+/* error */
+p.error-message-top {
+	clear: both;
+	color: #f00;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+span.error-message {
+	clear: both;
+	color: #f00;
+	margin: 0px 0px 0px 3px;
+}
+
+p.error-message {
+	clear: both;
+	color: #f00;
+	margin: 5px 0 0 0;
+	text-indent: 0;
+}
+
+ul {
+	line-height:1.5em;
+	margin:0 0 0.5em 40px;
+	padding:0;
+	list-style: none;
+}
+
+div.confirm {
+	text-align: center;
+	margin: 30px 0 80px 0;
+}
+
+ul.control {
+	margin: 30px 0;
+	text-align: center;
+}
+span.status_ng {
+	color: #ff4500;
+}
+span.caution {
+	color: #ff4500;
+}
+
+/* ime */
+.ime-off {
+	ime-mode: disabled;
+}
+.ime-on {
+/* commnet out for IE11 */
+/*	ime-mode: active;*/
+}
+
+input.button {
+	padding: 0 80px;
+	line-height: 45px;
+	border: none;
+	background-color: #333;
+	color: #f0f0f0;
+	vertical-align: middle;
+	cursor: pointer;
+}
+input.button:hover, input.buttonHover {
+	background-color: #555;
+}
+.htaccess {
+	width: 99%;
+	height: 200px;
+	font-family: "ＭＳ ゴシック","MS Gothic","Lucida Grande","Lucida Sans Unicode","Helvetica Neue","Hiragino Kaku Gothic Pro","ヒラギノ角ゴ Pro W3",Arial,Verdana,sans-serif;
+}
+p.center {
+	text-align: center;
+}

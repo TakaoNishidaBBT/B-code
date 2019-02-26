@@ -81,15 +81,15 @@
 
 	// ffmpeg
 	if(substr(PHP_OS, 0, 3) === 'WIN') {
-		define('FFMPEG', B_ADMIN_DIR . 'class/ffmpeg/ffmpeg_for_windows.exe');
+		define('FFMPEG', B_CURRENT_DIR . 'class/ffmpeg/ffmpeg_for_windows.exe');
 		define('B_SYSTEM_FILENAME_ENCODE', 'sjis-win');
 	}
 	else if(substr(PHP_OS, 0, 5) === 'Linux') {
-		define('FFMPEG', B_ADMIN_DIR . 'class/ffmpeg/ffmpeg_for_linux');
+		define('FFMPEG', B_CURRENT_DIR . 'class/ffmpeg/ffmpeg_for_linux');
 		define('B_SYSTEM_FILENAME_ENCODE', 'utf8');
 	}
 	else {
-		define('FFMPEG', B_ADMIN_DIR . 'class/ffmpeg/ffmpeg_for_mac');
+		define('FFMPEG', B_CURRENT_DIR . 'class/ffmpeg/ffmpeg_for_mac');
 		define('B_SYSTEM_FILENAME_ENCODE', 'utf8');
 	}
 
