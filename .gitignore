@@ -5,13 +5,9 @@
 
 # git update-index --skip-worktree .htaccess
 # git update-index --skip-worktree bs-admin-files/.htaccess
-# git update-index --skip-worktree bs-admin-files/files/.gitkeep
-# git update-index --skip-worktree bs-admin-files/thumbs/.gitkeep
 # git update-index --skip-worktree .htaccess
 # git update-index --skip-worktree .htpassword
-# git update-index --skip-worktree config/lang_config.php
 # git update-index --skip-worktree user/users.php
-# git update-index --skip-worktree files/.gitkeep
 
 # git update-index --no-skip-worktree [file-name]
 # git ls-files -v
