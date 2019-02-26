@@ -107,9 +107,15 @@
 				else {
 					$contents = mb_convert_encoding($this->post['contents'], $this->post['encoding'], 'UTF-8');
 				}
-				file_put_contents($file_path, $contents, LOCK_EX);
-
-				$message = __('Saved');
+				if(!file_put_contents($file_path, $contents, LOCK_EX)) {
+					$status = false;
+					$mode = 'alert';
+					$error = error_get_last();
+					$message = $error['message'];
+				}
+				else {
+					$message = __('Saved');
+				}
 			}
 
 			$response['status'] = $status;
