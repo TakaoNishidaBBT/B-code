@@ -4,15 +4,15 @@
  *
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
 */
-	if(typeof bstudio == 'undefined' || !bstudio) {
-		var bstudio = {};
+	if(typeof bcode == 'undefined' || !bcode) {
+		var bcode = {};
 	}
 
 	// -------------------------------------------------------------------------
-	// class bstudio
+	// class bcode
 	// 
 	// -------------------------------------------------------------------------
-	bstudio.activateModalWindow = function(a, w, h, func) {
+	bcode.activateModalWindow = function(a, w, h, func) {
 		var p = 'width:' + w + ',height:' + h;
 		a.setAttribute('data-param', p);
 
@@ -20,28 +20,28 @@
 		if(func) top.bframe.modalWindow.registerCallBackFunction(func);
 	}
 
-	bstudio.setDirectory = function() {
+	bcode.setDirectory = function() {
 		var nodes = bframe_tree.getCurrentNodes();
 		var node_id = nodes[0].id.substr(1);
 
 		if(node_id == 'root') node_id = '/';
 
-		bstudio.insertValue(window.frameElement.opener, 'directory', node_id);
+		bcode.insertValue(window.frameElement.opener, 'directory', node_id);
 		window.frameElement.deactivate();
 	}
 
-	bstudio.insertValue = function(opener, target_id, target_value) {
-		opener.bstudio._insertValue(target_id, target_value);
+	bcode.insertValue = function(opener, target_id, target_value) {
+		opener.bcode._insertValue(target_id, target_value);
 	}
 
-	bstudio._insertValue = function(target_id, target_value) {
+	bcode._insertValue = function(target_id, target_value) {
 		var target = document.getElementById(target_id);
 		if(!target) return;
 
 		target.value = target_value;
 	}
 
-	bstudio.clearText = function(target_id1, target_id2) {
+	bcode.clearText = function(target_id1, target_id2) {
 		var target1 = document.getElementById(target_id1);
 		if(target1 && target1.value) {
 			target1.value = '';
@@ -56,34 +56,34 @@
 		}
 	}
 
-	bstudio.reloadTree = function() {
+	bcode.reloadTree = function() {
 		if(typeof bframe_tree !== 'undefined') bframe_tree.reload();
 	}
 
-	bstudio.refreshEditor = function(fname, module, page, method, mode, nocheck) {
+	bcode.refreshEditor = function(fname, module, page, method, mode, nocheck) {
 		bframe.ajaxSubmit.clearCallBackFunctionAfter();
-		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.updateEditor);
-		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.resetEditFlag);
+		bframe.ajaxSubmit.registerCallBackFunctionAfter(bcode.updateEditor);
+		bframe.ajaxSubmit.registerCallBackFunctionAfter(bcode.resetEditFlag);
 		bframe.ajaxSubmit.submit(fname, module, page, method, mode, nocheck);
 	}
 
-	bstudio.registerEditor = function(fname, module, page, method, mode, nocheck) {
+	bcode.registerEditor = function(fname, module, page, method, mode, nocheck) {
 		bframe.ajaxSubmit.clearCallBackFunctionAfter();
-		bframe.ajaxSubmit.registerCallBackFunctionAfter(bstudio.resetEditFlag);
+		bframe.ajaxSubmit.registerCallBackFunctionAfter(bcode.resetEditFlag);
 		bframe.ajaxSubmit.submit(fname, module, page, method, mode, nocheck);
 	}
 
-	bstudio.setEditFlag = function() {
+	bcode.setEditFlag = function() {
 		var opener = window.frameElement.opener;
 		if(typeof opener.bframe_tree !== 'undefined') opener.bframe_tree.setEditFlag();
 	}
 
-	bstudio.resetEditFlag = function() {
+	bcode.resetEditFlag = function() {
 		var opener = window.frameElement.opener;
 		if(typeof opener.bframe_tree !== 'undefined') opener.bframe_tree.resetEditFlag();
 	}
 
-	bstudio.changeFileName = function(value) {
+	bcode.changeFileName = function(value) {
 		var node_id = document.getElementsByName('node_id');
 		if(node_id[0]) {
 			var arr = node_id[0].value.split('/');
@@ -94,7 +94,7 @@
 		} 
 	}
 
-	bstudio.replaceFilePath = function(before, after) {
+	bcode.replaceFilePath = function(before, after) {
 		var node_id = document.getElementsByName('node_id');
 		if(node_id[0]) {
 			node_id[0].value = node_id[0].value.split(before).join(after);
@@ -102,23 +102,23 @@
 		} 
 	}
 
-	bstudio.setFileName = function(f_name) {
-		top.bstudio._setFileName('file_name', f_name);
+	bcode.setFileName = function(f_name) {
+		top.bcode._setFileName('file_name', f_name);
 	}
 
-	bstudio._setFileName = function(target_id, target_value) {
+	bcode._setFileName = function(target_id, target_value) {
 		var target = document.getElementById(target_id);
 		if(!target) return;
 
 		target.innerHTML = target_value;
 	}
 
-	bstudio.setProperty = function(module) {
+	bcode.setProperty = function(module) {
 		bframe.ajaxSubmit.registerCallBackFunctionAfter(window.frameElement.deactivate);
 		bframe.ajaxSubmit.submit('F1', module, 'property', 'register', '', true);
 	}
 
-	bstudio.identicon = function() {
+	bcode.identicon = function() {
 		var salt = 'bcode';
 		var user_id = document.getElementById('user-id');
 		var big_identicon = document.getElementById('big-identicon');
@@ -137,15 +137,15 @@
 		if(big_identicon) big_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
 	}
 
-	bstudio.mousedownBody = function() {
+	bcode.mousedownBody = function() {
 		bframe.fireEvent(document.body, 'mousedown');
 	}
 
-	bstudio.setNavi = function() {
-		setTimeout(bstudio._setNavi, 10);
+	bcode.setNavi = function() {
+		setTimeout(bcode._setNavi, 10);
 	}
 
-	bstudio._setNavi = function() {
+	bcode._setNavi = function() {
 		if(parent.bframe.gnavi && location.search) {
 			parent.bframe.gnavi.set(location.search.substr(1));
 		}

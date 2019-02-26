@@ -236,7 +236,7 @@
 		}
 
 		function openWidget(event) {
-			bstudio.activateModalWindow(widget, 350, 400, insert);
+			bcode.activateModalWindow(widget, 350, 400, insert);
 			bframe.stopPropagation(event);
 		}
 
@@ -320,7 +320,7 @@
 			if(ace_editor.getSession().getUndoManager().undoDepth() != undo_depth) {
 				if(!confirm(top.bframe.message.getProperty('refresh_confirm'))) return;
 			}
-			bstudio.updateEditor = updateEditor;
+			bcode.updateEditor = updateEditor;
 			message_field.innerHTML = '';
 			bframe.fireEvent(refresh_button, 'click');
 		}
@@ -356,7 +356,7 @@
 			span.innerHTML = response.message;
 			message_field.appendChild(span);
 
-			setTimeout(bstudio.resetEditFlag, 100);
+			setTimeout(bcode.resetEditFlag, 100);
 		}
 
 		function updateTarget() {
@@ -376,10 +376,10 @@
 		function _setEditFlag() {
 			if(ace_editor.getSession().getUndoManager().undoDepth() != undo_depth) {
 				edit_flag = true;
-				bstudio.setEditFlag();
+				bcode.setEditFlag();
 			}
 			else {
-				bstudio.resetEditFlag();
+				bcode.resetEditFlag();
 			}
 		}
 

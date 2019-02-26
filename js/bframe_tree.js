@@ -1672,7 +1672,7 @@
 				var node_span = document.getElementById('s'+node_id);
 				var node_type = document.getElementById('nt'+node_id);
 				var node_name = node_span.innerHTML;
-				bstudio[func](node_id.substr(1), node_name, node_type.value);
+				bcode[func](node_id.substr(1), node_name, node_type.value);
 			}
 		}
 
@@ -1854,7 +1854,7 @@
 				if(current_edit_node && current_edit_node.id == node_id) return;
 
 				var func = property.ondblclick.script;
-				if(bstudio[func]) bstudio[func](node_id.substr(1), node_name, node_class.value);
+				if(bcode[func]) bcode[func](node_id.substr(1), node_name, node_class.value);
 			}
 		}
 
@@ -1882,7 +1882,7 @@
 					img_size = image_size_obj.value;
 				}
 				var path = document.getElementById('p' + node_id).value;
-				bstudio.insertResourceIMG(property.root_path, path, img_size, property.target, property.target_id);
+				bcode.insertResourceIMG(property.root_path, path, img_size, property.target, property.target_id);
 			}
 		}
 
@@ -1894,7 +1894,7 @@
 					img_size = image_size_obj.value;
 				}
 
-				bstudio.insertIMG(property.root_path, node_id.substr(1), img_size, property.target, property.target_id);
+				bcode.insertIMG(property.root_path, node_id.substr(1), img_size, property.target, property.target_id);
 			}
 		}
 
@@ -3039,13 +3039,13 @@
 					fname.innerHTML = value;
 					if(editor) {
 						var iframe = bframe.getFrameByName(window, editor.name);
-						return iframe.bstudio.changeFileName(value);
+						return iframe.bcode.changeFileName(value);
 					}
 				}
 
 				this.replaceFilePath = function(before, after) {
 					var iframe = bframe.getFrameByName(window, editor.name);
-					return iframe.bstudio.replaceFilePath(before, after);
+					return iframe.bcode.replaceFilePath(before, after);
 				}
 
 				this.isChild = function(obj) {
@@ -3088,7 +3088,7 @@
 
 				this.showFileName = function(f_name) {
 					if(!f_name) f_name = current_node.id().substr(1);
-					bstudio.setFileName(f_name);
+					bcode.setFileName(f_name);
 				}
 
 				this.inVisible = function() {

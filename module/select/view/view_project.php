@@ -6,7 +6,7 @@
 		<input type="hidden" id="node_id" name="node_id" value="" />
 		<div class="control">
 			<input type="button" class="cancel-button" value="Cancel" onclick="window.frameElement.deactivate();" />
-			<input type="button" class="register-button" value="Set" onclick="bstudio.setDirectory()" />
+			<input type="button" class="register-button" value="Set" onclick="bcode.setDirectory()" />
 		</div>
 	</form>
 </body>

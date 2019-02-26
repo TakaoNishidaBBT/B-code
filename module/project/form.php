@@ -1,6 +1,6 @@
 <?php
 /*
- * B-studio : Content Management System
+ * B-code : Online Editor
  * Copyright (c) Bigbeat Inc. All rights reserved. (http://www.bigbeat.co.jp)
  *
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
@@ -287,19 +287,6 @@
 				$this->sendChunk(',' . json_encode($response));
 				$this->progress = $response['progress'];
 			}
-		}
-
-		function sendChunk($response='') {
-			if($response) {
-				$response = $response . str_repeat(' ', 8000);
-				echo sprintf("%x\r\n", strlen($response));
-				echo $response . "\r\n";
-			}
-			else {
-				echo "0\r\n\r\n";
-			}
-			flush();
-			ob_flush();
 		}
 
 		function view() {

@@ -1,6 +1,6 @@
 <?php
 /*
- * B-studio : Content Management System
+ * B-code : Online Editor
  * Copyright (c) Bigbeat Inc. All rights reserved. (http://www.bigbeat.co.jp)
  *
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
@@ -15,7 +15,7 @@ $html_header_config = array(
 	),
 	'script'	=> 
 	array(
-		'<script src="js/bstudio.js"></script>',
+		'<script src="js/bcode.js"></script>',
 		'<script src="js/bframe.js"></script>',
 		'<script src="js/bframe_adjustwindow.js"></script>',
 		'<script src="js/bframe_ajax.js"></script>',

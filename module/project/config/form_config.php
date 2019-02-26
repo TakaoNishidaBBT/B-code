@@ -1,6 +1,6 @@
 <?php
 /*
- * B-studio : Content Management System
+ * B-code : Online Editor
  * Copyright (c) Bigbeat Inc. All rights reserved. (http://www.bigbeat.co.jp)
  *
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
@@ -134,7 +134,7 @@ $form_config = array(
 					'filter'		=> 'insert/update',
 					'class'			=> 'B_Link',
 					'link'			=> '#',
-					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bstudio.clearText(\'directory\'); return false;" ',
+					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bcode.clearText(\'directory\'); return false;" ',
 					'specialchars'	=> 'none',
 					'value'			=> '<img alt="' . __('Clear') . '" src="images/common/clear.png" />',
 				),

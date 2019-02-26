@@ -1,4 +1,4 @@
-<body onload="bstudio.setNavi()">
+<body onload="bcode.setNavi()">
 	<div id="header">
 		<h1><?php echo __('USER'); ?></h1>
 		<?php echo $this->header->gethtml(); ?>

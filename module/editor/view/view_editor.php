@@ -9,6 +9,6 @@
 		</div>
 	</div>
 	<script>
-		document.body.addEventListener('mousedown', top.bstudio.mousedownBody);
+		document.body.addEventListener('mousedown', top.bcode.mousedownBody);
 	</script>
 </body>

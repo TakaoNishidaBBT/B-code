@@ -1,6 +1,6 @@
 <?php
 /*
- * B-studio : Content Management System
+ * B-code : Online Editor
  * Copyright (c) Bigbeat Inc. All rights reserved. (http://www.bigbeat.co.jp)
  *
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
@@ -27,7 +27,7 @@ $editor_config = array(
 		'end_html'		=> '</div>',
 		array(
 			'name'			=> 'register',
-			'start_html'	=> '<span id="register" class="register-button" onclick="bstudio.registerEditor(\'F1\', \'' . $this->module . '\', \'editor\', \'register\', \'confirm\', true)">',
+			'start_html'	=> '<span id="register" class="register-button" onclick="bcode.registerEditor(\'F1\', \'' . $this->module . '\', \'editor\', \'register\', \'confirm\', true)">',
 			'end_html'		=> '</span>',
 			'value'			=> '<img src="images/common/save.png" alt="Save" />' . __('Save'),
 		),
@@ -37,7 +37,7 @@ $editor_config = array(
 		'end_html'		=> '</div>',
 		array(
 			'name'			=> 'refresh',
-			'start_html'	=> '<span id="refresh" class="refresh-button" onclick="bstudio.refreshEditor(\'F1\', \'' . $this->module . '\', \'editor\', \'refresh\', \'confirm\', true)">',
+			'start_html'	=> '<span id="refresh" class="refresh-button" onclick="bcode.refreshEditor(\'F1\', \'' . $this->module . '\', \'editor\', \'refresh\', \'confirm\', true)">',
 			'end_html'		=> '</span>',
 			'value'			=> '<img src="images/editor/refresh.png" alt="Save" />' . __('Refresh'),
 		),

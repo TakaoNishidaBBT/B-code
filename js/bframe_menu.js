@@ -218,7 +218,7 @@
 				a.href = p[0].replace(/&amp;/, '&');
 				a.title = p[1];
 
-				bstudio.activateModalWindow(a, p[2], p[3]);
+				bcode.activateModalWindow(a, p[2], p[3]);
 			}
 			menu_container.closeAll();
 		}
