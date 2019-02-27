@@ -30,7 +30,9 @@ div.list-header ul.search li.search {
 }
 div.list-header ul.search li.search .keyword {
 	width: 300px;
+	height: 36px;
 	padding: 8px 30px 8px 8px;
+	box-sizing: border-box;
 	background-color: transparent;
 	border: none;
 	font-size: 14px;
@@ -42,7 +44,9 @@ div.list-header ul.search input:forcus {
 	display: block;
 	position: absolute;
 	right: 0;
+	height: 36px;
 	padding: 8px 0 8px 30px;
+	box-sizing: border-box;
 	font-size: 14px;
 	width: 30px;
 	overflow: hidden;
