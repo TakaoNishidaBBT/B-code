@@ -30,7 +30,9 @@ div.list-header ul.search li.search {
 }
 div.list-header ul.search li.search .keyword {
 	width: 300px;
+	height: 36px;
 	padding: 8px 30px 8px 8px;
+	box-sizing: border-box;
 	background-color: transparent;
 	border: none;
 	font-size: 14px;
@@ -42,11 +44,13 @@ div.list-header ul.search input:forcus {
 	display: block;
 	position: absolute;
 	right: 0;
+	height: 36px;
 	padding: 8px 0 8px 30px;
+	box-sizing: border-box;
 	font-size: 14px;
 	width: 30px;
 	overflow: hidden;
-	background: url(images/common/search.png) #e3e3e3 no-repeat center center;
+	background: url(../images/common/search.png) #e3e3e3 no-repeat center center;
 	border: none;
 	cursor: pointer;
 }
@@ -58,7 +62,7 @@ div.list-header ul.search input:forcus {
 	font-size: 14px;
 	position: absolute;
 	right: 0;
-	background: url(images/common/plus.png) #7b7b7b no-repeat 92% center;
+	background: url(../images/common/plus.png) #7b7b7b no-repeat 92% center;
 	background-size: 14px 14px;
 	color: #fff;
 	cursor: pointer;
