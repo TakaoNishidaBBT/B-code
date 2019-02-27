@@ -7,7 +7,7 @@
 				<ul class="control">
 					<li class="back-button" onclick="bframe.submit('F1', 'project', 'list', 'back', '')">
 						<img src="images/common/left_arrow_white.png" alt="left arow" />
-						<span>Back To List</span>
+						<span><?php echo __('Back To List'); ?></span>
 					</li>
 				</ul>
 			</div>
@@ -16,7 +16,7 @@
 		<div id="main" class="bframe_adjustparent bframe_scroll" data-param="margin:168">
 			<div class="main-container">
 				<div class="delete-complete">
-					<span class="project-name"><?php echo $this->project_name; ?></span> was deleted!
+					<span class="project-name"><?php echo $this->project_name; ?></span> <?php echo __('was deleted!'); ?>
 				</div>
 			</div>
 		</div>

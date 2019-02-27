@@ -7,7 +7,7 @@
 				<ul class="control">
 					<li class="back-button" onclick="bframe.submit('F1', 'user', 'list', 'back', '')">
 						<img src="images/common/left_arrow_white.png" alt="left arow" />
-						<span>Back To List</span>
+						<span><?php echo __('Back To List'); ?></span>
 					</li>
 				</ul>
 				<div class="message-container"><span id="message"></span></div>
@@ -24,7 +24,7 @@
 				</div>
 				<ul class="submit">
 					<li class="submit-button delete" onclick="bframe.confirmSubmit('<?php echo __('Are you sure you want to delete?'); ?>', 'F1', 'user', 'form', 'delete', '')">
-						<span>Delete</span>
+						<span><?php echo __('Delete'); ?></span>
 					</li>
 				</ul>
 			</div>

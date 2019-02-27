@@ -256,7 +256,7 @@
 
 			$response['status'] = 'complete';
 			$response['progress'] = 100;
-			$response['message'] = 'Complete!';
+			$response['message'] = __('Complete!');
 			$response['message_obj'] = 'message';
 			$this->sendChunk(',' . json_encode($response));
 

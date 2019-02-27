@@ -338,9 +338,9 @@
 		'Enabled'						=> '有効',
 		'Disabled'						=> '無効',
 		'Admin'							=> '管理者',
-		'Editor'						=> '投稿者',
-		'Please enter user ID'			=> 'ユーザIDを入力してください',
-		'Please enter user ID using only alphanumeric, hyphen(-) and underbar(_)'
+		'Editor'						=> '編集者',
+		'Please enter User ID'			=> 'ユーザIDを入力してください',
+		'Please enter User ID using only alphanumeric, hyphen(-) and underbar(_)'
 										=> 'ユーザIDは英数とハイフン(-)アンダーバー(_)で入力してください',
 		'This ID is already in use'		=> '既に登録されています',
 		'This ID cannot be used'		=> 'そのIDは登録できません',
@@ -453,4 +453,15 @@
 										=> 'カレントバージョンレコードの作成に失敗しました。',
 		'Failed to create configuration record.'
 										=> '基本設定レコードの作成に失敗しました。',
+
+		// Project
+		'Add'							=> '新規登録',
+		'Directory'						=> 'ディレクトリ',
+		'Back To List'					=> '一覧に戻る',
+		'Register'						=> '登録',
+		'updated.'						=> '登録しました',
+		'saved.'						=> '登録しました',
+		'Complete!'						=> '登録しました',
+		'Failed to update'				=> '登録に失敗しました',
+		'was deleted!'					=> 'を削除しました',
 	);

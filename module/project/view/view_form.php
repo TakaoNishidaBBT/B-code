@@ -7,7 +7,7 @@
 				<ul class="control">
 					<li class="back-button" onclick="bframe.submit('F1', 'project', 'list', 'back', '')">
 						<img src="images/common/left_arrow_white.png" alt="left arow" />
-						<span>Back To List</span>
+						<span><?php echo __('Back To List'); ?></span>
 					</li>
 				</ul>
 				<div class="message-container"><span id="message"></span></div>
@@ -25,7 +25,7 @@
 
 				<ul class="submit">
 					<li id="submit-button" class="submit-button" onclick="bframe.ajaxSubmit.submit('F1', 'project', 'form', 'register', 'confirm', true)">
-						<span>Register</span>
+						<span><?php echo __('Register'); ?></span>
 					</li>
 				</ul>
 			</div>

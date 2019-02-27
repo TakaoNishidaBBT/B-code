@@ -40,7 +40,7 @@ $list_header_config = array(
 						'name'			=> 'add-button',
 						'start_html'	=> '<span id="add-button" class="add-button" onclick="bframe.submit(\'header_form\', \'' . $this->module . '\', \'form\', \'select\', \'insert\')">',
 						'end_html'		=> '</span>',
-						'value'			=> __('Add '),
+						'value'			=> __('Add'),
 					),
 				),
 			),
