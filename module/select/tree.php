@@ -10,6 +10,8 @@
 			parent::__construct(__FILE__);
 
 			$this->dir = B_FILE_ROOT_DIR;
+			$this->root_name = basename(B_FILE_ROOT_DIR);
+			if(!$this->root_name) $this->root_name = 'root';
 
 			if($this->request['directory']) {
 				$this->openCurrentNode($this->request['directory']);

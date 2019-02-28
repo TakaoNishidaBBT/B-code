@@ -19,7 +19,7 @@ $tree_config = array(
 			'selectable'	=> 'false',
 			'folderselect'	=> 'true',
 			'sort'			=> 'auto',
-			'root_name'		=> __('Document Root'),
+			'root_name'		=> $this->root_name,
 			'method'		=>
 			array(
 				'getNodeList'	=> 'getNodeList',
