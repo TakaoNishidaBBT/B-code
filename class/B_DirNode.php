@@ -12,35 +12,16 @@
 	class B_DirNode {
 		function __construct($dir, $path, $open_nodes=null, $parent=null, $expand_level=0, $level=0, $thumb_info=null) {
 			if(!$path) return;
-//$this->log = new B_Log(B_LOG_FILE);
+
 			$this->dir = $dir;
 			$this->path = $path == 'root' ? '' : $path;
 			$this->node_id = $path == '/' ? 'root' : $path;
 
 			$this->fullpath = B_Util::getPath($dir, $this->path);
-
 			$this->file_name = basename($this->fullpath);
-/*
-			if($parent) {
-				$this->parent = $parent;
-			}
-			else if(!$this->isRoot()) {
-				$dir = dirname($this->path) == '.' ? '' : dirname($this->path);
-				$this->parent = new B_DirNode($this->dir, str_replace('\\', '/', $dir), null, null);
-				$this->parent->addNodes($this);
-			}
-*/
 			$this->level = $level;
 			$this->node_count = 0;
-/*
-			if(!$thumb_info	&& file_exists(B_FILE_INFO_THUMB)) {
-				$serializedString = file_get_contents(B_FILE_INFO_THUMB);
-			    $thumb_info = unserialize($serializedString);
-			}
-			$this->thumb_info = $thumb_info;
-			$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
-			$this->thumb = $this->thumb_info[$this->thumbnail_image_path];
-*/
+
 			if(!file_exists($this->fullpath)) return;
 
 			$this->update_datetime_u = filemtime($this->fullpath);
@@ -59,6 +40,7 @@
 			}
 
 			$handle = opendir($this->fullpath);
+			if(!$handle) return;
 
 			while(false !== ($file_name = readdir($handle))) {
 				if($file_name == '.' || $file_name == '..') continue;
