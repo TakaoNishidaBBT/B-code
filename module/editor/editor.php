@@ -101,11 +101,7 @@
 				$message = __("Another user has updated this file\nAre you sure you want to overwrite?");
 			}
 			else {
-				$contents = $this->post['contents'];
-				if($contents) {
-					$contents = mb_convert_encoding($this->post['contents'], 'auto', 'UTF-8');
-				}
-				if(file_put_contents($file_path, $contents, LOCK_EX) === FALSE) {
+				if(file_put_contents($file_path, $this->post['contents'], LOCK_EX) === FALSE) {
 					$status = false;
 					$mode = 'alert';
 					$error = error_get_last();
