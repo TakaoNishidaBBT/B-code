@@ -121,8 +121,8 @@
 	ini_set('error_log', B_CURRENT_DIR . 'log/system.log');
 
 	// Edit Target Root Directory
-	define('B_FILE_ROOT', B_DOC_ROOT);
-	define('B_FILE_ROOT_DIR', B_DOC_ROOT . '/');
-	define('B_FILE_ROOT_URL', B_FILE_ROOT);
+	define('B_FILE_ROOT', '/');
+	define('B_FILE_ROOT_DIR', '/');
+	define('B_FILE_ROOT_URL', '/');
 
 	ini_set('memory_limit', '256M');

@@ -126,6 +126,7 @@ $form_config = array(
 						'terminal_id'	=> TERMINAL_ID,
 						'module'		=> 'select', 
 						'page'			=> 'tree',
+						'method'		=> 'open',
 					),
 					'specialchars'	=> 'none',
 					'value'			=> '<img alt="' . __('Directory') . '" src="images/common/gear.png" />',

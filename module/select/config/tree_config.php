@@ -20,7 +20,6 @@ $tree_config = array(
 			'folderselect'	=> 'true',
 			'sort'			=> 'auto',
 			'root_name'		=> $this->root_name,
-			'storage'		=> $this->storage,
 			'method'		=>
 			array(
 				'getNodeList'	=> 'getNodeList',

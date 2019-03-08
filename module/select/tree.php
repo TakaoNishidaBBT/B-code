@@ -13,11 +13,6 @@
 			$this->root_name = basename(B_FILE_ROOT_DIR);
 			if(!$this->root_name) $this->root_name = 'root';
 
-			if($this->request['directory']) {
-				$this->openCurrentNode($this->request['directory']);
-				$this->session['current_node'] = $this->request['directory'];
-			}
-
 			$this->storage = B_TREE_STORAGE_PREIX . 'select-dir';
 
 			require_once('./config/tree_config.php');
@@ -29,6 +24,24 @@
 			$this->status = true;
 			if(!$this->session['sort_order']) $this->session['sort_order'] = 'asc';
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
+
+			// remove windows drive letter
+			if(strstr(B_DOC_ROOT, ':')) {
+				$this->doc_root = explode(':', B_DOC_ROOT)[1];
+			}
+			else {
+				$this->doc_root = B_DOC_ROOT;
+			}
+		}
+
+		function open() {
+			if($this->request['directory']) {
+				$this->openCurrentNode($this->request['directory']);
+				$this->session['current_node'] = $this->request['directory'];
+			}
+			else {
+				$this->session['current_node'] = $this->doc_root;
+			}
 		}
 
 		function openCurrentNode($node_id) {
@@ -70,9 +83,8 @@
 			}
 
 			if(!$this->session['current_node']) {
-				$this->session['current_node'] = B_DOC_ROOT;
+				$this->session['current_node'] = $this->doc_root;
 			}
-
 			$this->response($this->session['current_node'], 'select');
 
 			exit;
@@ -572,11 +584,13 @@
 				$response['message'] = $this->message;
 			}
 
-			$root_node = new B_DirNode($this->dir, '/', $this->session['open_nodes'], null, 1);
-			$current_node = $root_node->getNodeById($this->session['current_node']);
-			if(!$current_node) {
-				$current_node = $root_node;
-				$this->session['current_node'] = 'root';
+			if(strstr($this->session['current_node'], $doc_root)) {
+				$current_node = new B_DirNode($this->dir, $doc_root, $this->session['open_nodes'], null, 1);
+				$root_node = $current_node->getRootNode();
+			}
+			else {
+				$current_node = new B_DirNode($this->dir, $this->session['current_node'], $this->session['open_nodes'], null, 1);
+				$root_node = $current_node->getRootNode();
 			}
 
 			if($this->session['sort_key']) {

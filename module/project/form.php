@@ -249,6 +249,8 @@
 			$this->progress = 0;
 			$node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
 
+			$this->form->setFilterValue($this->session['mode']);
+
 			$response['innerHTML'] = array(
 				'user-form'		=> $this->form->getHtml(),
 				'hidden-form'	=> $this->form->getHiddenHtml(),

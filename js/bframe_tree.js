@@ -136,6 +136,9 @@
 				dir+= '/' + node_dir[i];
 				open_nodes[dir] = true;
 			}
+			if(Object.keys(open_nodes).length) {
+				open_nodes['root'] = true;
+			}
 		}
 
 		function setTabControl() {
@@ -757,9 +760,10 @@
 					return;
 				}
 
-				// set current node
-				if(response.current_node) {
+				// if not set current_node then set current node from server
+				if(!current_node.id() && response.current_node) {
 					current_node.set('t'+response.current_node);
+					setOpenNodes(current_node.id());
 				}
 
 				// remove tree
@@ -890,6 +894,7 @@
 			ul.id = 'tu' + node_info.node_id;
 			ul.name = 'nodes';
 			li.appendChild(ul);
+
 			if(!open_nodes[node_info.node_id]) {
 				ul.style.display='none';
 			}
@@ -1965,6 +1970,8 @@
 		this.open_property = open_property;
 
 		function save() {
+			if(!property.storage) return;
+
 			var item = restore();
 
 			item.open_nodes = open_nodes;
