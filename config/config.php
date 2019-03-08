@@ -40,6 +40,9 @@
 	// Admin Session Name
 	define('B_ADMIN_SESSION_NAME', 'bcode-admin-session');
 
+	// Tree Lodal Storage Name Prefix
+	define('B_TREE_STORAGE_PREIX', 'bcode-storage-');
+
 	// URL of Top Page
 	define('B_SITE_ROOT', 'http://' . B_HTTP_HOST . B_CURRENT_ROOT);
 	define('B_SITE_ROOT_SSL', 'https://' . B_HTTP_HOST . B_CURRENT_ROOT);
@@ -118,7 +121,7 @@
 	ini_set('error_log', B_CURRENT_DIR . 'log/system.log');
 
 	// Edit Target Root Directory
-	define('B_FILE_ROOT', '/');
+	define('B_FILE_ROOT', B_DOC_ROOT);
 	define('B_FILE_ROOT_DIR', B_DOC_ROOT . '/');
 	define('B_FILE_ROOT_URL', B_FILE_ROOT);
 

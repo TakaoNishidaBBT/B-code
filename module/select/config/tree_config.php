@@ -20,6 +20,7 @@ $tree_config = array(
 			'folderselect'	=> 'true',
 			'sort'			=> 'auto',
 			'root_name'		=> $this->root_name,
+			'storage'		=> $this->storage,
 			'method'		=>
 			array(
 				'getNodeList'	=> 'getNodeList',
@@ -116,10 +117,10 @@ $tree_config = array(
 					'submenu'	=>
 					array(
 						array(
-							'menu'		=> __('Category'),
+							'menu'		=> __('Folder'),
 							'func'		=> 'createNode',
-							'icon'		=> 'images/folders/category.png',
-							'param'		=> 'node_type=category&node_class=category',
+							'icon'		=> './images/folders/folder.png',
+							'param'		=> 'node_type=folder&node_class=folder',
 						),
 					),
 					'submenu_width'	=> '120',

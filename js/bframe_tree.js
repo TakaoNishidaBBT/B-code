@@ -120,12 +120,12 @@
 
 				// initialize open_nodes current_node from local storage
 				var item = restore();
-				current_node.set(item.current_node);
-				if(item.open_nodes) {
-					open_nodes = item.open_nodes;
+				if(item) {
+					if(item.current_node) current_node.set(item.current_node);
+					if(item.open_nodes) open_nodes = item.open_nodes;
 				}
 
-				getNodeList('');
+				getNodeList(current_node.id());
 			}
 		}
 
@@ -624,10 +624,9 @@
 		function getNodeList(id, mode) {
 			var param;
 
-			open_nodes[id.substr(1)] = '1';
-
 			param = 'terminal_id='+terminal_id;
 			if(id) {
+				open_nodes[id.substr(1)] = '1';
 				param+= '&node_id='+id.substr(1);
 			}
 			if(display_mode) {
@@ -647,7 +646,6 @@
 			if(current_node.id()) {
 				param+= '&current_node=' + current_node.id().substr(1);
 			}
-
 			if(bframe.progressBar) {
 				httpObj = createXMLHttpRequest(showProgress);
 				var params = {
@@ -1973,12 +1971,14 @@
 			item.current_node = current_node.id();
 
 			var item_json = JSON.stringify(item);
-			localStorage.setItem(property.project, item_json);
+			localStorage.setItem(property.storage, item_json);
 		}
 		this.save = save;
 
 		function restore() {
-			var item_json = localStorage.getItem(property.project);
+			if(!property.storage) return;
+
+			var item_json = localStorage.getItem(property.storage);
 			if(item_json) {
 				return JSON.parse(item_json);
 			}
@@ -2427,12 +2427,12 @@
 				item.tabs = tabs;
 				item.visible_index = visible_index;
 				var item_json = JSON.stringify(item);
-				localStorage.setItem(property.project, item_json);
+				localStorage.setItem(property.storage, item_json);
 			}
 			this.save = save;
 
 			function restore() {
-				var item_json = localStorage.getItem(property.project);
+				var item_json = localStorage.getItem(property.storage);
 				if(item_json) {
 					return JSON.parse(item_json);
 				}
@@ -2997,6 +2997,7 @@
 				close_button.addEventListener('click', tc.close);
 
 				this.add = function(node_id, mode) {
+console.log('this.add', node_id, mode);
 					editor = document.getElementById('ed' + node_id);
 					node_array = node_id.split('/');
 					this.setFileName(node_array[node_array.length-1]);
@@ -3088,6 +3089,7 @@
 
 				this.showFileName = function(f_name) {
 					if(!f_name) f_name = current_node.id().substr(1);
+console.log('f_name', f_name);
 					bcode.setFileName(f_name);
 				}
 

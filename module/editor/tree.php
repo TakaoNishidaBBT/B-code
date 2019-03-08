@@ -15,6 +15,7 @@
 			}
 			$this->project = $this->session['project'];
 			$this->project_dir = $this->session['project_dir'];
+			$this->storage = B_TREE_STORAGE_PREIX . $this->project;
 
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $this->project . '/');
 			$this->dir = B_FILE_ROOT_DIR;

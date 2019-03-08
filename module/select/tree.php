@@ -18,6 +18,8 @@
 				$this->session['current_node'] = $this->request['directory'];
 			}
 
+			$this->storage = B_TREE_STORAGE_PREIX . 'select-dir';
+
 			require_once('./config/tree_config.php');
 			$this->tree_config = $tree_config;
 			$this->tree = new B_DirNode($this->dir, '');
@@ -31,10 +33,10 @@
 
 		function openCurrentNode($node_id) {
 			$dir = explode('/', $node_id);
-
-			for($i=0; $i<count($dir)-1; $i++) {
+			for($i=0; $i<count($dir); $i++) {
 				if(!$dir[$i]) continue;
-				$path.= '/' . $dir[$i];
+				if($path) $path.= '/';
+				$path.= $dir[$i];
 				$this->session['open_nodes'][$path] = true;
 			}
 		}
@@ -49,26 +51,28 @@
 				
 				$this->session['sort_key'] = $this->request['sort_key'];
 			}
-			if($this->request['node_id'] && $this->request['mode'] != 'open') {
-				$this->session['current_node'] = $this->request['node_id'];
-				$this->session['selected_node'] = $this->request['node_id'];
+
+			if($this->request['current_node']) {
+				$this->session['current_node'] = $this->request['current_node'];
 			}
-			if($this->request['node_id']) {
-				$this->session['open_nodes'][$this->request['node_id']] = true;
-			}
+
+			// set open_mode
 			if($this->request['mode'] == 'open') {
 				$this->open_node = true;
-				$this->session['open_tree_nodes'][$this->request['node_id']] = true;
 			}
-			if(!$this->session['open_tree_nodes']) {
-				$this->session['open_tree_nodes']['root'] = true;
+
+			// set open_nodes from request
+			$this->session['open_nodes'] = array();
+			if(is_array($this->request['open_nodes'])) {
+				foreach($this->request['open_nodes'] as $node) {
+					$this->session['open_nodes'][$node] = true;
+				}
 			}
+
 			if(!$this->session['current_node']) {
-				$this->session['current_node'] = 'root';
+				$this->session['current_node'] = B_DOC_ROOT;
 			}
-			if(isset($this->request['display_mode'])) {
-				$this->session['display_mode'] = $this->request['display_mode'];
-			}
+
 			$this->response($this->session['current_node'], 'select');
 
 			exit;
@@ -200,7 +204,6 @@
 
 			case 'cut':
 				foreach($this->request['source_node_id'] as $node_id) {
-					$this->log->write($node_id, dirname($node_id));
 					$source = new B_FileNode($this->dir, $node_id, null, null, 'all');
 
 					if(!file_exists($source->fullpath)) {
@@ -568,6 +571,7 @@
 			if($this->message) {
 				$response['message'] = $this->message;
 			}
+
 			$root_node = new B_DirNode($this->dir, '/', $this->session['open_nodes'], null, 1);
 			$current_node = $root_node->getNodeById($this->session['current_node']);
 			if(!$current_node) {

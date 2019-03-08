@@ -19,6 +19,16 @@
 
 			$this->fullpath = B_Util::getPath($dir, $this->path);
 			$this->file_name = basename($this->fullpath);
+
+			if($parent) {
+				$this->parent = $parent;
+			}
+			else if(!$this->isRoot()) {
+				$dir = dirname($this->path) == '.' ? '' : dirname($this->path);
+				$this->parent = new B_DirNode($this->dir, str_replace('\\', '/', $dir), null, null);
+				$this->parent->addNodes($this);
+			}
+
 			$this->level = $level;
 			$this->node_count = 0;
 
@@ -406,21 +416,6 @@
 			return $ret;
 		}
 
-		function createFile($node_name, &$new_node_id) {
-			if(!is_dir($this->fullpath)) {
-				return false;
-			}
-			$new_node_name = $this->getNewNodeName($this->fullpath, $node_name, 'insert');
-			$file_name = B_Util::getPath($this->fullpath, $new_node_name);
-			$fp = fopen($file_name, 'w');
-			fclose($fp);
-			chmod($file_name, 0666);
-
-			$new_node_id = B_Util::getPath($this->path, $new_node_name);
-
-			return true;
-		}
-
 		function getNewNodeName($dir, $default_name, $mode) {
 			$info = pathinfo($default_name);
 
@@ -489,77 +484,9 @@
 			return $parent_path;
 		}
 
-		function getMaxThumbnailNo() {
-			if($handle = opendir(B_UPLOAD_THUMBDIR)) {
-				while(false !== ($file_name = readdir($handle))){
-					if($file_name == '.' || $file_name == '..') continue;
-					$number = substr($file_name, 0, 10);
-					if(!is_numeric($number)) continue;
-					if(!$max || intval($max) < intval($number)) {
-						$max = $number;
-					}
-				}
-				closedir($handle);
-
-				return $max;
-			}
-		}
-
-		function createthumbnail(&$data, &$index=0, $except_array=null, $callback=null) {
-			if($this->file_name && is_array($except_array) && array_key_exists($this->file_name, $except_array)) return;
-
-			if(is_array($this->node)) {
-				foreach(array_keys($this->node) as $key) {
-					$this->node[$key]->createthumbnail($data, $index, $except_array, $callback);
-				}
-			}
-			if($this->node_type != 'root') {
-				if($this->_createthumbnail($data, $index)) {
-					if($callback) $this->callBack($callback);
-				}
-			}
-		}
-
-		function _createthumbnail(&$data, &$index) {
-			if($this->node_type == 'folder') return true;
-			if(!file_exists($this->fullpath)) return;
-
-			if($this->thumb && file_exists(B_UPLOAD_THUMBDIR . $this->thumb)) {
-				$data[$this->thumbnail_image_path] = $this->thumb;
-				return;
-			}
-
-			$file_info = pathinfo($this->path);
-			$index++;
-			$thumbnail_file_path = B_UPLOAD_THUMBDIR . str_pad($index, 10, '0', STR_PAD_LEFT) . '.' . $file_info['extension'];
-
-			// create thumbnail
-			if(B_Util::createthumbnail($this->fullpath, $thumbnail_file_path, B_THUMB_MAX_SIZE)) {
-				$info = B_Util::pathinfo($thumbnail_file_path);
-				chmod($thumbnail_file_path, 0777);
-				$data[$this->thumbnail_image_path] = $info['basename'];
-			}
-			return true;
-		}
-
-		function getThumbnailImgPath($path) {
-			$file_info = pathinfo($path);
-			if(strtolower($file_info['extension']) == 'svg') {
-				if($file_info['dirname'] != '.' && $file_info['dirname'] != '\\') {
-					return B_Util::getPath(B_Util::getPath(B_FILE_ROOT_URL, $file_info['dirname']), $thumb_prefix . $file_info['basename']);
-				}
-				else {
-					return B_Util::getPath(B_FILE_ROOT_URL, $thumb_prefix . $file_info['basename']);
-				}
-			}
-			else {
-				$thumb_prefix = B_THUMB_PREFIX;
-				if($file_info['dirname'] != '.' && $file_info['dirname'] != '\\') {
-					return B_Util::getPath($file_info['dirname'], $thumb_prefix . $file_info['basename']);
-				}
-				else {
-					return $thumb_prefix . $file_info['basename'];
-				}
+		function getRootNode() {
+			for($node = $this; $node; $node = $node->parent) {
+				if($node->isRoot()) return $node;
 			}
 		}
 
@@ -571,27 +498,6 @@
 				foreach(array_keys($this->node) as $key) {
 					$ret = $this->node[$key]->getNodeById($node_id);
 					if($ret) return $ret;
-				}
-			}
-		}
-
-		function serializeForDownload(&$data, $path='') {
-			if($path) $path.= '/';
-			$mypath = $path . $this->file_name;
-			if(is_array($this->node)) {
-				foreach(array_keys($this->node) as $key) {
-					$this->node[$key]->serializeForDownload($data, $mypath);
-				}
-			}
-			else {
-				if(substr($this->path, 0, 1) == '/') {
-					$path = substr($this->path, 1);
-				}
-				if($this->node_type != 'folder' && $this->node_type != 'root') {
-					$data[$mypath] = $this->fullpath;
-				}
-				else {
-					$data[$mypath] = '';
 				}
 			}
 		}
@@ -609,17 +515,6 @@
 			}
 
 			return $count + $mynode;
-		}
-
-		function filesize() {
-			if($this->file_size) $size = $this->file_size;
-
-			if(is_array($this->node)) {
-				foreach(array_keys($this->node) as $key) {
-					$size += $this->node[$key]->filesize();
-				}
-			}
-			return $size;
 		}
 
 		function callBack($call_back) {

@@ -31,8 +31,6 @@
 			$this->level = $level;
 			$this->node_count = 0;
 
-			$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
-			$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
 			if(!file_exists($this->fullpath)) return;
 
 			$this->update_datetime_u = filemtime($this->fullpath);
@@ -46,6 +44,10 @@
 					$this->image_size = $image_size[0] * $image_size[1];
 					$this->human_image_size = $image_size[0] . 'x' . $image_size[1];
 				}
+
+				// thumbnail_image_path
+				$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
+				$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
 
 				return;
 			}
