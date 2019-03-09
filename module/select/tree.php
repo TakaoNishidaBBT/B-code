@@ -584,8 +584,8 @@
 				$response['message'] = $this->message;
 			}
 
-			if(strstr($this->session['current_node'], $doc_root)) {
-				$current_node = new B_DirNode($this->dir, $doc_root, $this->session['open_nodes'], null, 1);
+			if(strstr($this->session['current_node'], $this->doc_root)) {
+				$current_node = new B_DirNode($this->dir, $this->doc_root, $this->session['open_nodes'], null, 1);
 				$root_node = $current_node->getRootNode();
 			}
 			else {
