@@ -9,6 +9,7 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
+			$this->dir = B_DOC_ROOT;
 			$this->project = $this->session['project'];
 			$this->project_dir = $this->session['project_dir'];
 
@@ -153,13 +154,13 @@
 
 						usleep(300000);
 
-						$node = new B_FileNode(B_FILE_ROOT_DIR, $this->request['node_id'], null, null, 'all');
+						$node = new B_FileNode($this->dir, $this->request['node_id'], null, null, 'all');
 						$this->createTumbnail_files = 0;
 						$this->progress = 0;
 						$node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
 
 						foreach($this->registered_archive_node as $path) {
-							$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $path), null, null, 0);
+							$node = new B_FileNode($this->dir, B_Util::getPath($this->request['node_id'], $path), null, null, 0);
 							$response['node_info'][] = $node->getNodeList('', '', $this->request['node_id']);
 						}
 
@@ -171,11 +172,11 @@
 					}
 				}
 				else {
-					$path = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']));
+					$path = B_Util::getPath($this->dir, B_Util::getPath($this->request['node_id'], $file['basename']));
 					$status = move_uploaded_file($_FILES['Filedata']['tmp_name'], $path);
 					if($status) {
 						chmod($path, 0777);
-						$node = new B_FileNode(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $file['basename']), null, null, 1);
+						$node = new B_FileNode($this->dir, B_Util::getPath($this->request['node_id'], $file['basename']), null, null, 1);
 						$node->createthumbnail();
 						$response['node_info'][] = $node->getNodeList('', '', $this->request['node_id']);
 					}
@@ -259,7 +260,7 @@
 				$this->registered_archive_node[] = $node->path;
 			}
 
-			$dest = B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $node->path));
+			$dest = B_Util::getPath($this->dir, B_Util::getPath($this->request['node_id'], $node->path));
 			if(is_dir($node->fullpath)) {
  				if(!file_exists($dest)) {
 					mkdir($dest);
@@ -267,7 +268,7 @@
 				return true;
 			}
 			else {
-				copy($node->fullpath, B_Util::getPath(B_FILE_ROOT_DIR, B_Util::getPath($this->request['node_id'], $node->path)));
+				copy($node->fullpath, B_Util::getPath($this->dir, B_Util::getPath($this->request['node_id'], $node->path)));
 			}
 
 			$this->registerd_files++;

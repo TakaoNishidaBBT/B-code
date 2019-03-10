@@ -162,7 +162,9 @@
 			$row = $this->df->selectByPk($new_id);
 			$this->session['init_value'] = $row;
 
-			$this->createThumbnail($param['name'], $param['directory']);
+			$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $value['name']) . '/';
+
+			$this->createThumbnailDir($param['name'], $param['directory']);
 
 			return true;
 		}
@@ -176,7 +178,8 @@
 
 			// recreate thumbnail
 			if($param['directory'] != $this->session['init_value']['directory']) {
-				$this->createThumbnail($param['name'], $param['directory']);
+				$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $this->session['init_value']['name']) . '/';
+				$this->removeThumbnail();
 			}
 
 			// rename thmubnail directory
@@ -199,81 +202,38 @@
 
 			$this->setView('resultView');
 
-			define('B_UPLOAD_THUMBDIR', B_Util::getPath(B_THUMBDIR, $value['name']) . '/');
+			$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $value['name']) . '/';
 
 			$this->removeThumbnail();
-			if(file_exists(B_UPLOAD_THUMBDIR)) rmdir(B_UPLOAD_THUMBDIR);
+
+			if(file_exists($this->thumb_dir)) rmdir($this->thumb_dir);
 
 			$this->setView('resultView');
 
 			return true;
 		}
 
-		function createThumbnail($name, $directory) {
-			$this->new_thumbnail = true;
-
-			// Set time limit to 3 minutes
-			set_time_limit(180);
-
-			$progress = 0;
-
-			// send progress
-			header('Content-Type: application/octet-stream');
-			header('Transfer-encoding: chunked');
-			flush();
-			ob_flush();
-
-			// Send start message
-			$response['status'] = 'show';
-			$response['progress'] = 0;
-			$response['message'] = 'Creating Thumbnail files';
-			$this->sendChunk(json_encode($response));
-
+		function createThumbnailDir($name, $directory) {
 			if(!file_exists(B_THUMBDIR)) {
 				mkdir(B_THUMBDIR);
 			}
 
-			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $name . '/');
-			if(file_exists(B_UPLOAD_THUMBDIR)) {
+			if(file_exists($this->thumb_dir)) {
 				$this->removeThumbnail();
 			}
 			else {
-				mkdir(B_UPLOAD_THUMBDIR);
-				chmod(B_UPLOAD_THUMBDIR, 0777);
+				mkdir($this->thumb_dir);
+				chmod($this->thumb_dir, 0777);
 			}
-
-			if(substr($directory, -1) != '/') $directory .= '/';
-			$node = new B_FileNode(B_FILE_ROOT_DIR, $directory, null, null, 'all');
-			$this->total_files = $node->nodeCount(true, $this->except);
-			$this->createTumbnail_files = 0;
-			$this->progress = 0;
-			$node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
-
-			$this->form->setFilterValue($this->session['mode']);
-
-			$response['innerHTML'] = array(
-				'user-form'		=> $this->form->getHtml(),
-				'hidden-form'	=> $this->form->getHiddenHtml(),
-			);
-
-			$response['status'] = 'complete';
-			$response['progress'] = 100;
-			$response['message'] = __('Complete!');
-			$response['message_obj'] = 'message';
-			$this->sendChunk(',' . json_encode($response));
-
-			sleep(1);
-
-			$this->sendChunk();	// terminate
 		}
 
 		function removeThumbnail() {
-			if(!file_exists(B_UPLOAD_THUMBDIR)) return;
+			if(!file_exists($this->thumb_dir)) return;
 
-			if($handle = opendir(B_UPLOAD_THUMBDIR)) {
+			if($handle = opendir($this->thumb_dir)) {
 				while(false !== ($file_name = readdir($handle))){
 					if($file_name == '.' || $file_name == '..') continue;
-					unlink(B_UPLOAD_THUMBDIR . $file_name);
+					unlink($this->thumb_dir . $file_name);
 				}
 				closedir($handle);
 			}

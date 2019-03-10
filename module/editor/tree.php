@@ -9,16 +9,20 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
+			$this->dir = B_DOC_ROOT;
+
 			if($this->request['project']) {
 				$this->session['project'] = $this->request['project'];
 				$this->session['project_dir'] = $this->getProjectDirectory($this->request['project']);
 			}
 			$this->project = $this->session['project'];
-			$this->project_dir = $this->session['project_dir'];
+			$this->project_dir = str_replace($this->dir, '', $this->session['project_dir']);
+			if(substr($this->project_dir, 0, 1) == '/') $this->project_dir = substr($this->project_dir, 1);
+
+
 			$this->storage = B_TREE_STORAGE_PREIX . $this->project;
 
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $this->project . '/');
-			$this->dir = B_FILE_ROOT_DIR;
 
 			require_once('./config/tree_config.php');
 			$this->tree_config = $tree_config;
@@ -593,6 +597,11 @@
 			}
 			if($this->open_node) {
 				$response['open_node'] = true;
+			}
+
+			// create thmubnail if necessary
+			if(!$current_node->thumbnail_exists()) {
+				$current_node->createthumbnail();
 			}
 
 			header('Content-Type: application/x-javascript charset=utf-8');

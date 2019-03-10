@@ -36,6 +36,7 @@
 			$this->update_datetime_u = filemtime($this->fullpath);
 			$this->update_datetime_t = date('Y/m/d H:i', filemtime($this->fullpath));
 			if(!is_dir($this->fullpath)) {
+				$this->file_info = pathinfo($this->fullpath);
 				$this->file_size = filesize($this->fullpath);
 				$this->node_type = 'file';
 				$this->node_class = 'leaf';
@@ -43,11 +44,11 @@
 				if(is_array($image_size)) {
 					$this->image_size = $image_size[0] * $image_size[1];
 					$this->human_image_size = $image_size[0] . 'x' . $image_size[1];
-				}
 
-				// thumbnail_image_path
-				$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
-				$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
+					// thumbnail_image_path
+					$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
+					$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
+				}
 
 				return;
 			}
@@ -365,7 +366,6 @@
 			try {
 				if(file_exists($this->fullpath)) {
 					if(is_dir($this->fullpath)) {
-						$info = pathinfo($source->fullpath);
 						$source->parent->removeNodes($source);
 						$this->addNodes($source);
 						$source->parent = $this;
@@ -506,6 +506,23 @@
 			if($parent_path == '\\') $parent_path = 'root';
 
 			return $parent_path;
+		}
+
+		function thumbnail_exists() {
+			if(is_array($this->node)) {
+				foreach(array_keys($this->node) as $key) {
+					if($this->node[$key]->thumbnail_image_path && $this->node[$key]->file_info[extension] != 'svg') {
+						$thumbnail_file_path = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->node[$key]->thumbnail_image_path);
+						if(file_exists($thumbnail_file_path)) {
+							return true;
+						}
+						else {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
 		}
 
 		function createthumbnail($except_array=null, $callback=null) {

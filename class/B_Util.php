@@ -240,9 +240,7 @@
 				$attr = $xml->attributes();
 				$size[0] = str_replace('px', '', $attr->width);
 				$size[1] = str_replace('px', '', $attr->height);
-				if($size[0] && $size[1]) {
-					return $size;
-				}
+				return $size;
 			}
 			else {
 				return getimagesize($filepath);
