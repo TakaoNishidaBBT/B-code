@@ -77,7 +77,7 @@ option {
 	padding: 4px 10px;
 }
 th, td {
-	font-size: 14px;
+	font-size: 12px;
 	color: #333;
 }
 p {
@@ -284,6 +284,7 @@ table.list th {
 	position: sticky;
 	top: 0;
 	border-bottom: 1px solid #ccc;
+	font-size: 14px;
 }
 table.list th.sortable {
 	background: url(../images/common/sort.png) no-repeat right 2px center;
@@ -316,6 +317,7 @@ table.list td {
 	line-height: 22px;
 	overflow: hidden;
 	vertical-align: middle;
+	font-size: 14px;
 }
 table.list td img {
 	vertical-align: middle;
