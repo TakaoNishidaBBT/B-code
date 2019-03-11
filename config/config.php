@@ -26,6 +26,14 @@
 
 	define('B_DOC_ROOT', $doc_root);
 
+	// remove windows drive letter
+	if(strstr(B_DOC_ROOT, ':')) {
+		define('B_DOC_ROOT_DIR', explode(':', B_DOC_ROOT)[1]);
+	}
+	else {
+		define('B_DOC_ROOT_DIR', B_DOC_ROOT);
+	}
+
 	$current_dir = dirname(str_replace('\\' , '/', __DIR__));
 	$current_path = str_replace(strtolower(B_DOC_ROOT), '', strtolower($current_dir));
 	$site_name = basename($current_path);

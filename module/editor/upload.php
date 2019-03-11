@@ -9,9 +9,9 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			$this->dir = B_DOC_ROOT;
-			$this->project = $this->session['project'];
-			$this->project_dir = $this->session['project_dir'];
+			$this->dir = $this->session['project']['doc_root'];
+			$this->project = $this->session['project']['name'];
+			$this->project_dir = $this->session['project']['project_dir'];
 
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $this->project . '/');
 		}

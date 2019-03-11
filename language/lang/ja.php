@@ -458,10 +458,21 @@
 		'Add'							=> '新規登録',
 		'Directory'						=> 'ディレクトリ',
 		'Back To List'					=> '一覧に戻る',
+		'Domain'						=> 'ドメイン',
 		'Register'						=> '登録',
-		'updated.'						=> '登録しました',
+		'created.'						=> '作成しました',
+		'updated.'						=> '更新しました',
 		'saved.'						=> '登録しました',
 		'Complete!'						=> '登録しました',
 		'Failed to update'				=> '登録に失敗しました',
 		'was deleted!'					=> 'を削除しました',
+		'Please enter project name'		=> 'プロジェクト名を入力してください',
+		'Please enter project name using only alphanumeric, hyphen(-) and underbar(_)'
+										=> 'プロジェクト名は英数とハイフン(-)アンダーバー(_)で入力してください',
+		'This name is already in use'	=> '既に登録されています',
+		'Please enter domain name'		=> 'ドメイン名を入力してください',
+		'Please enter project name using only alphanumeric and hyphen(-)'
+										=> 'ドメイン名は英数とハイフン(-)で入力してください',
+		'Please set directory'			=> 'ディレクトリを設定してください',
+		'Please set doc root'			=> 'Doc Rootを設定してください',
 	);

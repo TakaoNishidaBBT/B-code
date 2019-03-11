@@ -76,7 +76,12 @@
 		}
 
 		function isRoot() {
-			return $this->fullpath == $this->dir;
+			$fullpath = $this->fullpath;
+			$dir = $this->dir;
+			if(substr($fullpath, -1) == '/') $fullpath = substr($fullpath, 0, -1);
+			if(substr($dir, -1) == '/') $dir = substr($dir, 0, -1);
+
+			return $fullpath == $dir;
 		}
 
 		function addNodes(&$object) {
@@ -488,6 +493,7 @@
 			for($node = $this; $node; $node = $node->parent) {
 				if($node->isRoot()) return $node;
 			}
+			return $this;
 		}
 
 		function getNodeById($node_id) {

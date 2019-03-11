@@ -9,17 +9,9 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			$this->dir = B_DOC_ROOT;
-
-			if($this->request['project']) {
-				$this->session['project'] = $this->request['project'];
-				$this->session['project_dir'] = $this->getProjectDirectory($this->request['project']);
-			}
-			$this->project = $this->session['project'];
-			$this->project_dir = str_replace($this->dir, '', $this->session['project_dir']);
-			if(substr($this->project_dir, 0, 1) == '/') $this->project_dir = substr($this->project_dir, 1);
-
-
+			$this->dir = $this->session['project']['doc_root'];
+			$this->project = $this->session['project']['name'];
+			$this->project_dir = $this->session['project']['project_dir'];
 			$this->storage = B_TREE_STORAGE_PREIX . $this->project;
 
 			define('B_UPLOAD_THUMBDIR', B_THUMBDIR . $this->project . '/');
@@ -39,12 +31,16 @@
 		function open() {
 			$this->session['mode'] = 'open';
 			$this->session['current_node'] = '';
+
+			$this->setProject($this->request['project']);
 		}
 
-		function getProjectDirectory($project) {
+		function setProject($project) {
 			$this->df = new B_DataFile(B_PROJECT_DATA, 'project');
-			$row = $this->df->select('name', $project);
-			return $row['directory'];
+			$this->session['project'] = $this->df->select('name', $project);
+			$this->session['project']['project_dir'] = str_replace($this->session['project']['doc_root'], '', $this->session['project']['directory']);
+			if(substr($this->session['project']['project_dir'], 0, 1) == '/') $this->session['project']['project_dir'] = substr($this->session['project']['project_dir'], 1);
+			if(!$this->session['project']['project_dir']) $this->session['project']['project_dir'] = 'root';
 		}
 
 		function select() {

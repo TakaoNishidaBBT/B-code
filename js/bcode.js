@@ -20,6 +20,16 @@
 		if(func) top.bframe.modalWindow.registerCallBackFunction(func);
 	}
 
+	bcode.setDocRoot = function() {
+		var nodes = bframe_tree.getCurrentNodes();
+		var node_id = nodes[0].id.substr(1);
+
+		if(node_id == 'root') node_id = '/';
+
+		bcode.insertValue(window.frameElement.opener, 'doc_root', node_id);
+		window.frameElement.deactivate();
+	}
+
 	bcode.setDirectory = function() {
 		var nodes = bframe_tree.getCurrentNodes();
 		var node_id = nodes[0].id.substr(1);

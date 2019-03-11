@@ -83,14 +83,125 @@ $form_config = array(
 			),
 		),
 
+		// Domain
+		array(
+			'error_group'	=> true,
+			'start_html'	=> '<tr>',
+			'end_html'		=> '</tr>',
+			array(
+				'start_html'		=> '<th>',
+				'end_html'			=> '</th>',
+				'invalid_start_html'=> '<th class="error">',
+				array(
+					'value'			=> __('Domain'),
+				),
+				array(
+					'class'			=> 'B_Guidance',
+					'value'			=> '<span class="require">' . __('*') . '</span>',
+				),
+			),
+			array(
+				'start_html'	=> '<td>',
+				'end_html'		=> '</td>',
+				array(
+					'name'				=> 'domain',
+					'class'				=> 'B_InputText',
+					'attr'				=> 'class="textbox ime_off" maxlength="100" ',
+					'validate'			=>
+					array(
+						array(
+							'type' 			=> 'required',
+							'error_message'	=> __('Please enter domain name'),
+						),
+						array(
+							'type' 			=> 'pattern',
+							'pattern'		=> '^[a-zA-Z0-9\_\-]+$',
+							'error_message'	=> __('Please enter project name using only alphanumeric and hyphen(-)'),
+						),
+					),
+				),
+				array(
+					'name'				=> 'error_message',
+					'class'				=> 'B_ErrMsg',
+					'start_html'		=> '<span class="error-message">',
+					'end_html'			=> '</span>',
+				),
+			),
+		),
+
+		// Doc Root
+		array(
+			'error_group'	=> true,
+			'start_html'	=> '<tr>',
+			'end_html'		=> '</tr>',
+			array(
+				'start_html'		=> '<th>',
+				'end_html'			=> '</th>',
+				'invalid_start_html'=> '<th class="error">',
+				array(
+					'value'			=> __('Doc Root'),
+				),
+				array(
+					'class'			=> 'B_Guidance',
+					'value'			=> '<span class="require">' . __('*') . '</span>',
+				),
+			),
+			array(
+				'start_html'	=> '<td>',
+				'end_html'		=> '</td>',
+				array(
+					'name'			=> 'doc_root',
+					'class'			=> 'B_InputText',
+					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
+					'validate'		=>
+					array(
+						array(
+							'type' 			=> 'required',
+							'error_message'	=> __('Please set doc root'),
+						),
+					),
+				),
+				array(
+					'filter'		=> 'insert/update',
+					'name'			=> 'open_select',
+					'class'			=> 'B_Link',
+					'link'			=> 'index.php',
+					'attr'			=> 'title="' . __('Doc Root') . '" class="settings-button" onclick="top.bframe.modalWindow.activate(this, window, \'doc_root\'); return false;" data-param="width:350,height:400"',
+					'fixedparam'	=>
+					array(
+						'terminal_id'	=> TERMINAL_ID,
+						'module'		=> 'select', 
+						'page'			=> 'tree',
+						'method'		=> 'openDocRoot',
+					),
+					'specialchars'	=> 'none',
+					'value'			=> '<img alt="' . __('Doc Root') . '" src="images/common/gear.png" />',
+				),
+				array(
+					'filter'		=> 'insert/update',
+					'class'			=> 'B_Link',
+					'link'			=> '#',
+					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bcode.clearText(\'doc_root\'); return false;" ',
+					'specialchars'	=> 'none',
+					'value'			=> '<img alt="' . __('Clear') . '" src="images/common/clear.png" />',
+				),
+				array(
+					'name'				=> 'error_message',
+					'class'				=> 'B_ErrMsg',
+					'start_html'		=> '<span class="error-message">',
+					'end_html'			=> '</span>',
+				),
+			),
+		),
+
 		// Directory
 		array(
 			'error_group'	=> true,
 			'start_html'	=> '<tr>',
 			'end_html'		=> '</tr>',
 			array(
-				'start_html'	=> '<th>',
-				'end_html'		=> '</th>',
+				'start_html'		=> '<th>',
+				'end_html'			=> '</th>',
 				'invalid_start_html'=> '<th class="error">',
 				array(
 					'value'			=> __('Directory'),
@@ -107,11 +218,11 @@ $form_config = array(
 					'name'			=> 'directory',
 					'class'			=> 'B_InputText',
 					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
-					'validate'			=>
+					'validate'		=>
 					array(
 						array(
 							'type' 			=> 'required',
-							'error_message'	=> __('Please select directory'),
+							'error_message'	=> __('Please set directory'),
 						),
 					),
 				),
@@ -126,7 +237,7 @@ $form_config = array(
 						'terminal_id'	=> TERMINAL_ID,
 						'module'		=> 'select', 
 						'page'			=> 'tree',
-						'method'		=> 'open',
+						'method'		=> 'openDirectory',
 					),
 					'specialchars'	=> 'none',
 					'value'			=> '<img alt="' . __('Directory') . '" src="images/common/gear.png" />',

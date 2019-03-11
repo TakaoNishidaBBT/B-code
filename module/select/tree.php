@@ -34,7 +34,19 @@
 			}
 		}
 
-		function open() {
+		function openDocRoot() {
+			if($this->request['doc_root']) {
+				$this->openCurrentNode($this->request['doc_root']);
+				$this->session['current_node'] = $this->request['doc_root'];
+			}
+			else {
+				$this->session['current_node'] = $this->doc_root;
+			}
+
+			$this->view_file = './view/view_doc_root.php';
+		}
+
+		function openDirectory() {
 			if($this->request['directory']) {
 				$this->openCurrentNode($this->request['directory']);
 				$this->session['current_node'] = $this->request['directory'];
@@ -42,6 +54,8 @@
 			else {
 				$this->session['current_node'] = $this->doc_root;
 			}
+
+			$this->view_file = './view/view_directory.php';
 		}
 
 		function openCurrentNode($node_id) {
@@ -633,7 +647,7 @@
 			// Start buffering
 			ob_start();
 
-			require_once('./view/view_project.php');
+			require_once($this->view_file);
 
 			// Get buffer
 			$contents = ob_get_clean();

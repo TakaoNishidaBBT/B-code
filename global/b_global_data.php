@@ -120,6 +120,8 @@
 	${$g_data_set}['table']['project'] =
 		array(							// Data Types			Length	PK		Auto-Increment
 			'name'						=> array('text', 		'', 	'', 	''),
+			'domain'					=> array('text', 		'', 	'', 	''),
+			'doc_root'					=> array('text', 		'', 	'', 	''),
 			'directory'					=> array('text', 		'', 	'', 	''),
 			'path'						=> array('text', 		'', 	'', 	''),
 			'url'						=> array('text', 		'', 	'', 	''),

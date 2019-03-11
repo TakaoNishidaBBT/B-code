@@ -25,6 +25,10 @@
 
 			switch($this->mode) {
 			case 'insert':
+				$obj = $this->form->getElementByName('domain');
+				$obj->value = B_HTTP_HOST;
+				$obj = $this->form->getElementByName('doc_root');
+				$obj->value = B_DOC_ROOT_DIR;
 				$this->view_file = './view/view_form.php';
 				break;
 
@@ -122,6 +126,7 @@
 			case 'insert':
 				$ret = $this->insert();
 				if($ret) {
+					$message = __('created.');
 					$this->session['mode'] = 'update';
 				}
 				else {
@@ -162,7 +167,7 @@
 			$row = $this->df->selectByPk($new_id);
 			$this->session['init_value'] = $row;
 
-			$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $value['name']) . '/';
+			$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $param['name']) . '/';
 
 			$this->createThumbnailDir($param['name'], $param['directory']);
 
@@ -217,7 +222,6 @@
 			if(!file_exists(B_THUMBDIR)) {
 				mkdir(B_THUMBDIR);
 			}
-
 			if(file_exists($this->thumb_dir)) {
 				$this->removeThumbnail();
 			}

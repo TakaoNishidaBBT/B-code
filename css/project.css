@@ -184,6 +184,8 @@ ul.list li .delete a:hover .sprite img {
 
 /* form */
 #name,
+#domain,
+#doc_root,
 #directory {
 	width: 400px;
 }
