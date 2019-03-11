@@ -36,7 +36,6 @@
 
 		function openDocRoot() {
 			if($this->request['doc_root']) {
-				$this->openCurrentNode($this->request['doc_root']);
 				$this->session['current_node'] = $this->request['doc_root'];
 			}
 			else {
@@ -48,7 +47,6 @@
 
 		function openDirectory() {
 			if($this->request['directory']) {
-				$this->openCurrentNode($this->request['directory']);
 				$this->session['current_node'] = $this->request['directory'];
 			}
 			else {
@@ -62,8 +60,7 @@
 			$dir = explode('/', $node_id);
 			for($i=0; $i<count($dir); $i++) {
 				if(!$dir[$i]) continue;
-				if($path) $path.= '/';
-				$path.= $dir[$i];
+				$path.= '/' . $dir[$i];
 				$this->session['open_nodes'][$path] = true;
 			}
 		}
@@ -598,6 +595,7 @@
 				$response['message'] = $this->message;
 			}
 
+			$this->openCurrentNode($this->session['current_node']);
 			if(strstr($this->session['current_node'], $this->doc_root)) {
 				$current_node = new B_DirNode($this->dir, $this->doc_root, $this->session['open_nodes'], null, 1);
 				$root_node = $current_node->getRootNode();

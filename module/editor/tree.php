@@ -596,12 +596,55 @@
 			}
 
 			// create thmubnail if necessary
-			if(!$current_node->thumbnail_exists()) {
-				$current_node->createthumbnail();
+			if($this->total_files = $current_node->missing_thumbnails()) {
+				if($this->total_files < 50) {
+					$current_node->createthumbnail();
+				}
+				else {
+					$this->createthumbnail($current_node);
+					$this->sendChunk(',' . json_encode($response));
+					$this->sendChunk();		// terminate
+					exit;
+				}
 			}
 
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);
+		}
+
+		function createThumbnail($current_node) {
+			// Set time limit to 3 minutes
+			set_time_limit(180);
+
+			// send progress
+			header('Content-Type: application/octet-stream');
+			header('Transfer-encoding: chunked');
+			flush();
+			ob_flush();
+
+			// Send start message
+			$response['status'] = 'show';
+			$response['progress'] = 0;
+			$response['message'] = 'Creating Thumbnail files';
+			$this->sendChunk(json_encode($response));
+
+			$this->createTumbnail_files = 0;
+			$this->progress = 0;
+			$current_node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
+
+			sleep(1);
+		}
+
+		function createThumbnail_callback($node) {
+			if($node->node_type == 'folder') return true;
+
+			$this->createTumbnail_files++;
+			$response['status'] = 'progress';
+			$response['progress'] = round($this->createTumbnail_files / $this->total_files * 100);
+			if($this->progress != $response['progress']) {
+				$this->sendChunk(',' . json_encode($response));
+				$this->progress = $response['progress'];
+			}
 		}
 
 		function getErrorMessage($error) {

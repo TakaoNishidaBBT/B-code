@@ -69,6 +69,7 @@
 				if(is_dir(B_Util::getPath($this->fullpath, $file_name))) {
 					$this->folder_count++;
 				}
+
 				if((is_array($open_nodes) && $open_nodes[$this->node_id]) || ($expand_level === 'all' || $level < $expand_level)) {
 					$object = new B_FileNode($this->dir, B_Util::getPath($this->path, $file_name), $open_nodes, $this, $expand_level, $level+1);
 					$this->addNodes($object);
@@ -508,21 +509,19 @@
 			return $parent_path;
 		}
 
-		function thumbnail_exists() {
+		function missing_thumbnails() {
+			$count=0;
 			if(is_array($this->node)) {
 				foreach(array_keys($this->node) as $key) {
 					if($this->node[$key]->thumbnail_image_path && $this->node[$key]->file_info[extension] != 'svg') {
 						$thumbnail_file_path = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->node[$key]->thumbnail_image_path);
-						if(file_exists($thumbnail_file_path)) {
-							return true;
-						}
-						else {
-							return false;
+						if(!file_exists($thumbnail_file_path)) {
+							$count++;
 						}
 					}
 				}
 			}
-			return true;
+			return $count;
 		}
 
 		function createthumbnail($except_array=null, $callback=null) {
