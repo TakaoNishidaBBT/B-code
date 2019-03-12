@@ -4648,7 +4648,12 @@ console.log('f_name', f_name);
 						}
 						else {
 							if(config.thumbnail_image_path) {
-								obj_img.src = config.thumbnail_image_path + '?' + config.update_datetime_u;
+								if(suffix.toLowerCase() == 'svg') {
+									obj_img.src = property.scheme + property.domain + config.thumbnail_image_path + '?' + config.update_datetime_u;
+								}
+								else {
+									obj_img.src = config.thumbnail_image_path + '?' + config.update_datetime_u;
+								}
 							}
 							else {
 								var file_name = config.path.substring(config.path.lastIndexOf('/')+1,config.path.length);

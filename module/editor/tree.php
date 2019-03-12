@@ -10,6 +10,8 @@
 			parent::__construct(__FILE__);
 
 			$this->dir = $this->session['project']['doc_root'];
+			$this->scheme = $this->session['project']['scheme'];
+			$this->domain = $this->session['project']['domain'];
 			$this->project = $this->session['project']['name'];
 			$this->project_dir = $this->session['project']['project_dir'];
 			$this->storage = B_TREE_STORAGE_PREIX . $this->project;
@@ -532,7 +534,7 @@
 		function preview() {
 			if($this->request['node_id'] && $this->request['node_id'] != 'null') {
 				// Redircet to top page
-				$path = B_Util::getPath(B_FILE_ROOT_URL, $this->request['node_id']);
+				$path = $this->scheme . B_Util::getPath($this->domain, $this->request['node_id']);
 				header("Location:$path");
 			}
 

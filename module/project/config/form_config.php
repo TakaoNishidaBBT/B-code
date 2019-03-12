@@ -104,6 +104,12 @@ $form_config = array(
 				'start_html'	=> '<td>',
 				'end_html'		=> '</td>',
 				array(
+					'name'			=> 'scheme',
+					'class'			=> 'B_SelectBox',
+					'data_set'		=> 'scheme',
+					'attr'			=> 'class="bframe_selectbox white"',
+				),
+				array(
 					'name'				=> 'domain',
 					'class'				=> 'B_InputText',
 					'attr'				=> 'class="textbox ime_off" maxlength="100" ',

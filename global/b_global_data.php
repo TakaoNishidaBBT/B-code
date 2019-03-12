@@ -12,6 +12,12 @@
 			'zh-cn'	=> __('Chinese'),
 		);
 
+	${$g_data_set}['scheme'] =
+		array(
+			'http://'	=> 'http://',
+			'https://'	=> 'https://',
+		);
+
 	${$g_data_set}['row_per_page'] =
 		array(
 			'1'		=> __('1 line'),
@@ -120,6 +126,7 @@
 	${$g_data_set}['table']['project'] =
 		array(							// Data Types			Length	PK		Auto-Increment
 			'name'						=> array('text', 		'', 	'', 	''),
+			'scheme'					=> array('text', 		'', 	'', 	''),
 			'domain'					=> array('text', 		'', 	'', 	''),
 			'doc_root'					=> array('text', 		'', 	'', 	''),
 			'directory'					=> array('text', 		'', 	'', 	''),

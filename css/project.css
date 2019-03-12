@@ -184,10 +184,12 @@ ul.list li .delete a:hover .sprite img {
 
 /* form */
 #name,
-#domain,
 #doc_root,
 #directory {
 	width: 400px;
+}
+#domain {
+	width: 304px;
 }
 
 .delete-complete {
@@ -200,4 +202,8 @@ ul.list li .delete a:hover .sprite img {
 	font-size: 16px;
 	margin-right: 3px;
 	color: #c00;
+}
+
+table.form a.selectbox {
+	line-height: 36px;
 }

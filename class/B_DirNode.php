@@ -212,7 +212,7 @@
 
 		function rename($old_name, $new_name) {
 			if($this->node_id === $old_name) {
-				$ret = rename(B_Util::getPath($this->dir, $old_name), B_Util::getPath($this->dir , $new_name));
+				$ret = rename(B_Util::getPath($this->dir, $old_name), B_Util::getPath($this->dir, $new_name));
 				if(!$ret) return false;
 
 				$this->node_id = $new_name;

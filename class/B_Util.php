@@ -128,7 +128,17 @@
 			return $new_path;
 		}
 
-		public static function getPath($dir, $file_name) {
+		public static function getPath() {
+			$path = func_get_arg(0);
+
+			for($i=1; $i<func_num_args(); $i++) {
+				$path = B_Util::_getPath($path, func_get_arg($i));
+			}
+
+			return $path;
+		}
+
+		private static function _getPath($dir, $file_name) {
 			$dir = str_replace('\\', '/', $dir);
 			if(substr($dir, -1) == '/') {
 				$dir = substr($dir, 0, -1);
