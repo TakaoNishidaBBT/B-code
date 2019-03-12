@@ -137,6 +137,7 @@
 		function save() {
 			if(!file_exists(dirname($this->file_name))) {
 				mkdir(dirname($this->file_name));
+				chmod(dirname($this->file_name), 0777);
 			}
 
 			$fp = fopen($this->file_name, 'w');

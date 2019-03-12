@@ -221,6 +221,7 @@
 		function createThumbnailDir($name, $directory) {
 			if(!file_exists(B_THUMBDIR)) {
 				mkdir(B_THUMBDIR);
+				chmod(B_THUMBDIR, 0777);
 			}
 			if(file_exists($this->thumb_dir)) {
 				$this->removeThumbnail();
