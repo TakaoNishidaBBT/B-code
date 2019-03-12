@@ -471,8 +471,8 @@
 										=> 'プロジェクト名は英数とハイフン(-)アンダーバー(_)で入力してください',
 		'This name is already in use'	=> '既に登録されています',
 		'Please enter domain name'		=> 'ドメイン名を入力してください',
-		'Please enter project name using only alphanumeric and hyphen(-)'
-										=> 'ドメイン名は英数とハイフン(-)で入力してください',
+		'Please enter project name using only alphanumeric, hyphen(-) and dot(.)'
+										=> 'ドメイン名は英数とハイフン(-)ドット(.)で入力してください',
 		'Please set directory'			=> 'ディレクトリを設定してください',
 		'Please set doc root'			=> 'Doc Rootを設定してください',
 	);

@@ -9,7 +9,7 @@
 		function __construct() {
 			parent::__construct(__FILE__);
 
-			$this->dir = B_DOC_ROOT;
+			$this->dir = $this->session['project']['doc_root'];
 			require_once('./config/editor_config.php');
 			$this->editor = new B_Element($editor_config);
 		}
