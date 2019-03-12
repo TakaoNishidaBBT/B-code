@@ -28,7 +28,8 @@
 
 	// remove windows drive letter
 	if(strstr(B_DOC_ROOT, ':')) {
-		define('B_DOC_ROOT_DIR', explode(':', B_DOC_ROOT)[1]);
+		$doc_root_array = explode(':', B_DOC_ROOT);
+		define('B_DOC_ROOT_DIR', $doc_root_dir[1]);
 	}
 	else {
 		define('B_DOC_ROOT_DIR', B_DOC_ROOT);

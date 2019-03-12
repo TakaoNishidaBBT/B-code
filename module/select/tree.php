@@ -10,6 +10,7 @@
 			parent::__construct(__FILE__);
 
 			$this->dir = B_FILE_ROOT_DIR;
+			$this->doc_root = B_DOC_ROOT_DIR;
 			$this->root_name = basename(B_FILE_ROOT_DIR);
 			if(!$this->root_name) $this->root_name = 'root';
 
@@ -24,14 +25,6 @@
 			$this->status = true;
 			if(!$this->session['sort_order']) $this->session['sort_order'] = 'asc';
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
-
-			// remove windows drive letter
-			if(strstr(B_DOC_ROOT, ':')) {
-				$this->doc_root = explode(':', B_DOC_ROOT)[1];
-			}
-			else {
-				$this->doc_root = B_DOC_ROOT;
-			}
 		}
 
 		function openDocRoot() {
