@@ -10,7 +10,6 @@
 			parent::__construct(__FILE__);
 
 			$this->dir = B_FILE_ROOT_DIR;
-			$this->doc_root = B_DOC_ROOT_DIR;
 			$this->root_name = basename(B_FILE_ROOT_DIR);
 			if(!$this->root_name) $this->root_name = 'root';
 
@@ -39,6 +38,13 @@
 		}
 
 		function openDirectory() {
+			if($this->request['doc_root']) {
+				$this->session['doc_root'] = $this->request['doc_root'];
+			}
+			else {
+				$this->session['doc_root'] = $this->B_DOC_ROOT_DIR;
+			}
+
 			if($this->request['directory']) {
 				$this->session['current_node'] = $this->request['directory'];
 			}
@@ -60,6 +66,7 @@
 
 		function getNodeList() {
 			$this->session['selected_node'] = '';
+			$this->doc_root = $this->session['doc_root'];
 
 			if($this->request['sort_key']) {
 				if($this->request['node_id'] == $this->session['current_node'] && $this->session['sort_key'] == $this->request['sort_key']) {
