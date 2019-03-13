@@ -24,7 +24,6 @@ $html_header_config = array(
 		'<script src="js/bframe_scroll.js"></script>',
 		'<script src="js/bframe_textarea.js"></script>',
 		'<script src="js/bframe_elastic_table.js"></script>',
-		'<script src="js/bframe_progress_bar.js"></script>',
 	),
 	'css'		=>
 	array(

@@ -965,6 +965,7 @@
 		}
 
 		function setVisibleCurrentNode() {
+			if(!current_node.object()) return;
 			if(!bframe.isVisible(current_node.object())) {
 				let obj = current_node.object();
 				while(1) {

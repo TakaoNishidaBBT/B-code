@@ -31,7 +31,7 @@
 				$this->session['current_node'] = $this->request['doc_root'];
 			}
 			else {
-				$this->session['current_node'] = $this->doc_root;
+				$this->session['current_node'] = '/';
 			}
 
 			$this->view_file = './view/view_doc_root.php';
@@ -49,7 +49,7 @@
 				$this->session['current_node'] = $this->request['directory'];
 			}
 			else {
-				$this->session['current_node'] = $this->doc_root;
+				$this->session['current_node'] = $this->session['doc_root'];
 			}
 
 			$this->view_file = './view/view_directory.php';

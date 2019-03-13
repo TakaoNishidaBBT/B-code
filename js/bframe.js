@@ -135,6 +135,7 @@
 		var cb = [];
 		var cba = [];
 		var sfname, smodule, spage, smethod, smode, snocheck;
+		var progress;
 
 		submit = function(fname, module, page, method, mode, nocheck) {
 			sfname = fname;
@@ -164,12 +165,14 @@
 			httpObj.open('POST','index.php');
 			httpObj.send(form_data);
 
-			var params = {
-				'id': 				'backupDialog', 
-				'icon': 			'images/common/process.png',
-				'complete_icon': 	'images/common/complete.png',
+			if(bframe.progressBar) {
+				var params = {
+					'id': 				'backupDialog', 
+					'icon': 			'images/common/process.png',
+					'complete_icon': 	'images/common/complete.png',
+				}
+				progress = new bframe.progressBar(params);
 			}
-			progress = new bframe.progressBar(params);
 
 			bframe.response_wait = true;
 		}
@@ -252,7 +255,7 @@
 					return;
 				}
 
-				progress.remove();
+				if(progress) progress.remove();
 
 				if(response.status && response.mode && response.mode == 'confirm') {
 					if(confirm(response.message)) {
