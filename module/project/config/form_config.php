@@ -265,6 +265,71 @@ $form_config = array(
 			),
 		),
 
+		// User
+		array(
+			'error_group'	=> true,
+			'start_html'	=> '<tr>',
+			'end_html'		=> '</tr>',
+			array(
+				'start_html'		=> '<th>',
+				'end_html'			=> '</th>',
+				'invalid_start_html'=> '<th class="error">',
+				array(
+					'value'			=> __('User'),
+				),
+				array(
+					'class'			=> 'B_Guidance',
+					'value'			=> '<span class="require">' . __('*') . '</span>',
+				),
+			),
+			array(
+				'start_html'	=> '<td>',
+				'end_html'		=> '</td>',
+				array(
+					'name'			=> 'user',
+					'class'			=> 'B_InputText',
+					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
+					'validate'		=>
+					array(
+//						array(
+//							'type' 			=> 'required',
+//							'error_message'	=> __('Please set directory'),
+//						),
+					),
+				),
+				array(
+					'filter'		=> 'insert/update',
+					'name'			=> 'open_select',
+					'class'			=> 'B_Link',
+					'link'			=> 'index.php',
+					'attr'			=> 'title="' . __('User Select') . '" class="settings-button" onclick="top.bframe.modalWindow.activate(this, window, \'user\'); return false;" data-param="width:400,height:300"',
+					'fixedparam'	=>
+					array(
+						'terminal_id'	=> TERMINAL_ID,
+						'module'		=> 'user_select', 
+						'page'			=> 'form',
+						'method'		=> 'open',
+					),
+					'specialchars'	=> 'none',
+					'value'			=> '<img alt="' . __('User') . '" src="images/common/gear.png" />',
+				),
+				array(
+					'filter'		=> 'insert/update',
+					'class'			=> 'B_Link',
+					'link'			=> '#',
+					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bcode.clearText(\'user\'); return false;" ',
+					'specialchars'	=> 'none',
+					'value'			=> '<img alt="' . __('Clear') . '" src="images/common/clear.png" />',
+				),
+				array(
+					'name'				=> 'error_message',
+					'class'				=> 'B_ErrMsg',
+					'start_html'		=> '<span class="error-message">',
+					'end_html'			=> '</span>',
+				),
+			),
+		),
+
 		// Notes
 		array(
 			'error_group'	=> true,

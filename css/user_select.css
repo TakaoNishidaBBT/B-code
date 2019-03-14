@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+html, body {
+	background-color: #fff;
+	-moz-user-select: auto;
+	-ms-user-select: auto;
+	-webkit-user-select: auto;
+	user-select: auto;
+}
+
+div#main {
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 0;
+}
+
+div.left,
+div.right {
+	width: 160px;
+}
+div.left {
+	border: 1px solid #ccc;
+}
+div.right-inner {
+	border: 1px solid #ccc;
+	height: calc(100% - 40px);
+}
+div.control {
+	display: flex;
+	align-items: center;
+}
+div.control ul {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+div.control ul li {
+	margin: 4px;
+}
+
+ul.search {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	list-style: none;
+	padding: 0;
+	margin: 0 0 10px 0;
+}
+ul.search li.search {
+	display: flex;
+	position: relative;
+	background-color: #e3e3e3;
+}
+ul.search li.search .keyword {
+	width: 160px;
+	height: 30px;
+	padding: 6px 30px 6px 8px;
+	box-sizing: border-box;
+	background-color: transparent;
+	border: none;
+	font-size: 14px;
+}
+ul.search input:forcus {
+  outline: none;
+}
+#search-button {
+	display: block;
+	position: absolute;
+	right: 0;
+	height: 30px;
+	padding: 6px 0 6px 30px;
+	box-sizing: border-box;
+	font-size: 14px;
+	width: 30px;
+	overflow: hidden;
+	background: url(../images/common/search.png) #e3e3e3 no-repeat center center;
+	border: none;
+	cursor: pointer;
+}
+
+/* user-list */
+table.user-list {
+	width: 100%;
+}
+table.user-list td {
+	font-size: 13px;
+	padding: 2px 8px;
+}
+/* control */
+div.control ul li a {
+	display: inline-block;
+	line-height: 0;
+	padding: 10px;
+	border: 1px solid #d2d2d2;
+	vertical-align: top;
+}
+
+/* button */
+div.control {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	padding-top: 4px;
+}
+.register-button {
+	padding: 3px 20px;
+	min-width: 80px;
+	background-color: #444;
+	color: #fff;
+	cursor: pointer;
+	border: 2px solid #444;
+	border-radius: 12px;
+}
+.cancel-button {
+	padding: 3px 20px;
+	min-width: 80px;
+	background-color: #fff;
+	color: #000;
+	cursor: pointer;
+	border: 2px solid #444;
+	border-radius: 12px;
+	margin-right: 14px;
+}
+.register-button:hover {
+	background-color: #ccc;
+}
+.register-button:hover {
+	background-color: #000;
+}
+.cancel-button:hover {
+	opacity: 0.6;
+}
+.cancel-button {
+	margin-right: 10px;
+}
