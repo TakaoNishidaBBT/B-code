@@ -11977,8 +11977,7 @@ exports.commands = [{
     readOnly: true
 }, {
     name: "gotoline",
-//    bindKey: bindKey("Ctrl-L", "Command-L"),
-    bindKey: bindKey("Ctrl-G", "Command-G"),
+    bindKey: bindKey("Ctrl-L", "Command-L"),
     exec: function(editor, line) {
         if (typeof line !== "number")
             line = parseInt(prompt("Enter line number:"), 10);
