@@ -63,8 +63,8 @@ $form_config = array(
 						),
 						array(
 							'type' 			=> 'pattern',
-							'pattern'		=> '^[a-zA-Z0-9\_\-]+$',
-							'error_message'	=> __('Please enter project name using only alphanumeric, hyphen(-) and underbar(_)'),
+							'pattern'		=> '^[a-zA-Z0-9¥.\_\-]+$',
+							'error_message'	=> __('Please enter project name using only alphanumeric, dot(.), hyphen(-) and underbar(_)'),
 						),
 						array(
 							'type'			=> 'callback',
@@ -121,8 +121,8 @@ $form_config = array(
 						),
 						array(
 							'type' 			=> 'pattern',
-							'pattern'		=> '^[a-zA-Z0-9\-\.]+$',
-							'error_message'	=> __('Please enter project name using only alphanumeric, hyphen(-) and dot(.)'),
+							'pattern'		=> '^[a-zA-Z0-9\.\-]+$',
+							'error_message'	=> __('Please enter project name using only alphanumeric, dot(.) and hyphen(-)'),
 						),
 					),
 				),
