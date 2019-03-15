@@ -40,7 +40,13 @@
 		function setProject($project) {
 			$this->df = new B_DataFile(B_PROJECT_DATA, 'project');
 			$this->session['project'] = $this->df->select('name', $project);
-			$this->session['project']['project_dir'] = str_replace($this->session['project']['doc_root'], '', $this->session['project']['directory']);
+			if($this->session['project']['doc_root'] == $this->session['project']['directory']) {
+				$this->session['project']['doc_root'] = dirname($this->session['project']['doc_root']);
+				$this->session['project']['project_dir'] = basename($this->session['project']['directory']);
+			}
+			else {
+				$this->session['project']['project_dir'] = str_replace($this->session['project']['doc_root'], '', $this->session['project']['directory']);
+			}
 			if(substr($this->session['project']['project_dir'], 0, 1) == '/') $this->session['project']['project_dir'] = substr($this->session['project']['project_dir'], 1);
 			if(!$this->session['project']['project_dir']) $this->session['project']['project_dir'] = 'root';
 		}
