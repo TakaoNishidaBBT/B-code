@@ -250,7 +250,7 @@
 			return true;
 		}
 
-		function copy($dest, &$new_node_name, &$data, $recursive=false, $callback=null) {
+		function copy($dest, &$new_node_name, $recursive=false, $callback=null) {
 			$destination = B_Util::getPath($this->dir, $dest);
 			if($this->isMyChild($destination)) {
 				$this->error_no = 1;
@@ -287,14 +287,14 @@
 			}
 			if($recursive && is_array($this->node)) {
 				foreach(array_keys($this->node) as $key) {
-					$this->node[$key]->_copy($dest, $data, $recursive, $callback);
+					$this->node[$key]->_copy($dest, $recursive, $callback);
 				}
 			}
 
 			return true;
 		}
 
-		function _copy($dest, &$data, $recursive=false, $callback=null) {
+		function _copy($dest, $recursive=false, $callback=null) {
 			$destination = B_Util::getPath($this->dir, $dest);
 			if(file_exists($this->fullpath)) {
 				if(is_dir($this->fullpath)) {
@@ -325,7 +325,7 @@
 			}
 			if($recursive && is_array($this->node)) {
 				foreach(array_keys($this->node) as $key) {
-					$this->node[$key]->_copy($dest, $data, $recursive, $callback);
+					$this->node[$key]->_copy($dest, $recursive, $callback);
 				}
 			}
 
@@ -502,7 +502,7 @@
 		}
 
 		function parentPath() {
-			if($this->parent) return $this->parent;
+			if($this->parent) return $this->parent->path;
 			$parent_path = dirname($this->path);
 			if($parent_path == '\\') $parent_path = 'root';
 

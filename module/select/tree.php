@@ -161,8 +161,6 @@
 				}
 				if(!$this->status) break;
 
-				$max = $source->getMaxThumbnailNo();
-
 				if(10 < $this->total_copy_nodes) {
 					// send progress
 					header('Content-Type: application/octet-stream');
@@ -186,7 +184,7 @@
 				foreach($source_node as $source) {
 					if($dest->node_type == 'folder' || $dest->node_type == 'root') {
 						if($this->show_progress) $callback = array('obj' => $this, 'method' => '_copy_callback');
-						$ret = $source->copy($dest->path, $new_node_name, $data, $max, true, $callback);
+						$ret = $source->copy($dest->path, $new_node_name, true, $callback);
 					}
 					if($ret) {
 						$this->session['selected_node'][] = $dest->path . '/' . $new_node_name;
