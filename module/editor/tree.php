@@ -307,7 +307,7 @@
 				$dest = B_Util::getPath($this->dir , $new_node_id);
 
 				if($this->checkFileName($source, $dest, $node_name, $file_info)) {
-					$node = new B_FileNode($this->dir, $this->request['node_id'], null, null, 'all');
+					$node = new B_FileNode($this->dir, $this->request['node_id'], null, null, 1);
 					if($node) {
 						$ret = $node->rename($this->request['node_id'], $new_node_id);
 					}

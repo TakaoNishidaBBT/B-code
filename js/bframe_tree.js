@@ -748,7 +748,6 @@
 			if(httpObj.readyState == 4 && httpObj.status == 200 && response_wait)　{
 				try {
 					node_number = 0;
-					current_edit_node = '';
 					response = eval('('+httpObj.responseText+')');
 					var node_info = response.node_info;
 				}
@@ -761,10 +760,19 @@
 				}
 
 				// if not set current_node then set current node from server
-				if(!current_node.id() && response.current_node) {
+				if(!current_node.id() && response.current_node && response.status) {
 					current_node.set('t'+response.current_node);
+					selected_node.set('t'+response.current_node);
 					setOpenNodes(current_node.id());
 				}
+
+				// if not set current_node then set current node from server
+				if(current_edit_node && current_edit_node.id == current_node.id() && response.status) {
+					current_node.set('t'+response.current_node);
+					selected_node.set('t'+response.current_node);
+					setOpenNodes(current_node.id());
+				}
+				current_edit_node = '';
 
 				// remove tree
 				if(root_ul && root_ul.parentNode == target) {
@@ -2242,7 +2250,7 @@
 			this.setColor = function(mode) {
 				if(!current_node[0]) return;
 				for(var i=0; i < current_node.length; i++) {
-					if(current_edit_node.id == current_node[i].id) continue;
+					if(current_edit_node && current_edit_node.id == current_node[i].id) continue;
 					var node = self.object(i);
 					if(node) {
 						var span = bframe.searchNodeByName(node, 'node_span');
@@ -3005,7 +3013,6 @@
 				close_button.addEventListener('click', tc.close);
 
 				this.add = function(node_id, mode) {
-console.log('this.add', node_id, mode);
 					editor = document.getElementById('ed' + node_id);
 					node_array = node_id.split('/');
 					this.setFileName(node_array[node_array.length-1]);
@@ -3097,7 +3104,6 @@ console.log('this.add', node_id, mode);
 
 				this.showFileName = function(f_name) {
 					if(!f_name) f_name = current_node.id().substr(1);
-console.log('f_name', f_name);
 					bcode.setFileName(f_name);
 				}
 

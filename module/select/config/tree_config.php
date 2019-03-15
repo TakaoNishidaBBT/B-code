@@ -32,7 +32,6 @@ $tree_config = array(
 				'createNode'	=> 'createNode',
 				'updateDispSeq'	=> 'updateDispSeq',
 				'saveName'		=> 'saveName',
-				'property'		=> 'property',
 			),
 			'ondblclick'	=>
 			array(
@@ -127,10 +126,6 @@ $tree_config = array(
 				array(
 					'menu'		=> __('Rename'),
 					'func'		=> 'editName',
-				),
-				array(
-					'menu'		=> __('Properties'),
-					'func'		=> 'open_property',
 				),
 			),
 			'context_menu_width'	=> '138',

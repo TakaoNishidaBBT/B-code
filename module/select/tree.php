@@ -66,7 +66,6 @@
 
 		function getNodeList() {
 			$this->session['selected_node'] = '';
-			$this->doc_root = $this->session['doc_root'];
 
 			if($this->request['sort_key']) {
 				if($this->request['node_id'] == $this->session['current_node'] && $this->session['sort_key'] == $this->request['sort_key']) {
@@ -257,7 +256,6 @@
 						if($this->session['current_node'] == $node_id) {
 							$this->session['current_node'] = $source->node_id;
 						}
-						$this->refreshThumbnailCache($source);
 					}
 					else {
 						$this->status = false;
@@ -326,7 +324,6 @@
 							if($node->isMyChild(B_Util::getPath($this->dir, $this->session['current_node']))) {
 								$this->session['current_node'] = $node->parentPath();
 							}
-							$this->refreshThumbnailCache($node);
 						}
 						else {
 							$this->status = false;
@@ -350,20 +347,17 @@
 				$dest = B_Util::getPath($this->dir , $new_node_id);
 
 				if($this->checkFileName($source, $dest, $node_name, $file_info)) {
-					$node = new B_FileNode($this->dir, $this->request['node_id'], null, null, 'all');
+					$node = new B_FileNode($this->dir, $this->request['node_id'], null, null, 1);
 					if($node) {
 						$ret = $node->rename($this->request['node_id'], $new_node_id);
 					}
 					if($ret) {
 						$this->status = true;
-						$this->session['selected_node'] = '';
-						$this->session['selected_node'][0] = $new_node_id;
 						if($this->session['current_node'] == $this->request['node_id']) {
 							$this->session['current_node'] = $new_node_id;
 						}
 						$this->session['open_nodes'][$this->request['node_id']] = false;
 						$this->session['open_nodes'][$new_node_id] = true;
-						$this->refreshThumbnailCache($node);
 					}
 					else {
 						$this->message = __('The name could not be changed');
@@ -401,10 +395,6 @@
 				return false;
 			}
 			return true;
-		}
-
-		function refreshThumbnailCache($node) {
-			return;
 		}
 
 		function download() {
@@ -590,6 +580,8 @@
 		}
 
 		function response($node_id, $category) {
+			$this->doc_root = $this->session['doc_root'];
+
 			$response['status'] = $this->status;
 			if($this->message) {
 				$response['message'] = $this->message;
