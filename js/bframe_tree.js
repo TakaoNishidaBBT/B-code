@@ -4841,7 +4841,12 @@
 			a.appendChild(input);
 
 			span.className = 'node-name';
-			text = document.createTextNode(shortenText(config.node_name));
+			if(place == 'tree') {
+				text = document.createTextNode(config.node_name);
+			}
+			else {
+				text = document.createTextNode(shortenText(config.node_name));
+			}
 			span.appendChild(text);
 
 			return li;
