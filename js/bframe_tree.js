@@ -130,14 +130,28 @@
 		}
 
 		function setOpenNodes(node_id) {
-			var node_dir = node_id.split('/');
 			var dir = '';
-			for(let i=1; i < node_dir.length; i++) {
-				dir+= '/' + node_dir[i];
-				open_nodes[dir] = true;
+
+			var node = node_id.substr(1);
+			var node_dir = node.split('/');
+
+			if(node.substr(0, 1) == '/') {
+				// start form root directory means no root directory name, so add open_nodes as property.root_name instead
+				// and dir start from slash
+				open_nodes[property.root_name] = true;
+
+				for(let i=1; i < node_dir.length; i++) {
+					dir+= '/' + node_dir[i];
+					open_nodes[dir] = true;
+				}
 			}
-			if(Object.keys(open_nodes).length) {
-				open_nodes['root'] = true;
+			else {
+				// not from root directory
+				for(let i=0; i < node_dir.length; i++) {
+					if(dir) dir+= '/';
+					dir+= node_dir[i];
+					open_nodes[dir] = true;
+				}
 			}
 		}
 
@@ -629,7 +643,7 @@
 
 			param = 'terminal_id='+terminal_id;
 			if(id) {
-				open_nodes[id.substr(1)] = '1';
+				open_nodes[id.substr(1)] = true;
 				param+= '&node_id='+id.substr(1);
 			}
 			if(display_mode) {

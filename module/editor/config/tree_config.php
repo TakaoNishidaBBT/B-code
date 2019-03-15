@@ -18,7 +18,6 @@ $tree_config = array(
 			'editor_mode'	=> 'true',
 			'editable'		=> 'true',
 			'sort'			=> 'auto',
-			'root_name'		=> 'root',
 			'root_path'		=> B_FILE_ROOT_URL,
 			'root_url'		=> B_FILE_ROOT_DIR,
 			'thumb_path'	=> B_FILE_ROOT_URL,
