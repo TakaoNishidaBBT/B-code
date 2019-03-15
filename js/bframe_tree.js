@@ -146,7 +146,7 @@
 				}
 			}
 			else {
-				// not from root directory
+				// not start from root directory
 				for(let i=0; i < node_dir.length; i++) {
 					if(dir) dir+= '/';
 					dir+= node_dir[i];
