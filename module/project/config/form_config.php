@@ -298,16 +298,21 @@ $form_config = array(
 					),
 				),
 				array(
+					'class'			=> 'B_Hidden',
+					'name'			=> 'user_id',
+					'value'			=> 'test/test3',
+				),
+				array(
 					'filter'		=> 'insert/update',
 					'name'			=> 'open_select',
 					'class'			=> 'B_Link',
 					'link'			=> 'index.php',
-					'attr'			=> 'title="' . __('User Select') . '" class="settings-button" onclick="top.bframe.modalWindow.activate(this, window, \'user\'); return false;" data-param="width:400,height:300"',
+					'attr'			=> 'title="' . __('User Select') . '" class="settings-button" onclick="top.bframe.modalWindow.activate(this, window, \'user_id\'); return false;" data-param="width:400,height:300"',
 					'fixedparam'	=>
 					array(
 						'terminal_id'	=> TERMINAL_ID,
-						'module'		=> 'user_select', 
-						'page'			=> 'form',
+						'module'		=> 'user', 
+						'page'			=> 'select',
 						'method'		=> 'open',
 					),
 					'specialchars'	=> 'none',
