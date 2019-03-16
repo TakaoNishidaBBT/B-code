@@ -286,7 +286,7 @@ $form_config = array(
 				'start_html'	=> '<td>',
 				'end_html'		=> '</td>',
 				array(
-					'name'			=> 'user',
+					'name'			=> 'user_name',
 					'class'			=> 'B_InputText',
 					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
 					'validate'		=>
@@ -299,7 +299,7 @@ $form_config = array(
 				),
 				array(
 					'class'			=> 'B_Hidden',
-					'name'			=> 'user_id',
+					'name'			=> 'user',
 					'value'			=> 'test/test3',
 				),
 				array(

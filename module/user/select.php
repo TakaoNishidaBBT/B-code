@@ -18,15 +18,17 @@
 		}
 
 		function open() {
-			$this->user_id = $this->request['user_id'];
+			$this->user = $this->request['user'];
 			$this->setData();
 		}
 
 		function setData() {
+			$left = array();
+
 			$data = $this->df->getAll();
 			$this->dg_right->bind($data);
 
-			$users = explode('/', $this->user_id);
+			$users = explode('/', $this->user);
 			foreach($data as $value) {
 				if(array_search($value['user_id'], $users) !== false) {
 					$left[] = $value;
