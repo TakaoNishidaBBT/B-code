@@ -3031,7 +3031,7 @@
 					node_array = node_id.split('/');
 					this.setFileName(node_array[node_array.length-1]);
 					this.setDisplayName(node_array[node_array.length-1]);
-					a.title = fullpath = node_id.substr(1);
+					a.title = fullpath = node_id;
 					fname.classList.add(mode);
 
 					control.appendChild(li);
