@@ -27,6 +27,8 @@
 		var left = new selectable_table(left_table);  
 		var right = new selectable_table(right_table);  
 
+		add_button.addEventListener('click', add);
+
 		function selectable_table(table) {
 			var last_row;
 
@@ -63,5 +65,37 @@
 					this.classList.toggle('selected');
 				}
 			}
+
+			this.getSelectedRow = function() {
+				var collection = [];
+
+				for(let i=0, index=0; i < table.rows.length; i++) {
+					if(table.rows[i].classList.contains('selected')) {
+						collection[index++] = table.rows[i];
+					}
+				}
+
+				return collection;
+			}
+
+			this.addRow = function(collection) {
+				for(let i=0; i < collection.length; i++) {
+					for(var j=0, index=0; j < table.rows.length; j++) {
+						if(collection[i].cells[1].innerHTML == table.rows[j].cells[1].innerHTML) {
+							break;
+						}
+					}
+					if(j == table.rows.length) {
+						var tr = collection[i].cloneNode(true);
+						tr.addEventListener('click', onClick);
+						table.appendChild(tr);
+					}
+				}
+			}
+		}
+
+		function add(event) {
+			var collection = right.getSelectedRow();
+			left.addRow(collection);
 		}
 	}
