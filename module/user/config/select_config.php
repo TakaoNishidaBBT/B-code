@@ -19,10 +19,16 @@ array(
 		'end_html'				=> '</tr>',
 		'class'					=> 'B_Row',
 		array(
-			'start_html'	=> '<td class="left">',
+			'start_html'	=> '<td>',
 			'end_html'		=> '</td>',
 			'class'			=> 'B_Text',
 			'name'			=> 'user_name',
+		),
+		array(
+			'start_html'	=> '<td class="hidden">',
+			'end_html'		=> '</td>',
+			'class'			=> 'B_Text',
+			'name'			=> 'user_id',
 		),
 	),
 );

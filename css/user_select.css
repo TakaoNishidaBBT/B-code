@@ -14,16 +14,30 @@ div#main {
 	margin: 10px 0;
 }
 
-div.left,
-div.right {
+#left,
+#right {
 	width: 160px;
+	user-select: none;
+	-webkit-user-select: none;
 }
-div.left {
+#left {
 	border: 1px solid #ccc;
 }
 div.right-inner {
 	border: 1px solid #ccc;
 	height: calc(100% - 40px);
+}
+table.user-list td {
+	cursor: pointer;
+}
+table.user-list tr.selected {
+	background-color: #22a8f6;
+}
+table.user-list tr.selected td {
+	color: #fff;
+}
+table.user-list td.hidden {
+	display: none;
 }
 div.control {
 	display: flex;

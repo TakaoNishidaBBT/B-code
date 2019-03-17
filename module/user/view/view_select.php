@@ -1,6 +1,6 @@
 <body>
 		<div id="main" class="bframe_adjustparent" data-param="margin:40">
-			<div class="left">
+			<div id="left">
 				<div class="left-inner bframe_scroll">
 					<?php echo $this->dg_left->getHtml(); ?>
 				</div>
@@ -11,7 +11,7 @@
 					<li><a id="del-button" href="#" ><img src="images/common/right_arrow_black.png" alt="right_arror" /></a></li>
 				</ul>
 			</div>
-			<div class="right">
+			<div id="right">
 				<ul class="search">
 					<li class="search">
 						<input class="keyword" maxlength="100" type="text" name="keyword" id="keyword" value="" />
