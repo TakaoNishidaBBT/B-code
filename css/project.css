@@ -186,7 +186,7 @@ ul.list li .delete a:hover .sprite img {
 #name,
 #doc_root,
 #directory,
-#user {
+#user_name {
 	width: 400px;
 }
 #domain {

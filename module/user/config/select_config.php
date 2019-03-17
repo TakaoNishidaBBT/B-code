@@ -10,7 +10,7 @@ array(
 	'start_html'	=> '<table class="user-list">',
 	'end_html'		=> '</table>',
 
-	'empty_message'	=> '',
+	'empty_message'	=> '<table class="user-list"></table>',
 
 	'row'		=>
 	array(
