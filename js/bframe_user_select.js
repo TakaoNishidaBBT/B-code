@@ -22,12 +22,13 @@
 		var right_table = document.querySelector('#right table');
 		var add_button = document.getElementById('add-button');
 		var del_button = document.getElementById('del-button');
-		var keyword = document.getElementById('keyword');
+		var cancel_button = document.getElementById('cancel-button');
 
-		var left = new selectable_table(left_table);  
-		var right = new selectable_table(right_table);  
+		var left = new selectable_table(left_table);
+		var right = new selectable_table(right_table);
 
 		add_button.addEventListener('click', add);
+		del_button.addEventListener('click', del);
 
 		function selectable_table(table) {
 			var last_row;
@@ -66,6 +67,16 @@
 				}
 			}
 
+			this.getAllRow = function() {
+				var collection = [];
+
+				for(let i=0, index=0; i < table.rows.length; i++) {
+					collection[i] = table.rows[i];
+				}
+
+				return collection;
+			}
+
 			this.getSelectedRow = function() {
 				var collection = [];
 
@@ -92,10 +103,50 @@
 					}
 				}
 			}
+
+			this.removeSelectedRow = function() {
+				var collection = [];
+
+				for(let i=0; i < table.rows.length;) {
+					if(table.rows[i].classList.contains('selected')) {
+						table.deleteRow(i);
+						continue;
+					}
+					i++;
+				}
+			}
 		}
 
 		function add(event) {
 			var collection = right.getSelectedRow();
 			left.addRow(collection);
+		}
+
+		function del(event) {
+			left.removeSelectedRow();
+		}
+
+		this.getUserName = function() {
+			var user_name = '';
+			var collection = left.getAllRow();
+
+			for(let i=0; i < collection.length; i++) {
+				if(user_name) user_name += ', ';
+				user_name += collection[i].cells[0].innerHTML;
+			}
+
+			return user_name;
+		}
+
+		this.getUser = function() {
+			var user = '';
+			var collection = left.getAllRow();
+
+			for(let i=0; i < collection.length; i++) {
+				if(user) user += '/';
+				user += collection[i].cells[1].innerHTML;
+			}
+
+			return user;
 		}
 	}

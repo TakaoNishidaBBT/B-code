@@ -34,6 +34,7 @@
 
 			case 'update':
 				$row = $this->df->selectByPk($this->request['rowid']);
+				$row['user_name'] = $this->getUserName($row['user']);
 				$this->form->setValue($row);
 				$this->session['init_value'] = $row;
 				$this->view_file = './view/view_form.php';
@@ -47,6 +48,20 @@
 				break;
 			}
 			$this->form->setFilterValue($this->session['mode']);
+		}
+
+		function getUserName($user) {
+			if(!$user) return;
+
+			$user_df = new B_DataFile(B_USER_DATA, 'user');
+			$users = explode('/', $user);
+			foreach($users as $value) {
+				$row = $user_df->select('user_id', $value);
+				if($user_name) $user_name.= ', ';
+				$user_name.= $row['user_name'];
+			}
+
+			return $user_name;
 		}
 
 		function validate() {

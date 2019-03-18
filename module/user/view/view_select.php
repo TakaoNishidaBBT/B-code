@@ -25,8 +25,8 @@
 		</div>
 		<form name="F1" method="post" action="index.php">
 			<div class="control">
-				<input type="button" class="cancel-button" value="Cancel" onclick="window.frameElement.deactivate();" />
-				<input type="button" class="register-button" value="Set" onclick="bcode.setUser()" />
+				<input id="cancel-button" type="button" class="cancel-button" value="Cancel" onclick="window.frameElement.deactivate();" />
+				<input id="set-button" type="button" class="register-button" value="Set" onclick="bcode.setUser()" />
 			</div>
 		</form>
 </body>

@@ -40,6 +40,16 @@
 		window.frameElement.deactivate();
 	}
 
+	bcode.setUser = function() {
+		var user_name = bframe.userSelect.getUserName();
+		bcode.insertValue(window.frameElement.opener, 'user_name', user_name);
+
+		var user = bframe.userSelect.getUser();
+		bcode.insertValue(window.frameElement.opener, 'user', user);
+
+		window.frameElement.deactivate();
+	}
+
 	bcode.insertValue = function(opener, target_id, target_value) {
 		opener.bcode._insertValue(target_id, target_value);
 	}
