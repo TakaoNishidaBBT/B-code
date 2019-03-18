@@ -67,6 +67,10 @@
 				}
 			}
 
+			function onKeydown(event) {
+console.log('onKeydown');
+			}
+
 			this.getAllRow = function() {
 				var collection = [];
 
@@ -120,10 +124,12 @@
 		function add(event) {
 			var collection = right.getSelectedRow();
 			left.addRow(collection);
+			bframe.stopPropagation(event);
 		}
 
 		function del(event) {
 			left.removeSelectedRow();
+			bframe.stopPropagation(event);
 		}
 
 		this.getUserName = function() {

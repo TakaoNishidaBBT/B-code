@@ -271,15 +271,10 @@ $form_config = array(
 			'start_html'	=> '<tr>',
 			'end_html'		=> '</tr>',
 			array(
-				'start_html'		=> '<th>',
-				'end_html'			=> '</th>',
-				'invalid_start_html'=> '<th class="error">',
+				'start_html'	=> '<th>',
+				'end_html'		=> '</th>',
 				array(
 					'value'			=> __('User'),
-				),
-				array(
-					'class'			=> 'B_Guidance',
-					'value'			=> '<span class="require">' . __('*') . '</span>',
 				),
 			),
 			array(
@@ -289,13 +284,6 @@ $form_config = array(
 					'name'			=> 'user_name',
 					'class'			=> 'B_InputText',
 					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
-					'validate'		=>
-					array(
-//						array(
-//							'type' 			=> 'required',
-//							'error_message'	=> __('Please set directory'),
-//						),
-					),
 				),
 				array(
 					'class'			=> 'B_Hidden',
@@ -321,7 +309,7 @@ $form_config = array(
 					'filter'		=> 'insert/update',
 					'class'			=> 'B_Link',
 					'link'			=> '#',
-					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bcode.clearText(\'user\'); return false;" ',
+					'attr'			=> 'title="' . __('Clear') . '" class="clear-button" onclick="bcode.clearText(\'user_name\', \'user\'); return false;" ',
 					'specialchars'	=> 'none',
 					'value'			=> '<img alt="' . __('Clear') . '" src="images/common/clear.png" />',
 				),

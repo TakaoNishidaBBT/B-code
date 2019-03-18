@@ -59,19 +59,16 @@
 		if(!target) return;
 
 		target.value = target_value;
+		if(bframe.fireEvent) bframe.fireEvent(target, 'change');
 	}
 
-	bcode.clearText = function(target_id1, target_id2) {
-		var target1 = document.getElementById(target_id1);
-		if(target1 && target1.value) {
-			target1.value = '';
-			if(bframe.fireEvent) bframe.fireEvent(target1, 'change');
-		}
-		if(target_id2) {
-			var target2 = document.getElementById(target_id2);
-			if(target2 && target2.value) {
-				target2.value = '';
-				if(bframe.fireEvent) bframe.fireEvent(target2, 'change');
+	bcode.clearText = function() {
+		// arguments
+		for(var i=0; i < arguments.length; i++) {
+			var target = document.getElementById(arguments[i]);
+			if(target && target.value) {
+				target.value = '';
+				if(bframe.fireEvent) bframe.fireEvent(target, 'change');
 			}
 		}
 	}
