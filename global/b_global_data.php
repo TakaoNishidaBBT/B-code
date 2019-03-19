@@ -30,7 +30,7 @@
 	${$g_data_set}['user_auth'] =
 		array(
 			'admin'		=> __('Admin'),
-			'editor'	=> __('Editor'),
+			'coder'		=> __('Coder'),
 		);
 
 	${$g_data_set}['user_status'] =

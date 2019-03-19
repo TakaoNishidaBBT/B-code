@@ -338,7 +338,7 @@
 		'Enabled'						=> '有効',
 		'Disabled'						=> '無効',
 		'Admin'							=> '管理者',
-		'Editor'						=> '編集者',
+		'Coder'							=> 'コーダー',
 		'Please enter User ID'			=> 'ユーザIDを入力してください',
 		'Please enter User ID using only alphanumeric, hyphen(-) and underbar(_)'
 										=> 'ユーザIDは英数とハイフン(-)アンダーバー(_)で入力してください',

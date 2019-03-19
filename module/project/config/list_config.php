@@ -41,7 +41,7 @@ array(
 			),
 		),
 		array(
-			'auth_filter'	=> 'super_admin',
+			'auth_filter'	=> 'super_admin/admin',
 			'start_html'	=> '<div class="delete">',
 			'end_html'		=> '</div>',
 			array(
@@ -73,7 +73,7 @@ array(
 			),
 		),
 		array(
-			'auth_filter'	=> 'super_admin',
+			'auth_filter'	=> 'super_admin/admin',
 			'start_html'	=> '<div class="settings">',
 			'end_html'		=> '</div>',
 			array(

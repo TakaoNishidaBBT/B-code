@@ -92,3 +92,7 @@ div.list-header ul.search input:forcus {
 	margin-right: 3px;
 	color: #c00;
 }
+table.form a.selectbox {
+	line-height: 32px;
+	font-size: 14px;
+}

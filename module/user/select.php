@@ -23,9 +23,10 @@
 		}
 
 		function setData() {
+			$data = array();
 			$left = array();
 
-			$data = $this->df->getAll();
+			$data = $this->df->select('user_auth', 'coder');
 			$this->dg_right->bind($data);
 
 			$users = explode('/', $this->user);

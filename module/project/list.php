@@ -113,7 +113,7 @@
 
 			foreach($data as $value) {
 				$users = explode('/', $value['user']);
-				if($this->user_auth == 'super_admin' || array_search($this->user_id, $users) !== false) {
+				if($this->user_auth == 'super_admin' || $this->user_auth == 'admin' || array_search($this->user_id, $users) !== false) {
 					$list[$i++] = $value;
 				}
 			}

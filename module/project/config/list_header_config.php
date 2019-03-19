@@ -33,7 +33,7 @@ $list_header_config = array(
 					),
 				),
 				array(
-					'auth_filter'	=> 'super_admin',
+					'auth_filter'	=> 'super_admin/admin',
 					'start_html'	=> '<li>',
 					'end_html'		=> '</li>',
 					array(

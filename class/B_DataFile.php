@@ -47,11 +47,18 @@
 		}
 
 		function select($field, $value) {
-			if(!is_array($this->data)) return;
+			$collection = array();
 
-			foreach($this->data as $key => $row) {
-				if($row[$field] == $value) return $row;
+			if(is_array($this->data)) {
+				foreach($this->data as $key => $row) {
+					if($row[$field] == $value) {
+						$collection[] = $row;
+					}
+				}
+				$this->sort($collection);
 			}
+
+			return $collection;
 		}
 
 		function selectByPk($index) {
@@ -59,18 +66,19 @@
 		}
 
 		function selectByKeyword($fields, $keyword) {
-			if(!is_array($this->data)) return;
+			$collection = array();
 
-			foreach($this->data as $key => $row) {
-				foreach($fields as $field) {
-					if(preg_match('/' . $keyword . '/', $row[$field])) {
-						$collection[] = $row;
-						break;
+			if(is_array($this->data)) {
+				foreach($this->data as $key => $row) {
+					foreach($fields as $field) {
+						if(preg_match('/' . $keyword . '/', $row[$field])) {
+							$collection[] = $row;
+							break;
+						}
 					}
 				}
+				$this->sort($collection);
 			}
-
-			$this->sort($collection);
 
 			return $collection;
 		}
