@@ -26,7 +26,7 @@
 			$data = array();
 			$left = array();
 
-			$data = $this->df->select('user_auth', 'coder');
+			$data = $this->df->selectAll('user_auth', 'coder');
 			$this->dg_right->bind($data);
 
 			$users = explode('/', $this->user);

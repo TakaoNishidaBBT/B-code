@@ -57,7 +57,7 @@
 			$users = explode('/', $user);
 			foreach($users as $value) {
 				$row = $user_df->select('user_id', $value);
-				$user_name.= '<span>' . $row[0]['user_name'] . '</span>';
+				$user_name.= '<span>' . $row['user_name'] . '</span>';
 			}
 
 			return $user_name;

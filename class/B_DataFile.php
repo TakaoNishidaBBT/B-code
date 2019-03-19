@@ -47,6 +47,16 @@
 		}
 
 		function select($field, $value) {
+			if(is_array($this->data)) {
+				foreach($this->data as $key => $row) {
+					if($row[$field] == $value) {
+						return $row;
+					}
+				}
+			}
+		}
+
+		function selectAll($field, $value) {
 			$collection = array();
 
 			if(is_array($this->data)) {
