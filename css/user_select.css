@@ -27,6 +27,9 @@ div.right-inner {
 	border: 1px solid #ccc;
 	height: calc(100% - 40px);
 }
+div.left-inner {
+	height: 100%;
+}
 table.user-list td {
 	cursor: pointer;
 }

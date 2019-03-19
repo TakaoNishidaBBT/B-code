@@ -103,8 +103,22 @@
 
 		function setData() {
 			$data = $this->df->selectByKeyword(array('name', 'directory', 'notes'), $this->keyword);
+			if(is_array($data)) $data = $this->filterUserAuth($data);
 			if(is_array($data)) $data = array_merge($data, array('', '', '', '', ''));
 			$this->dg->bind($data);
+		}
+
+		function filterUserAuth($data) {
+			$list = array();
+
+			foreach($data as $value) {
+				$users = explode('/', $value['user']);
+				if($this->user_auth == 'super_admin' || array_search($this->user_id, $users) !== false) {
+					$list[$i++] = $value;
+				}
+			}
+
+			return $list;
 		}
 
 		function _list_callback(&$array) {

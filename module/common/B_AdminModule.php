@@ -36,4 +36,11 @@
 			flush();
 			ob_flush();
 		}
+
+		function redirect() {
+			// index.phpへリダイレクト
+			$path = B_SITE_ROOT;
+			header("Location:$path");
+			exit;
+		}
 	}

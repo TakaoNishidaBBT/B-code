@@ -57,8 +57,7 @@
 			$users = explode('/', $user);
 			foreach($users as $value) {
 				$row = $user_df->select('user_id', $value);
-				if($user_name) $user_name.= ', ';
-				$user_name.= $row['user_name'];
+				$user_name.= '<span>' . $row['user_name'] . '</span>';
 			}
 
 			return $user_name;
@@ -102,8 +101,6 @@
 		}
 
 		function register() {
-			$this->new_thumbnail = false;
-
 			try {
 				if($this->validate()) {
 					$status = $this->_register($this->message);
@@ -118,9 +115,10 @@
 				$this->message = $e->getMessage();
 			}
 
-			if($this->new_thumbnail) exit;
-
 			$this->form->setFilterValue($this->session['mode']);
+			$user = $this->form->getElementByName('user');
+			$user_name = $this->form->getElementByName('user_name');
+			$user_name->value = $this->getUserName($user->value);
 
 			$response['innerHTML'] = array(
 				'user-form'		=> $this->form->getHtml(),

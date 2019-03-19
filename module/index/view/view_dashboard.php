@@ -27,6 +27,7 @@
 <script src="js/identicon/identicon.js"></script>
 <title><?php echo $this->title ?></title></head>
 <body>
+	<script>if(window != top) top.location.href='.'</script>
 	<div id="title-header">
 		<div class="title"><img src="images/common/bcode-logo.png" alt="B-code" /></div>
 		<ul class="login-user">

@@ -40,16 +40,6 @@
 		window.frameElement.deactivate();
 	}
 
-	bcode.setUser = function() {
-		var user_name = bframe.userSelect.getUserName();
-		bcode.insertValue(window.frameElement.opener, 'user_name', user_name);
-
-		var user = bframe.userSelect.getUser();
-		bcode.insertValue(window.frameElement.opener, 'user', user);
-
-		window.frameElement.deactivate();
-	}
-
 	bcode.insertValue = function(opener, target_id, target_value) {
 		opener.bcode._insertValue(target_id, target_value);
 	}
@@ -62,12 +52,38 @@
 		if(bframe.fireEvent) bframe.fireEvent(target, 'change');
 	}
 
+	bcode.setUser = function() {
+		var user_name = bframe.userSelect.getUserName();
+		bcode.insertHTML(window.frameElement.opener, 'user_name', user_name);
+
+		var user = bframe.userSelect.getUser();
+		bcode.insertValue(window.frameElement.opener, 'user', user);
+
+		window.frameElement.deactivate();
+	}
+
+	bcode.insertHTML = function(opener, target_id, target_value) {
+		opener.bcode._insertHTML(target_id, target_value);
+	}
+
+	bcode._insertHTML = function(target_id, target_value) {
+		var target = document.getElementById(target_id);
+		if(!target) return;
+
+		target.innerHTML = target_value;
+	}
+
 	bcode.clearText = function() {
 		// arguments
 		for(var i=0; i < arguments.length; i++) {
 			var target = document.getElementById(arguments[i]);
-			if(target && target.value) {
-				target.value = '';
+			if(target) {
+				if(target.value) {
+					target.value = '';
+				}
+				else {
+					target.innerHTML = '';
+				}
 				if(bframe.fireEvent) bframe.fireEvent(target, 'change');
 			}
 		}

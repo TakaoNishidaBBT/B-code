@@ -457,6 +457,7 @@
 		// Project
 		'Add'							=> '新規登録',
 		'Directory'						=> 'ディレクトリ',
+		'User'							=> 'ユーザー',
 		'Back To List'					=> '一覧に戻る',
 		'Domain'						=> 'ドメイン',
 		'Register'						=> '登録',

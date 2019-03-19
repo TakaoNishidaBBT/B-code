@@ -137,8 +137,7 @@ console.log('onKeydown');
 			var collection = left.getAllRow();
 
 			for(let i=0; i < collection.length; i++) {
-				if(user_name) user_name += ', ';
-				user_name += collection[i].cells[0].innerHTML;
+				user_name += '<span>' + collection[i].cells[0].innerHTML + '</span>';
 			}
 
 			return user_name;

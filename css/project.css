@@ -208,3 +208,17 @@ ul.list li .delete a:hover .sprite img {
 table.form a.selectbox {
 	line-height: 36px;
 }
+
+table.form .user-name {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid #ccc;
+	width: 400px;
+	flex-wrap: wrap;
+	min-height: 36px;
+	vertical-align: bottom;
+}
+table.form .user-name span {
+	white-space: nowrap;
+	margin: 2px 10px;
+}

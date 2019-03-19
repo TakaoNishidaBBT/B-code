@@ -35,6 +35,17 @@
 			$this->session['current_node'] = '';
 
 			$this->setProject($this->request['project']);
+
+			if(!$this->checkUserAuth()) {
+				$this->redirect();
+			}
+		}
+
+		function checkUserAuth() {
+			$users = explode('/', $this->session['project']['user']);
+			if($this->user_auth == 'super_admin' || array_search($this->user_id, $users) !== false) {
+				return true;
+			}
 		}
 
 		function setProject($project) {

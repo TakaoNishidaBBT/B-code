@@ -29,6 +29,10 @@
 		}
 
 		function admin() {
+			if(!$this->checkUrl()) {
+				$this->redirect();
+			}
+
 			// Set session for each TERMINAL_ID
 			$_SESSION['terminal_id'] = TERMINAL_ID;
 			if(!is_array($_SESSION[TERMINAL_ID])) $_SESSION[TERMINAL_ID] = array();
@@ -57,6 +61,11 @@
 
 				$this->view_file = './view/view_dashboard.php';
 			}
+		}
+
+		function checkUrl() {
+			$directory = explode('/', $_REQUEST['url']);
+			if(count($directory) < 3) return true;
 		}
 
 		function login() {

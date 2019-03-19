@@ -282,8 +282,8 @@ $form_config = array(
 				'end_html'		=> '</td>',
 				array(
 					'name'			=> 'user_name',
-					'class'			=> 'B_InputText',
-					'attr'			=> 'class="textbox ime-off" readonly="readonly"',
+					'start_html'	=> '<div id="user_name" class="user-name">',
+					'end_html'		=> '</div>',
 				),
 				array(
 					'class'			=> 'B_Hidden',
