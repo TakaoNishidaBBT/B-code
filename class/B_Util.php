@@ -586,4 +586,61 @@
 			}
 			return empty($_line) ? false : $_csv_data;
 		}
+
+		 public static function identicon($hash) {
+			$size = 128;
+			$margin = 0.2;
+			$baseMargin = $size * $margin;
+			$cell = ($size - ($baseMargin * 2)) / 5;
+			$bg = 'rgba(255,255,255,1)';
+			$fg = 'rgba(217,38,174,1)';
+
+			$xml = "<svg xmlns='http://www.w3.org/2000/svg' width='$size' height='$size' style='background-color:$bg;'>";
+			$xml.= "<g style='fill:$fg; stroke:$fg; stroke-width:$stroke;'>";
+
+			for ($i = 0; $i < count($rectangles); $i++) {
+				$rect = $rectangles[$i];
+				if($rect.color == $bg) continue;
+
+				$xml.= "<rect x='$rect.x' y='$rect.y' width='$rect.w' height='$rect.h' />";
+			}
+			$xml.= "</g></svg>";
+
+			return $xml;
+/*
+<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128' style='background-color:rgba(255,255,255,1);'>
+	<g style='fill:rgba(217,38,174,1); stroke:rgba(217,38,174,1); stroke-width:0.64;'>
+		<rect  x='56' y='56' width='15' height='15'/>
+		<rect  x='56' y='71' width='15' height='15'/>
+		<rect  x='56' y='86' width='15' height='15'/>
+		<rect  x='41' y='26' width='15' height='15'/>
+		<rect  x='71' y='26' width='15' height='15'/>
+		<rect  x='41' y='41' width='15' height='15'/>
+		<rect  x='71' y='41' width='15' height='15'/>
+		<rect  x='26' y='56' width='15' height='15'/>
+		<rect  x='86' y='56' width='15' height='15'/>
+		<rect  x='26' y='86' width='15' height='15'/>
+		<rect  x='86' y='86' width='15' height='15'/>
+	</g>
+</svg>
+*/
+
+		}
+
+		private static function rectangle($hash) {
+			for($i=0; $i < 15; $i++) {
+				$color = hexdec($hash{$i}) % 2 ? $bg : $fg;
+				if($i < 5) {
+					this.rectangle(2 * $cell + $margin, i * cell + margin, cell, cell, color, image);
+				}
+				else if($i < 10) {
+					this.rectangle(1 * cell + margin, (i - 5) * cell + margin, cell, cell, color, image);
+					this.rectangle(3 * cell + margin, (i - 5) * cell + margin, cell, cell, color, image);
+				}
+				else if($i < 15) {
+					this.rectangle(0 * cell + margin, (i - 10) * cell + margin, cell, cell, color, image);
+					this.rectangle(4 * cell + margin, (i - 10) * cell + margin, cell, cell, color, image);
+				}
+			}
+		}
 	}
