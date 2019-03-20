@@ -21,8 +21,6 @@
 <script src="js/bframe_modal_window.js"></script>
 <script src="js/bframe_progress_bar.js"></script>
 <script src="js/bcode.js"></script>
-<script src="js/identicon/sha256.js"></script>
-<script src="js/identicon/identicon.js"></script>
 <title><?php echo $this->title ?></title></head>
 <body>
 	<script>if(window != top) top.location.href='.'</script>
@@ -30,14 +28,11 @@
 		<div class="title"><img src="images/common/bcode-logo.png" alt="B-code" /></div>
 		<div id="file_name"></div>
 		<ul class="login-user">
-			<li id="small-identicon"></li>
+			<li id="small-identicon"><?php echo $this->identicon; ?></li>
 			<li id="user-name"><?php echo $this->user_name ?></li>
 			<li id="user-id" style="display:none"><?php echo $this->user_id ?></li>
 			<li id="logout"><a href="<?php echo DISPATCH_URL ?>&amp;module=index&amp;page=logout" target="_top" ><?php echo __('Log out'); ?><img class="logout" src="images/common/logout.png" alt="logout" /></a></li>
 		</ul>
 	</div>
 	<iframe id="main" name="main" class="bframe_adjustwindow" src="<?php echo $this->initial_page; ?>"></iframe>
-	<script type="text/javascript">
-		bcode.identicon();
-	</script>
 </body>

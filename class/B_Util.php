@@ -587,60 +587,70 @@
 			return empty($_line) ? false : $_csv_data;
 		}
 
-		 public static function identicon($hash) {
+		 public static function identicon($user_id) {
+			$salt = 'bcode';
+			$hash = hash('sha256', $user_id . $salt);
 			$size = 128;
 			$margin = 0.2;
-			$baseMargin = $size * $margin;
-			$cell = ($size - ($baseMargin * 2)) / 5;
+			$baseMargin = round($size * $margin);
+			$cell = round(($size - ($baseMargin * 2)) / 5);
+			$stroke = $size * 0.005;
 			$bg = 'rgba(255,255,255,1)';
 			$fg = 'rgba(217,38,174,1)';
-
+			$fg = B_Util::identicon_color($hash);
 			$xml = "<svg xmlns='http://www.w3.org/2000/svg' width='$size' height='$size' style='background-color:$bg;'>";
 			$xml.= "<g style='fill:$fg; stroke:$fg; stroke-width:$stroke;'>";
-
-			for ($i = 0; $i < count($rectangles); $i++) {
-				$rect = $rectangles[$i];
-				if($rect.color == $bg) continue;
-
-				$xml.= "<rect x='$rect.x' y='$rect.y' width='$rect.w' height='$rect.h' />";
-			}
+			$xml.= B_Util::rectangle($hash, $cell, $baseMargin);
 			$xml.= "</g></svg>";
 
-			return $xml;
-/*
-<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128' style='background-color:rgba(255,255,255,1);'>
-	<g style='fill:rgba(217,38,174,1); stroke:rgba(217,38,174,1); stroke-width:0.64;'>
-		<rect  x='56' y='56' width='15' height='15'/>
-		<rect  x='56' y='71' width='15' height='15'/>
-		<rect  x='56' y='86' width='15' height='15'/>
-		<rect  x='41' y='26' width='15' height='15'/>
-		<rect  x='71' y='26' width='15' height='15'/>
-		<rect  x='41' y='41' width='15' height='15'/>
-		<rect  x='71' y='41' width='15' height='15'/>
-		<rect  x='26' y='56' width='15' height='15'/>
-		<rect  x='86' y='56' width='15' height='15'/>
-		<rect  x='26' y='86' width='15' height='15'/>
-		<rect  x='86' y='86' width='15' height='15'/>
-	</g>
-</svg>
-*/
-
+			return '<img src="data:image/svg+xml;utf8,' . $xml . '">';
 		}
 
-		private static function rectangle($hash) {
+		private static function identicon_color($hash) {
+			$saturation = 0.7;
+			$brightness = 0.5;
+			substr($hash, -7);
+
+			$hue = round(hexdec(substr($hash, -7))) / 0xfffffff;
+			$hue *= 6;
+			$saturation *= $brightness < .5 ? $brightness : 1 - $brightness;
+			$s = [
+				$brightness += $saturation,
+				$brightness - ($hue - floor($hue)) * $saturation * 2,
+				$brightness -= $saturation *= 2,
+				$brightness,
+				$brightness + ($hue - floor($hue)) * $saturation,
+				$brightness + $saturation
+			];
+
+			$r = round($s[floor($hue) % 6] * 255);
+			$g = round($s[($hue | 16) % 6] * 255);
+			$b = round($s[($hue | 8) % 6 ] * 255);
+
+			return "rgba($r,$g,$b,1)";
+		}
+
+		private static function rectangle($hash, $cell, $margin) {
 			for($i=0; $i < 15; $i++) {
-				$color = hexdec($hash{$i}) % 2 ? $bg : $fg;
+				if(hexdec($hash{$i}) % 2) continue;
+
 				if($i < 5) {
-					this.rectangle(2 * $cell + $margin, i * cell + margin, cell, cell, color, image);
+					$xml.= B_Util::rectangle_xml(2 * $cell + $margin, $i * $cell + $margin, $cell, $cell) . "\n";
 				}
 				else if($i < 10) {
-					this.rectangle(1 * cell + margin, (i - 5) * cell + margin, cell, cell, color, image);
-					this.rectangle(3 * cell + margin, (i - 5) * cell + margin, cell, cell, color, image);
+					$xml.= B_Util::rectangle_xml(1 * $cell + $margin, ($i - 5) * $cell + $margin, $cell, $cell) . "\n";
+					$xml.= B_Util::rectangle_xml(3 * $cell + $margin, ($i - 5) * $cell + $margin, $cell, $cell) . "\n";
 				}
 				else if($i < 15) {
-					this.rectangle(0 * cell + margin, (i - 10) * cell + margin, cell, cell, color, image);
-					this.rectangle(4 * cell + margin, (i - 10) * cell + margin, cell, cell, color, image);
+					$xml.= B_Util::rectangle_xml(0 * $cell + $margin, ($i - 10) * $cell + $margin, $cell, $cell) . "\n";
+					$xml.= B_Util::rectangle_xml(4 * $cell + $margin, ($i - 10) * $cell + $margin, $cell, $cell) . "\n";
 				}
 			}
+
+			return $xml;
+		}
+
+		private static function rectangle_xml($x, $y, $w, $h) {
+			return "<rect x='$x' y='$y' width='$w' height='$h' />";
 		}
 	}

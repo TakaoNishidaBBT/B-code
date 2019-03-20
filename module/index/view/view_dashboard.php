@@ -23,15 +23,13 @@
 <script src="js/bframe_navi.js"></script>
 <script src="js/bframe_progress_bar.js"></script>
 <script src="js/bcode.js"></script>
-<script src="js/identicon/sha256.js"></script>
-<script src="js/identicon/identicon.js"></script>
 <title><?php echo $this->title ?></title></head>
 <body>
 	<script>if(window != top) top.location.href='.'</script>
 	<div id="title-header">
 		<div class="title"><img src="images/common/bcode-logo.png" alt="B-code" /></div>
 		<ul class="login-user">
-			<li id="small-identicon"></li>
+			<li id="small-identicon"><?php echo $this->identicon; ?></li>
 			<li id="user-name"><?php echo $this->user_name ?></li>
 			<?php echo $this->admin_profile; ?>
 			<li id="user-id" style="display:none"><?php echo $this->user_id ?></li>
@@ -41,7 +39,7 @@
 	<div class="main-content">
 		<div id="left-container">
 			<div class="user">
-				<span id="big-identicon"></span>
+				<span id="big-identicon"><?php echo $this->identicon; ?></span>
 				<span class="user-name"><?php echo $this->user_name ?></span>
 			</div>
 			<div class="logo">
@@ -51,7 +49,4 @@
 		</div>
 		<iframe id="main" name="main" class="bframe_adjustwindow" src="<?php echo $this->initial_page; ?>"></iframe>
 	</div>
-	<script type="text/javascript">
-		bcode.identicon();
-	</script>
 </body>
