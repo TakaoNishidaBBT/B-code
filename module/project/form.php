@@ -42,6 +42,7 @@
 
 			case 'delete':
 				$row = $this->df->selectByPk($this->request['rowid']);
+				$row['user_name'] = $this->getUserName($row['user']);
 				$this->form->setValue($row);
 				$this->display_mode = 'confirm';
 				$this->view_file = './view/view_delete.php';

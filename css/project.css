@@ -218,7 +218,13 @@ table.form .user-name {
 	min-height: 36px;
 	vertical-align: bottom;
 }
+table.form .user-name.delete {
+	border: none;
+}
 table.form .user-name span {
 	white-space: nowrap;
 	margin: 2px 10px;
+}
+table.form .user-name.delete span:first-child {
+	margin-left: 0;
 }

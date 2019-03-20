@@ -596,7 +596,6 @@
 			$cell = round(($size - ($baseMargin * 2)) / 5);
 			$stroke = $size * 0.005;
 			$bg = 'rgba(255,255,255,1)';
-			$fg = 'rgba(217,38,174,1)';
 			$fg = B_Util::identicon_color($hash);
 			$xml = "<svg xmlns='http://www.w3.org/2000/svg' width='$size' height='$size' style='background-color:$bg;'>";
 			$xml.= "<g style='fill:$fg; stroke:$fg; stroke-width:$stroke;'>";

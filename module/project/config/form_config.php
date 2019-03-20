@@ -281,8 +281,15 @@ $form_config = array(
 				'start_html'	=> '<td>',
 				'end_html'		=> '</td>',
 				array(
+					'config_filter'	=> 'insert/update',
 					'name'			=> 'user_name',
 					'start_html'	=> '<div id="user_name" class="user-name">',
+					'end_html'		=> '</div>',
+				),
+				array(
+					'config_filter'	=> 'delete',
+					'name'			=> 'user_name',
+					'start_html'	=> '<div id="user_name" class="user-name delete">',
 					'end_html'		=> '</div>',
 				),
 				array(

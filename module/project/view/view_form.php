@@ -24,7 +24,7 @@
 				</div>
 
 				<ul class="submit">
-					<li id="submit-button" class="submit-button" onclick="bframe.ajaxSubmit.submit('F1', 'project', 'form', 'register', 'confirm', true)">
+					<li id="submit-button" class="submit-button" onclick="bframe.ajaxSubmit.submit('F1', 'project', 'form', 'register', 'update', true)">
 						<span><?php echo __('Register'); ?></span>
 					</li>
 				</ul>
