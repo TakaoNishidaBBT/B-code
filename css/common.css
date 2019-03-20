@@ -285,7 +285,8 @@ table.list th {
 	top: 0;
 	border-bottom: 1px solid #ccc;
 	font-size: 14px;
-}
+	background-color: #fff !important;
+}}
 table.list th.sortable {
 	background: url(../images/common/sort.png) no-repeat right 2px center;
 }
@@ -401,7 +402,7 @@ table.list tr.alt td {
 	border-bottom: 1px solid #ddd;
 }
 table.list tr.invalid {
-	background: #f2f2f2;
+	opacity: 0.6;
 }
 table.list tr.invalid td {
 	color: #999;

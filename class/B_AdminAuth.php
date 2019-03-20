@@ -43,7 +43,7 @@
 
 			case 'B_DataFile':
 				$row = $db->select('user_id', $user_id);
-				if($row && $row['pwd'] == $pwd) {
+				if($row && $row['pwd'] == $pwd && $row['user_status'] == '1') {
 					$_SESSION['user_id'] = $row['user_id'];
 					$_SESSION['user_name'] = $row['user_name'];
 					$_SESSION['user_auth'] = $row['user_auth'];

@@ -58,6 +58,8 @@
 			$users = explode('/', $user);
 			foreach($users as $value) {
 				$row = $user_df->select('user_id', $value);
+				if($row['user_status'] == '9') continue;
+
 				$user_name.= '<span>' . $row['user_name'] . '</span>';
 			}
 

@@ -96,3 +96,7 @@ table.form a.selectbox {
 	line-height: 32px;
 	font-size: 14px;
 }
+
+table.list td.identicon img {
+	width: 32px;
+}

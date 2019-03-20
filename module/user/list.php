@@ -113,6 +113,19 @@
 			$this->dg->bind($data);
 		}
 
+		function _list_callback($array) {
+			$row = $array['row'];
+
+			$user_status = $row->getElementByName('user_status');
+			if($user_status->value == '9') {
+				$row->start_html = $row->start_html_invalid;
+			}
+
+			$user_id = $row->getElementByName('user_id');
+			$identicon = $row->getElementByName('identicon');
+			$identicon->value = B_Util::identicon($user_id->value);
+		}
+
 		function view() {
 			// Start buffering
 			ob_start();

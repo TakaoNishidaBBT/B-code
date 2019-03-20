@@ -30,6 +30,11 @@ array(
 		'end_html'		=> '</tr>',
 		'class'			=> 'B_Row',
 		array(
+			'start_html'		=> '<th class="center" style="width:60px"><span>',
+			'end_html'			=> '</span></th>',
+			'value'				=> __('icon'),
+		),
+		array(
 			'name'				=> 'User_id',
 			'start_html'		=> '<th class="sortable" style="width:80px">',
 			'start_html_asc'	=> '<th class="sortable asc" style="width:80px">',
@@ -125,6 +130,11 @@ array(
 		'start_html_invalid'	=> '<tr class="invalid">',
 		'end_html'				=> '</tr>',
 		'class'					=> 'B_Row',
+		array(
+			'start_html'	=> '<td class="center identicon">',
+			'end_html'		=> '</td>',
+			'name'			=> 'identicon',
+		),
 		array(
 			'start_html'	=> '<td class="left">',
 			'end_html'		=> '</td>',

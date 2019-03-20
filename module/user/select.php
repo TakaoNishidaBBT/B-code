@@ -24,13 +24,18 @@
 
 		function setData() {
 			$data = array();
+			$valid_user = array();
 			$left = array();
 
 			$data = $this->df->selectAll('user_auth', 'coder');
-			$this->dg_right->bind($data);
+			foreach($data as $value) {
+				if($value['user_status'] == '9') continue;
+				$valid_user[] = $value;
+			}
+			$this->dg_right->bind($valid_user);
 
 			$users = explode('/', $this->user);
-			foreach($data as $value) {
+			foreach($valid_user as $value) {
 				if(array_search($value['user_id'], $users) !== false) {
 					$left[] = $value;
 				}
