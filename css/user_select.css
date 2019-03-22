@@ -33,11 +33,14 @@ div.left-inner {
 table.user-list td {
 	cursor: pointer;
 }
-table.user-list tr.selected {
+table.user-list tr.current {
 	background-color: #22a8f6;
 }
-table.user-list tr.selected td {
+table.user-list tr.current td {
 	color: #fff;
+}
+table.user-list tr.selected {
+	background-color: #ddd;
 }
 table.user-list td.hidden {
 	display: none;
