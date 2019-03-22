@@ -780,7 +780,7 @@
 					setOpenNodes(current_node.id());
 				}
 
-				// if not set current_node then set current node from server
+				// if current edit node is current node
 				if(current_edit_node && current_edit_node.id == current_node.id() && response.status) {
 					current_node.set('t'+response.current_node);
 					selected_node.set('t'+response.current_node);
@@ -900,6 +900,11 @@
 
 				// if current node is not visible, set visible parent node to current
 				setVisibleCurrentNode();
+
+				if(!selected_node.object()) {
+					// set current node to selected node
+					selected_node.set(current_node.id());
+				}
 
 				new_node = false;
 				reload_status = false;
