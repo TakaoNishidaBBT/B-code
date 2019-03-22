@@ -220,6 +220,9 @@ table.form .user-name {
 }
 table.form .user-name.delete {
 	border: none;
+	min-height: inherit;
+	min-height: initial;
+	min-height: unset;
 }
 table.form .user-name span {
 	white-space: nowrap;
