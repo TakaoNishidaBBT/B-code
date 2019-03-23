@@ -3122,7 +3122,7 @@
 				}
 
 				this.showFileName = function(f_name) {
-					if(!f_name) f_name = document.getElementById('p' + current_node.id()).value;
+					if(!f_name) f_name = current_node.id().substr(1);
 					bcode.setFileName(f_name);
 				}
 
