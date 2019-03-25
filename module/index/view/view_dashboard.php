@@ -7,6 +7,7 @@
 <meta name="source_page" content="index">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="shortcut icon" href="images/common/favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="images/common/favicon.png" />
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/dashboard.css">
