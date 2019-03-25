@@ -16,16 +16,12 @@
 		<table class="browsers">
 			<tr>
 				<td class="icon"><img src="images/browsers/safari.png" alt="Safari" /></td>
-				<td class="icon"><img src="images/browsers/edge.png" alt="Microsoft Edge" /></td>
-				<td class="icon"><img src="images/browsers/ie.png" alt="Internet Explorer" /></td>
 				<td class="icon"><img src="images/browsers/firefox.png" alt="Firefox" /></td>
 				<td class="icon"><img src="images/browsers/chrome.png" alt="Chrome" /></td>
 				<td class="icon"><img src="images/browsers/opera.png" alt="Opera" /></td>
 			</tr>
 			<tr>
 				<td class="name">Safari</td>
-				<td class="name">Microsoft Edge</td>
-				<td class="name">Internet Explorer11</td>
 				<td class="name">Firefox</td>
 				<td class="name">Chrome</td>
 				<td class="name">Opera</td>

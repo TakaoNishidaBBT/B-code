@@ -101,11 +101,10 @@
 		}
 
 		function checkBrowser() {
-			$this->agent = $_SERVER['HTTP_USER_AGENT'];
+			if(preg_match('/edge/i', $_SERVER['HTTP_USER_AGENT'])) return false;
 			if(preg_match('/firefox/i', $_SERVER['HTTP_USER_AGENT'])) return true;
 			if(preg_match('/chrome/i', $_SERVER['HTTP_USER_AGENT'])) return true;
 			if(preg_match('/safari/i', $_SERVER['HTTP_USER_AGENT'])) return true;
-			if(preg_match('/rv:11.0/i', $_SERVER['HTTP_USER_AGENT'])) return true;
 
 			return false;
 		}
