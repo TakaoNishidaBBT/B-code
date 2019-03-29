@@ -2409,26 +2409,41 @@
 			this.open = open;
 
 			function setFileName() {
-				var file_name;
 				var file_name_array = [];
 
-				for(var i=0; i < tabs.length; i++) {
-					file_name = tabs[i].obj.getFileName();
+				for(let i=0; i < tabs.length; i++) {
+					var file_name = tabs[i].obj.getFileName();
 					if(!Array.isArray(file_name_array[file_name])) {
 						file_name_array[file_name] = [];
 					}
 					file_name_array[file_name].push(tabs[i].obj);
 				}
 
-				for(var key in  file_name_array) {
+				for(let key in  file_name_array) {
 					if(file_name_array[key].length == 1) {
 						file_name_array[key][0].setDisplayName(key);
 					}
 					else {
-						var arr = file_name_array[key];
-						for(var i=0; i < arr.length; i++) {
-							var dir = arr[i].getDirName();
-							arr[i].setDisplayName(key + ' ― ' + dir);
+						let arr = file_name_array[key];
+						for(let level = 1; arr.length; level++) {
+							let dir_name_array = [];
+							for(var i=0; i < arr.length; i++) {
+								var dir_name = arr[i].getDirName(level);
+								if(!Array.isArray(dir_name_array[dir_name])) {
+									dir_name_array[dir_name] = [];
+								}
+								dir_name_array[dir_name].push(arr[i]);
+							}
+							var j=0;
+							for(var key2 in  dir_name_array) {
+								if(dir_name_array[key2].length == 1) {
+									dir_name_array[key2][0].setDisplayName(key + ' ― ' + key2);
+									arr.splice(j, 1);
+								}
+								else {
+									j++;
+								}
+							}
 						}
 					}
 				}
@@ -3055,12 +3070,12 @@
 					fname.innerHTML = f_name;
 				}
 
-				this.getDirName = function() {
+				this.getDirName = function(level) {
 					var dir = '';
 
-					for(let i=2; i < node_array.length-1; i++) {
-						if(dir) dir += '/';
-						dir += node_array[i];
+					for(let i=node_array.length-2; i > node_array.length - 2 - level; i--) {
+						if(dir) dir = '/' + dir;
+						dir = node_array[i] + dir;
 					}
 					return dir;
 				}
