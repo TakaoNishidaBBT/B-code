@@ -91,6 +91,8 @@
 			control1.appendChild(li);
 			li = createControlButton('images/editor/invisible_object.png', 'show invisibles', invisible);
 			control1.appendChild(li);
+			li = createControlButton('images/editor/goto.png', 'go to line', goto);
+			control1.appendChild(li);
 			widget = bframe.searchNodeByClassName(parent, 'open_widgetmanager');
 			if(widget) {
 				li = createControlButton('images/editor/gear.png', 'widgets', openWidget);
@@ -313,6 +315,13 @@
 				if(split.getSplits() == 2) {
 					split.getEditor(1).renderer.setShowInvisibles(true);
 				}
+			}
+		}
+
+		function goto(event) {
+			line = parseInt(prompt("Enter line number:"), 10);
+			if(!isNaN(line)) {
+				ace_editor.gotoLine(line);
 			}
 		}
 
