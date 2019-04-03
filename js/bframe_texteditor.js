@@ -266,7 +266,8 @@
 				newEditor.renderer.setShowPrintMargin(ace_editor.renderer.getShowPrintMargin());
 				newEditor.renderer.setShowInvisibles(ace_editor.renderer.getShowInvisibles());
 				newEditor.setDisplayIndentGuides(ace_editor.getDisplayIndentGuides());
-				newEditor.commands.addCommand(command);
+				newEditor.commands.addCommand(save_command);
+				newEditor.focus();
 			}
 			else{
 				split.setSplits(1);
@@ -287,10 +288,12 @@
 				newEditor.renderer.setShowPrintMargin(ace_editor.renderer.getShowPrintMargin());
 				newEditor.renderer.setShowInvisibles(ace_editor.renderer.getShowInvisibles());
 				newEditor.setDisplayIndentGuides(ace_editor.getDisplayIndentGuides());
-				newEditor.commands.addCommand(command);
+				newEditor.commands.addCommand(save_command);
+				newEditor.focus();
 			}
 			else {
 				split.setSplits(1);
+				ace_editor.focus();
 			}
 		}
 
@@ -327,8 +330,9 @@
 		function goto(event) {
 			line = parseInt(prompt("Enter line number:"), 10);
 			if(!isNaN(line)) {
-				ace_editor.gotoLine(line);
-				ace_editor.focus();
+				var cEditor = split.getCurrentEditor();
+				cEditor.gotoLine(line);
+				cEditor.focus();
 			}
 		}
 
