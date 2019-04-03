@@ -322,6 +322,7 @@
 			line = parseInt(prompt("Enter line number:"), 10);
 			if(!isNaN(line)) {
 				ace_editor.gotoLine(line);
+				ace_editor.focus();
 			}
 		}
 
