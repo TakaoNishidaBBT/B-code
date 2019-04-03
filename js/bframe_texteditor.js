@@ -6,11 +6,11 @@
 */
 	bframe.addEventListener(window, 'load' , bframeTextEditorInit);
 
-	function bframeTextEditorInit(){
+	function bframeTextEditorInit() {
 		var objects = document.querySelectorAll('textarea.bframe_texteditor');
 
 		for(var i=0; i < objects.length; i++) {
-			var s = new bframe.texteditor(objects[i]);
+			bframe_texteditor = new bframe.texteditor(objects[i]);
 		}
 	}
 
@@ -130,7 +130,7 @@
 			var a = document.createElement('a');
 			a.title = title;
 			if(func) {
-				bframe.addEventListener(a, 'mousedown',func);
+				bframe.addEventListener(a, 'mousedown', func);
 			}
 			li.appendChild(a);
 			img = document.createElement('img');
@@ -194,10 +194,10 @@
 
 			var completion = require('ace/ext/language_tools');
 			ace_editor.setOptions({
-			         enableBasicAutocompletion: true,
-			         enableLiveAutocompletion: true,
-			         enableSnippets: true,
-			     });
+				enableBasicAutocompletion: true,
+				enableLiveAutocompletion: true,
+				enableSnippets: true,
+			});
 
 			ace_editor.setScrollSpeed(2);
 			ace_editor.commands.addCommand(save_command);

@@ -83,7 +83,11 @@
 		}
 
 		function isRoot() {
-			return $this->fullpath == $this->dir;
+			$dir = $this->dir;
+			$fullpath = $this->fullpath;
+			if(substr($dir, -1) != '/') $dir.= '/';
+			if(substr($fullpath, -1) != '/') $fullpath.= '/';
+			return $fullpath == $dir;
 		}
 
 		function addNodes(&$object) {
