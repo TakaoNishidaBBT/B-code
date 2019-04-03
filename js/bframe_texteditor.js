@@ -91,8 +91,14 @@
 			control1.appendChild(li);
 			li = createControlButton('images/editor/invisible_object.png', 'show invisibles', invisible);
 			control1.appendChild(li);
-			li = createControlButton('images/editor/goto.png', 'go to line', goto);
-			control1.appendChild(li);
+			if(bframe.getOS() == 'windows') {
+				li = createControlButton('images/editor/goto.png', 'go to line (ctrl-l)', goto);
+				control1.appendChild(li);
+			}
+			else {
+				li = createControlButton('images/editor/goto.png', 'go to line', goto);
+				control1.appendChild(li);
+			}
 			widget = bframe.searchNodeByClassName(parent, 'open_widgetmanager');
 			if(widget) {
 				li = createControlButton('images/editor/gear.png', 'widgets', openWidget);
