@@ -42,6 +42,7 @@ table.user-list tr.current td {
 table.user-list tr.selected {
 	background-color: #ddd;
 }
+table.user-list tr.hidden,
 table.user-list td.hidden {
 	display: none;
 }
@@ -72,9 +73,10 @@ ul.search li.search {
 	display: flex;
 	position: relative;
 	background-color: #e3e3e3;
+	padding: 3px;
 }
 ul.search li.search .keyword {
-	width: 160px;
+	width: 154px;
 	height: 30px;
 	padding: 6px 30px 6px 8px;
 	box-sizing: border-box;
@@ -88,7 +90,7 @@ ul.search input:forcus {
 #search-button {
 	display: block;
 	position: absolute;
-	right: 0;
+	right: 3px;
 	height: 30px;
 	padding: 6px 0 6px 30px;
 	box-sizing: border-box;

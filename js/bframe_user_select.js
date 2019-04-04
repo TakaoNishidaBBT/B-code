@@ -23,6 +23,8 @@
 		var add_button = document.getElementById('add-button');
 		var del_button = document.getElementById('del-button');
 		var cancel_button = document.getElementById('cancel-button');
+		var keyword = document.getElementById('keyword');
+		var search_button = document.getElementById('search-button');
 
 		var left = new selectable_table(left_table);
 		var right = new selectable_table(right_table);
@@ -30,6 +32,7 @@
 		add_button.addEventListener('click', add);
 		del_button.addEventListener('click', del);
 		document.body.addEventListener('click', reset);
+		document.addEventListener('keydown', onKeydown);
 
 		function selectable_table(table) {
 			var last_row;
@@ -103,6 +106,10 @@
 				}
 			}
 
+			function search() {
+
+			}
+
 			this.getAllRow = function() {
 				var collection = [];
 
@@ -172,6 +179,21 @@
 				}
 			}
 			this.resetSelection = resetSelection;
+
+			this.search = function() {
+				for(let i=0, index=0; i < table.rows.length; i++) {
+					if(table.rows[i].cells[0].innerHTML.indexOf(keyword.value) == -1) {
+						table.rows[i].classList.add('hidden');
+					}
+					else {
+						table.rows[i].classList.remove('hidden');
+					}
+				}
+			}
+		}
+
+		function onKeydown(event) {
+			setTimeout(right.search, 10);
 		}
 
 		function reset(event) {
