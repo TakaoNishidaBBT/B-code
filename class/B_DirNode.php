@@ -17,7 +17,7 @@
 			$this->path = $path == 'root' ? '' : $path;
 			$this->node_id = $path == '/' ? 'root' : $path;
 
-			$this->fullpath = B_Util::getPath($dir, $this->path);
+			$this->fullpath = __getPath($dir, $this->path);
 			$this->file_name = basename($this->fullpath);
 
 			if($parent) {
@@ -57,14 +57,14 @@
 
 				$this->node_count++;
 
-				if(is_dir(B_Util::getPath($this->fullpath, $file_name))) {
+				if(is_dir(__getPath($this->fullpath, $file_name))) {
 					$this->folder_count++;
 				}
 				else {
 					continue;
 				}
 				if((is_array($open_nodes) && $open_nodes[$this->node_id]) || ($expand_level === 'all' || $level < $expand_level)) {
-					$object = new B_DirNode($this->dir, B_Util::getPath($this->path, $file_name), $open_nodes, $this, $expand_level, $level+1, $thumb_info);
+					$object = new B_DirNode($this->dir, __getPath($this->path, $file_name), $open_nodes, $this, $expand_level, $level+1, $thumb_info);
 					$this->addNodes($object);
 				}
 			}
@@ -212,7 +212,7 @@
 
 		function rename($old_name, $new_name) {
 			if($this->node_id === $old_name) {
-				$ret = rename(B_Util::getPath($this->dir, $old_name), B_Util::getPath($this->dir, $new_name));
+				$ret = rename(__getPath($this->dir, $old_name), __getPath($this->dir, $new_name));
 				if(!$ret) return false;
 
 				$this->node_id = $new_name;
@@ -220,12 +220,12 @@
 				$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
 			}
 			else {
-				$this->path = B_Util::getPath($this->parent->path, $this->file_name);
-				$this->node_id = B_Util::getPath($this->parent->path, $this->file_name);
+				$this->path = __getPath($this->parent->path, $this->file_name);
+				$this->node_id = __getPath($this->parent->path, $this->file_name);
 				$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
 			}
 
-			$this->fullpath = B_Util::getPath($this->dir, $this->path);
+			$this->fullpath = __getPath($this->dir, $this->path);
 
 			if(is_array($this->node)) {
 				foreach(array_keys($this->node) as $key) {
@@ -237,7 +237,7 @@
 		}
 
 		function copy($dest, &$new_node_name, &$data, &$index, $recursive=false, $callback=null) {
-			$destination = B_Util::getPath($this->dir, $dest);
+			$destination = __getPath($this->dir, $dest);
 			if($this->isMyChild($destination)) {
 				$this->error_no = 1;
 				return false;
@@ -245,8 +245,8 @@
 			if(file_exists($this->fullpath)) {
 				if(is_dir($this->fullpath)) {
 					$new_node_name = $this->getNewNodeName($destination, $this->file_name, 'copy');
-					$dest = B_Util::getPath($dest, $new_node_name);
-					$destination = B_Util::getPath($this->dir, $dest);
+					$dest = __getPath($dest, $new_node_name);
+					$destination = __getPath($this->dir, $dest);
 					if(!file_exists($destination)) {
 						mkdir($destination);
 						chmod($destination, 0777);
@@ -254,8 +254,8 @@
 				}
 				else {
 					$new_node_name = $this->getNewNodeName($destination, $this->file_name, 'copy');
-					$dest = B_Util::getPath($dest, $new_node_name);
-					$destination = B_Util::getPath($this->dir, $dest);
+					$dest = __getPath($dest, $new_node_name);
+					$destination = __getPath($this->dir, $dest);
 					copy($this->fullpath, $destination);
 					chmod($destination, 0777);
 
@@ -285,19 +285,19 @@
 		}
 
 		function _copy($dest, &$data, &$index, $recursive=false, $callback=null) {
-			$destination = B_Util::getPath($this->dir, $dest);
+			$destination = __getPath($this->dir, $dest);
 			if(file_exists($this->fullpath)) {
 				if(is_dir($this->fullpath)) {
-					$dest = B_Util::getPath($dest, $this->file_name);
-					$destination = B_Util::getPath($this->dir, $dest);
+					$dest = __getPath($dest, $this->file_name);
+					$destination = __getPath($this->dir, $dest);
 					if(!file_exists($destination)) {
 						mkdir($destination);
 						chmod($destination, 0777);
 					}
 				}
 				else {
-					$dest = B_Util::getPath($dest, $this->file_name);
-					$destination = B_Util::getPath($this->dir, $dest);
+					$dest = __getPath($dest, $this->file_name);
+					$destination = __getPath($this->dir, $dest);
 					copy($this->fullpath, $destination);
 					chmod($destination, 0777);
 
@@ -329,14 +329,14 @@
 		function fileCopy($destination, $recursive=false, $callback=null) {
 			if(file_exists($this->fullpath)) {
 				if(is_dir($this->fullpath)) {
-					$destination = B_Util::getPath($destination, $this->file_name);
+					$destination = __getPath($destination, $this->file_name);
 					if(!file_exists($destination)) {
 						mkdir($destination);
 						chmod($destination, 0777);
 					}
 				}
 				else {
-					$destination = B_Util::getPath($destination, $this->file_name);
+					$destination = __getPath($destination, $this->file_name);
 					copy($this->fullpath, $destination);
 					chmod($destination, 0777);
 				}
@@ -365,7 +365,7 @@
 						$source->parent->removeNodes($source);
 						$this->addNodes($source);
 						$source->parent = $this;
-						$this->rename($source->node_id, B_Util::getPath($this->path, $source->file_name));
+						$this->rename($source->node_id, __getPath($this->path, $source->file_name));
 						return true;
 					}
 				}
@@ -409,14 +409,14 @@
 				return false;
 			}
 
-			for($i=2, $folder = $node_name; file_exists(B_Util::getPath($this->fullpath, $folder)); $folder = $node_name . $extend) {
+			for($i=2, $folder = $node_name; file_exists(__getPath($this->fullpath, $folder)); $folder = $node_name . $extend) {
 				$extend = '(' . $i++ . ')';
 			}
-			$folder_name = B_Util::getPath($this->fullpath, $folder);
+			$folder_name = __getPath($this->fullpath, $folder);
 			$ret = mkdir($folder_name);
 			chmod($folder_name, 0777);
 
-			$new_node_id = B_Util::getPath($this->path, $folder);
+			$new_node_id = __getPath($this->path, $folder);
 
 			return $ret;
 		}
@@ -426,10 +426,10 @@
 
 			for($i=2, $node_name = $info['filename'];; $node_name = $prefix . $info['filename'] . $extend) {
 				if($info['extension']) {
-					if(!file_exists(B_Util::getPath($dir, $node_name) . '.' . $info['extension'])) break;
+					if(!file_exists(__getPath($dir, $node_name) . '.' . $info['extension'])) break;
 				}
 				else {
-					if(!file_exists(B_Util::getPath($dir, $node_name))) break;
+					if(!file_exists(__getPath($dir, $node_name))) break;
 				}
 				switch($mode) {
 				case 'insert':

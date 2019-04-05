@@ -47,7 +47,7 @@
 			$thumb_dir = B_THUMBDIR . $folder . '/';
 			$file['dirname'] = implode('/', $dir_array);
 			if($file['dirname']) {
-				$url = B_Util::getPath($file['dirname'], $file['basename']);
+				$url = __getPath($file['dirname'], $file['basename']);
 			}
 			else {
 				$url = $file['basename'];

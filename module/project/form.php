@@ -183,7 +183,7 @@
 			$row = $this->df->selectByPk($new_id);
 			$this->session['init_value'] = $row;
 
-			$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $param['name']) . '/';
+			$this->thumb_dir = __getPath(B_THUMBDIR, $param['name']) . '/';
 
 			$this->createThumbnailDir($param['name'], $param['directory']);
 
@@ -199,7 +199,7 @@
 
 			// recreate thumbnail
 			if($param['directory'] != $this->session['init_value']['directory']) {
-				$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $this->session['init_value']['name']) . '/';
+				$this->thumb_dir = __getPath(B_THUMBDIR, $this->session['init_value']['name']) . '/';
 				$this->removeThumbnail();
 			}
 
@@ -223,7 +223,7 @@
 
 			$this->setView('resultView');
 
-			$this->thumb_dir = B_Util::getPath(B_THUMBDIR, $value['name']) . '/';
+			$this->thumb_dir = __getPath(B_THUMBDIR, $value['name']) . '/';
 
 			$this->removeThumbnail();
 

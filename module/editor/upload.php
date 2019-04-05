@@ -54,7 +54,7 @@
 						break;
 
 					case 'noextract':
-						$fullpath = B_Util::getPath($this->dir,$this->request['node_id'], $file['basename']);
+						$fullpath = __getPath($this->dir, $this->request['node_id'], $file['basename']);
 						if(file_exists($fullpath) && $this->request['mode'] == 'confirm') {
 							$response_mode = 'confirm';
 							$message = __('%FILE_NAME% already exists.<br />Are you sure you want to overwrite?');
@@ -64,7 +64,7 @@
 					}
 				}
 				else {
-					$fullpath = B_Util::getPath($this->dir, $this->request['node_id'], $file['basename']);
+					$fullpath = __getPath($this->dir, $this->request['node_id'], $file['basename']);
 					if($this->request['mode'] == 'confirm' && file_exists($fullpath)) {
 						$response_mode = 'confirm';
 						$message = __('%FILE_NAME% already exists.<br />Are you sure you want to overwrite?');
@@ -160,7 +160,7 @@
 						$node->createthumbnail($this->except, array('obj' => $this, 'method' => 'createThumbnail_callback'));
 
 						foreach($this->registered_archive_node as $path) {
-							$node = new B_FileNode($this->dir, B_Util::getPath($this->request['node_id'], $path), null, null, 0);
+							$node = new B_FileNode($this->dir, __getPath($this->request['node_id'], $path), null, null, 0);
 							$response['node_info'][] = $node->getNodeList('', '', $this->request['node_id']);
 						}
 
@@ -172,11 +172,11 @@
 					}
 				}
 				else {
-					$path = B_Util::getPath($this->dir, $this->request['node_id'], $file['basename']);
+					$path = __getPath($this->dir, $this->request['node_id'], $file['basename']);
 					$status = move_uploaded_file($_FILES['Filedata']['tmp_name'], $path);
 					if($status) {
 						chmod($path, 0777);
-						$node = new B_FileNode($this->dir, B_Util::getPath($this->request['node_id'], $file['basename']), null, null, 1);
+						$node = new B_FileNode($this->dir, __getPath($this->request['node_id'], $file['basename']), null, null, 1);
 						$node->createthumbnail();
 						$response['node_info'][] = $node->getNodeList('', '', $this->request['node_id']);
 					}
@@ -260,7 +260,7 @@
 				$this->registered_archive_node[] = $node->path;
 			}
 
-			$dest = B_Util::getPath($this->dir, $this->request['node_id'], $node->path);
+			$dest = __getPath($this->dir, $this->request['node_id'], $node->path);
 			if(is_dir($node->fullpath)) {
  				if(!file_exists($dest)) {
 					mkdir($dest);
@@ -268,7 +268,7 @@
 				return true;
 			}
 			else {
-				copy($node->fullpath, B_Util::getPath($this->dir, $this->request['node_id'], $node->path));
+				copy($node->fullpath, __getPath($this->dir, $this->request['node_id'], $node->path));
 			}
 
 			$this->registerd_files++;

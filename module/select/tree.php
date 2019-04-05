@@ -319,7 +319,7 @@
 						$ret = $node->remove();
 						if($ret) {
 							$this->status = true;
-							if($node->isMyChild(B_Util::getPath($this->dir, $this->session['current_node']))) {
+							if($node->isMyChild(__getPath($this->dir, $this->session['current_node']))) {
 								$this->session['current_node'] = $node->parentPath();
 							}
 						}
@@ -340,9 +340,9 @@
 			if($this->request['node_id'] && $this->request['node_id'] != 'null') {
 				$file_info = pathinfo($this->request['node_id']);
 				$node_name = trim($this->request['node_name']);
-				$new_node_id = B_Util::getPath($file_info['dirname'], $node_name);
-				$source = B_Util::getPath($this->dir , $this->request['node_id']);
-				$dest = B_Util::getPath($this->dir , $new_node_id);
+				$new_node_id = __getPath($file_info['dirname'], $node_name);
+				$source = __getPath($this->dir , $this->request['node_id']);
+				$dest = __getPath($this->dir , $new_node_id);
 
 				if($this->checkFileName($source, $dest, $node_name, $file_info)) {
 					$node = new B_FileNode($this->dir, $this->request['node_id'], null, null, 1);
@@ -375,7 +375,7 @@
 				$this->message = __('Multi-byte characters cannot be used');
 				return false;
 			}
-			if(!file_exists(B_Util::getPath($this->dir, $file_info['path']))) {
+			if(!file_exists(__getPath($this->dir, $file_info['path']))) {
 				$this->message = __('Another user has updated this record');
 				return false;
 			}
@@ -570,7 +570,7 @@
 		function preview() {
 			if($this->request['node_id'] && $this->request['node_id'] != 'null') {
 				// Redircet to top page
-				$path = B_Util::getPath(B_FILE_ROOT_URL, $this->request['node_id']);
+				$path = __getPath(B_FILE_ROOT_URL, $this->request['node_id']);
 				header("Location:$path");
 			}
 

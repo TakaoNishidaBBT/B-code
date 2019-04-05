@@ -36,6 +36,25 @@
 		return $dir_array[0];
 	}
 
+	function __getPath() {
+		$path = str_replace('\\', '/', func_get_arg(0));
+
+		for($i=1; $i<func_num_args(); $i++) {
+			if(!$file_name = func_get_arg($i)) continue;
+
+			if(substr($path, -1) == '/') {
+				$path = substr($path, 0, -1);
+			}
+			if(substr($file_name, 0, 1) == '/') {
+				$file_name = substr($file_name, 1);
+			}
+
+			$path.= '/' . $file_name;
+		}
+
+		return $path;
+	}
+
 	// class auto loader
 	spl_autoload_register(function($class_name) {
 		$admin_dir = dirname(str_replace('\\' , '/', __DIR__));

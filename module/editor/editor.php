@@ -16,7 +16,7 @@
 
 		function open() {
 			if($this->request['node_id']) {
-				$file_path = B_Util::getPath($this->dir , $this->request['node_id']);
+				$file_path = __getPath($this->dir, $this->request['node_id']);
 				if(!file_exists(mb_convert_encoding($file_path, B_SYSTEM_FILENAME_ENCODE, 'utf8'))) {
 					$this->view_file = './view/view_not_found.php';
 					return;
@@ -64,7 +64,7 @@
 		}
 
 		function refresh() {
-			$file_path = B_Util::getPath($this->dir , $this->post['node_id']);
+			$file_path = __getPath($this->dir, $this->post['node_id']);
 			$file_path = mb_convert_encoding($file_path, B_SYSTEM_FILENAME_ENCODE, 'utf8');
 
 			if(file_exists($file_path)) {
@@ -92,7 +92,7 @@
 
 		function register() {
 			$status = true;
-			$file_path = B_Util::getPath($this->dir , $this->post['node_id']);
+			$file_path = __getPath($this->dir, $this->post['node_id']);
 
 			if(!file_exists($file_path)) {
 				$status = false;
