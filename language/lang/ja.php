@@ -6,7 +6,7 @@
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
 */
 
-	$texts = array(
+	$texts['ja'] = array(
 		// Common
 		'None'							=> 'なし',
 		'(Test)'						=> '【テスト】',

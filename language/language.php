@@ -15,13 +15,11 @@
 	// Language file
 	switch($lang) {
 	case 'ja':
-		require_once(B_LNGUAGE_DIR . 'lang/ja.php');
 		define('B_MB_DETECT_ORDER', 'UTF-8, EUC-JP, SJIS');
 		mb_detect_order(B_MB_DETECT_ORDER);
 		break;
 
 	case 'zh-cn':
-		require_once(B_LNGUAGE_DIR . 'lang/zh-cn.php');
 		define('B_MB_DETECT_ORDER', 'UTF-8, GB18030, EUC-CN');
 		mb_detect_order(B_MB_DETECT_ORDER);
 		break;
@@ -30,3 +28,6 @@
 		define('B_MB_DETECT_ORDER', 'UTF-8, EUC-JP, SJIS, GB18030, EUC-CN');
 		break;
 	}
+
+	require_once(B_LNGUAGE_DIR . 'lang/ja.php');
+	require_once(B_LNGUAGE_DIR . 'lang/zh-cn.php');

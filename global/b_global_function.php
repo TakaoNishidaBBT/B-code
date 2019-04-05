@@ -14,12 +14,14 @@
 		return $pwd;
 	}
 
-	function __($text) {
-		if($_SESSION['language'] == 'en') return $text;
+	function __($text, $lang=null) {
+		if($_SESSION['language'] == 'en' || $lang == 'en') return $text;
 
 		global $texts;
 
-		return $texts[$text] ? $texts[$text] : $text;
+		if(!$lang) $lang = $_SESSION['language'];
+
+		return $texts[$lang][$text] ? $texts[$lang][$text] : $text;
 	}
 
 	function __project($url) {

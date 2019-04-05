@@ -6,7 +6,7 @@
  * Licensed under the GPL, LGPL and MPL Open Source licenses.
 */
 
-	$texts = array(
+	$texts['zh-cn'] = array(
 		// Common
 		'None'							=> '无数据',
 		'(Test)'						=> '【测试】',
