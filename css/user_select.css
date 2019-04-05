@@ -25,7 +25,7 @@ div#main {
 }
 div.right-inner {
 	border: 1px solid #ccc;
-	height: calc(100% - 40px);
+	height: calc(100% - 46px);
 }
 div.left-inner {
 	height: 100%;
