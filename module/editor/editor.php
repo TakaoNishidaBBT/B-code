@@ -37,6 +37,8 @@
 					break;
 
 				case 'css':
+				case 'scss':
+				case 'sass':
 					$obj->attr = str_replace('%SYNTAX%', 'data-syntax="css"', $obj->attr);
 					break;
 
