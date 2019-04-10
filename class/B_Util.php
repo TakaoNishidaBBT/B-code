@@ -613,14 +613,14 @@
 			$hue = round(hexdec(substr($hash, -7))) / 0xfffffff;
 			$hue *= 6;
 			$saturation *= $brightness < .5 ? $brightness : 1 - $brightness;
-			$s = [
+			$s = array(
 				$brightness += $saturation,
 				$brightness - ($hue - floor($hue)) * $saturation * 2,
 				$brightness -= $saturation *= 2,
 				$brightness,
 				$brightness + ($hue - floor($hue)) * $saturation,
 				$brightness + $saturation
-			];
+			);
 
 			$r = round($s[floor($hue) % 6] * 255);
 			$g = round($s[($hue | 16) % 6] * 255);
