@@ -906,6 +906,8 @@
 					selected_node.set(current_node.id());
 				}
 
+				save();
+
 				new_node = false;
 				reload_status = false;
 
@@ -2508,7 +2510,7 @@
 						var obj = exists(node_id);
 						if(obj) {
 							var i = getTabIndex(obj);
-							tabs[i].node_id = '/' + obj.changeFileName(value);
+							tabs[i].node_id = obj.changeFileName(value);
 						}
 					}
 
@@ -2518,7 +2520,7 @@
 							var arr = node_id.split('/');
 							arr[arr.length-1] = value;
 							new_value = arr.join('/');
-							tabs[i].node_id = '/' + tabs[i].obj.replaceFilePath(node_id.substr(1), new_value.substr(1));
+							tabs[i].node_id = tabs[i].obj.replaceFilePath(node_id.substr(1), new_value.substr(1));
 
 						}
 					}
@@ -3087,6 +3089,7 @@
 
 				this.changeFileName = function(value) {
 					fname.innerHTML = value;
+					file_name = value;
 					if(editor) {
 						var iframe = bframe.getFrameByName(window, editor.name);
 						return iframe.bcode.changeFileName(value);
