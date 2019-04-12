@@ -93,7 +93,6 @@
 
 		function _directory_validate_callback($param) {
 			$doc_root = $this->form->getElementByName('doc_root');
-$this->log->write('$doc_root', $doc_root->value, $param['value']);
 			if(strstr($param['value'], $doc_root->value)) {
 				return true;
 			}
