@@ -230,6 +230,12 @@ $form_config = array(
 							'type' 			=> 'required',
 							'error_message'	=> __('Please set directory'),
 						),
+						array(
+							'type' 			=> 'callback',
+							'obj'			=> $this,
+							'method'		=> '_directory_validate_callback',
+							'error_message'	=> __('Directory must be under Doc Root'),
+						),
 					),
 				),
 				array(

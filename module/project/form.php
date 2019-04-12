@@ -91,6 +91,15 @@
 			return true;
 		}
 
+		function _directory_validate_callback($param) {
+			$doc_root = $this->form->getElementByName('doc_root');
+$this->log->write('$doc_root', $doc_root->value, $param['value']);
+			if(strstr($param['value'], $doc_root->value)) {
+				return true;
+			}
+			return false;
+		}
+
 		function checkAlt($value) {
 			if($this->request['mode'] == 'update') {
 				$row = $this->df->selectByPk($value['id']);

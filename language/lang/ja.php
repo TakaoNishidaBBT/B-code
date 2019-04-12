@@ -476,4 +476,6 @@
 										=> 'ドメイン名は英数とドット(.)ハイフン(-)で入力してください',
 		'Please set directory'			=> 'ディレクトリを設定してください',
 		'Please set doc root'			=> 'Doc Rootを設定してください',
+		'Directory must be under Doc Root'
+										=> 'ディレクトリはDoc Root配下を指定してください',
 	);
