@@ -2499,32 +2499,43 @@
 			}
 
 			this.changeFileName = function(value) {
+				var current_tab;
 				if(current_edit_node) {
 					var node_id = current_edit_node.id.substr(1);
 					var node_type = document.getElementById('ntt' + node_id);
 					if(current_edit_node.id == current_node.id() && node_type && node_type.value == 'folder') {
 						var obj = exists('');
 						if(obj) obj.changeFileName(value);
+
+						var arr = node_id.split('/');
+						arr[arr.length-1] = value;
+						new_value = arr.join('/');
+
+						for(var i=1; i < tabs.length; i++) {
+							if(tabs[i].node_id.indexOf(node_id) != -1) {
+								tabs[i].node_id = tabs[i].obj.replaceFilePath(node_id.substr(1), new_value.substr(1));
+							}
+							if(tabs[i].obj.isVisible()) {
+								current_tab = tabs[i];
+							}
+						}
 					}
 					else {
 						var obj = exists(node_id);
 						if(obj) {
 							var i = getTabIndex(obj);
 							tabs[i].node_id = obj.changeFileName(value);
+							if(tabs[i].obj.isVisible()) {
+								current_tab = tabs[i];
+							}
 						}
 					}
 
-					node_id = current_edit_node.id.substr(1);
-					for(var i=1; i < tabs.length; i++) {
-						if(tabs[i].node_id.indexOf(node_id) != -1) {
-							var arr = node_id.split('/');
-							arr[arr.length-1] = value;
-							new_value = arr.join('/');
-							tabs[i].node_id = tabs[i].obj.replaceFilePath(node_id.substr(1), new_value.substr(1));
-
-						}
-					}
 				}
+
+				if(current_tab) bcode.setFileName(current_tab.obj.fullpath());
+				save();
+
 				name_changed = true;
 			}
 
@@ -3090,6 +3101,11 @@
 				this.changeFileName = function(value) {
 					fname.innerHTML = value;
 					file_name = value;
+					if(fullpath) {
+						dir = fullpath.split('/');
+						dir[dir.length-1] = value;
+						fullpath = dir.join('/');
+					}
 					if(editor) {
 						var iframe = bframe.getFrameByName(window, editor.name);
 						return iframe.bcode.changeFileName(value);
@@ -3097,6 +3113,7 @@
 				}
 
 				this.replaceFilePath = function(before, after) {
+					fullpath = fullpath.split(before).join(after)
 					var iframe = bframe.getFrameByName(window, editor.name);
 					return iframe.bcode.replaceFilePath(before, after);
 				}
@@ -3142,6 +3159,10 @@
 				this.showFileName = function(f_name) {
 					if(!f_name) f_name = current_node.id().substr(1);
 					bcode.setFileName(f_name);
+				}
+
+				this.fullpath = function() {
+					return fullpath;
 				}
 
 				this.inVisible = function() {
