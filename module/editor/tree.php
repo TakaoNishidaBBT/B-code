@@ -335,8 +335,7 @@
 						if($this->session['current_node'] == $this->request['node_id']) {
 							$this->session['current_node'] = $new_node_id;
 						}
-						$this->session['open_nodes'][$this->request['node_id']] = false;
-						$this->session['open_nodes'][$new_node_id] = true;
+						$this->replaceOpenNodes($this->request['node_id'], $new_node_id);
 					}
 					else {
 						$this->message = __('The name could not be changed');
@@ -345,6 +344,16 @@
 			}
 			$this->response($this->session['current_node'], 'select');
 			exit;
+		}
+
+		function replaceOpenNodes($before, $after) {
+			foreach($this->session['open_nodes'] as $key => $value) {
+				if(strstr($key, $before)) {
+					$key = $after . substr($key, strlen($before));
+				}
+				$open_nodes[$key] = true;
+			}
+			$this->session['open_nodes'] = $open_nodes;
 		}
 
 		function checkFileName($source, $dest, $file_name, $file_info) {

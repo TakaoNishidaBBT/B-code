@@ -155,6 +155,17 @@
 			}
 		}
 
+		function replaceOpenNodes(before, after) {
+			var _open_nodes = {};
+
+			for(let key in open_nodes) {
+				let new_key = key.split(before).join(after);
+				_open_nodes[new_key] = true;
+			}
+
+			open_nodes = _open_nodes;
+		}
+
 		function setTabControl() {
 			if(property.editor_mode != 'true') return;
 			tab_control = new tabControl();
@@ -1645,8 +1656,9 @@
 			}
 			else {
 				var param;
+				var node_id = current_edit_node.id.substr(1);
 
-				param = 'terminal_id='+terminal_id+'&node_id='+encodeURIComponent(current_edit_node.id.substr(1));
+				param = 'terminal_id='+terminal_id+'&node_id='+encodeURIComponent(node_id);
 				param+= '&node_name='+encodeURIComponent(input.value.trim());
 				httpObj = createXMLHttpRequest(showNode);
 				eventHandler(httpObj, property.module, property.file, property.method.saveName, 'POST', param);
@@ -1654,6 +1666,15 @@
 
 				if(property.editor_mode == 'true') {
 					tab_control.changeFileName(input.value.trim());
+				}
+
+				var node_type = document.getElementById('ntt' + node_id);
+				if(node_type && node_type.value == 'folder') {
+					var before = node_id;
+					var arr = before.split('/');
+					arr[arr.length-1] = input.value.trim();
+					after = arr.join('/');
+					replaceOpenNodes(before, after);
 				}
 			}
 		}
@@ -2503,7 +2524,7 @@
 				if(current_edit_node) {
 					var node_id = current_edit_node.id.substr(1);
 					var node_type = document.getElementById('ntt' + node_id);
-					if(current_edit_node.id == current_node.id() && node_type && node_type.value == 'folder') {
+					if(node_type && node_type.value == 'folder') {
 						var obj = exists('');
 						if(obj) obj.changeFileName(value);
 
