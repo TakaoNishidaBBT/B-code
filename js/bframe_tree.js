@@ -537,8 +537,7 @@
 		}
 
 		function context_filter() {
-			switch(selected_node.id()) {
-			case 'troot':
+			if(selected_node.id().substr(1) == property.project_dir) {
 				context_menu.disableElement('cutNode');
 				context_menu.disableElement('copyNode');
 				context_menu.disableElement('deleteNode');
@@ -547,9 +546,8 @@
 				context_menu.enableElement('upload');
 				context_menu.enableElement('download');
 				context_menu.disableElement('open_property');
-				break;
-
-			default:
+			}
+			else {
 				context_menu.enableElement('cutNode');
 				context_menu.enableElement('copyNode');
 				context_menu.enableElement('deleteNode');
@@ -558,8 +556,6 @@
 				context_menu.enableElement('upload');
 				context_menu.enableElement('download');
 				context_menu.enableElement('open_property');
-
-				break;
 			}
 
 			if(clipboard.target) {
