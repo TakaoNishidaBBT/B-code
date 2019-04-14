@@ -219,38 +219,45 @@
 		function rename($old_name, $new_name) {
 			$thumb = $this->thumb;
 
-			if($this->node_id === $old_name) {
-				$ret = rename(__getPath($this->dir, $old_name), __getPath($this->dir, $new_name));
-				if(!$ret) return false;
+			try {
+				if($this->node_id === $old_name) {
+					$ret = rename(__getPath($this->dir, $old_name), __getPath($this->dir, $new_name));
+					if(!$ret) throw new Exception();
 
-				$this->node_id = $new_name;
-				$this->path = $new_name;
-				$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
-				$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
-				if(file_exists($thumb)) {
-					$ret = rename($thumb, $this->thumb);
-					if(!$ret) return false;
+					$this->node_id = $new_name;
+					$this->path = $new_name;
+					$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
+					$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
+					if(file_exists($thumb)) {
+						$ret = rename($thumb, $this->thumb);
+						if(!$ret) return false;
+					}
+				}
+				else {
+					$this->path = __getPath($this->parent->path, $this->file_name);
+					$this->node_id = __getPath($this->parent->path, $this->file_name);
+					$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
+					$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
+					if(file_exists($thumb)) {
+						$ret = rename($thumb, $this->thumb);
+						if(!$ret) throw new Exception();
+					}
+				}
+
+				$this->fullpath = __getPath($this->dir, $this->path);
+
+				if(is_array($this->node)) {
+					foreach(array_keys($this->node) as $key) {
+						$this->node[$key]->rename($old_name, $new_name);
+					}
 				}
 			}
-			else {
-				$this->path = __getPath($this->parent->path, $this->file_name);
-				$this->node_id = __getPath($this->parent->path, $this->file_name);
-				$this->thumbnail_image_path = $this->getThumbnailImgPath($this->path);
-				$this->thumb = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
-				if(file_exists($thumb)) {
-					$ret = rename($thumb, $this->thumb);
-					if(!$ret) return false;
-				}
+			catch(Exception $e) {
+				$error = error_get_last();
+				$this->message = $error['message'];
+				return false;
 			}
 
-			$this->fullpath = __getPath($this->dir, $this->path);
-
-			if(is_array($this->node)) {
-				foreach(array_keys($this->node) as $key) {
-					$ret = $this->node[$key]->rename($old_name, $new_name);
-					if(!$ret) return false;
-				}
-			}
 			return true;
 		}
 
@@ -657,5 +664,9 @@
 
 		function getErrorNo() {
 			return $this->error_no;
+		}
+
+		function getMessage() {
+			return $this->message;
 		}
 	}

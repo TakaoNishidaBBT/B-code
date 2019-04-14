@@ -338,7 +338,7 @@
 						$this->replaceOpenNodes($this->request['node_id'], $new_node_id);
 					}
 					else {
-						$this->message = __('The name could not be changed');
+						$this->message = $node->getMessage();
 					}
 				}
 			}

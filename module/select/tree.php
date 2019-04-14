@@ -358,7 +358,7 @@
 						$this->session['open_nodes'][$new_node_id] = true;
 					}
 					else {
-						$this->message = __('The name could not be changed');
+						$this->message = $node->getMessage();
 					}
 				}
 			}
