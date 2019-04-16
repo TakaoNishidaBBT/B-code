@@ -10,6 +10,7 @@
 			parent::__construct(__FILE__);
 
 			$this->dir = $this->session['project']['doc_root'];
+			$this->directory = $this->session['project']['directory'];
 			$this->scheme = $this->session['project']['scheme'];
 			$this->domain = $this->session['project']['domain'];
 			$this->project = $this->session['project']['name'];
@@ -28,6 +29,9 @@
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
 
 			$this->status = true;
+			if(!file_exists($this->directory)) {
+				$this->setView('viewError');
+			}
 		}
 
 		function open() {
@@ -700,6 +704,29 @@
 			$this->html_header->appendProperty('script', '<script src="js/bframe_dialog.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_splitter.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_progress_bar.js"></script>');
+
+			// Show HTML header
+			$this->showHtmlHeader();
+
+			// Show HTML body
+			echo $contents;
+		}
+
+		function viewError() {
+			// Start buffering
+			ob_start();
+
+			$this->message = __("Can't open the Directory.");
+
+			require_once('./view/view_not_found.php');
+
+			// Get buffer
+			$contents = ob_get_clean();
+
+			// Send HTTP header
+			$this->sendHttpHeader();
+
+			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/filemanager.css">');
 
 			// Show HTML header
 			$this->showHtmlHeader();

@@ -223,6 +223,7 @@ div.not-found {
 	text-align: center;
 	color: #fff;
 	overflow: hidden;
+	font-weight: 400;
 }
 div.not-found dl dt{
 	margin: 100px 0 20px;

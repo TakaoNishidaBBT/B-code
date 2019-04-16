@@ -1,7 +1,13 @@
 @charset "UTF-8";
 
 html, body {
-	background-color: #444;
+	background-color: #333;
+}
+h1 {
+	color: #fff;
+	font-size: 32px;
+	text-align: center;
+	margin: 100px 0 20px;
 }
 h2 {
 	margin: 0;
@@ -265,39 +271,6 @@ ul.resource_control li.upload {
 ul.resource_control li a {
 	text-decoration: none;
 }
-/*
-span.upload-button,
-span:visited.upload-button,
-span:link.upload-button,
-span:active.upload-button {
-	display: block;
-	margin: 0;
-	line-height: 28px;
-	width: 140px;
-	background-color: #666;
-	border-top: 1px solid #666;
-	border-left: 1px solid #666;
-	border-right: 1px solid #666;
-	border-bottom: 1px solid #666;
-	color: #eee;
-	text-align: center;
-	text-shadow: -1px -1px #555;
-	cursor: pointer;
-}
-span:hover.upload-button {
-	background-color: #777;
-	border-top: 1px solid #777;
-	border-left: 1px solid #777;
-	border-right: 1px solid #777;
-	border-bottom: 1px solid #777;
-	color: #fff;
-	text-shadow: 1px 1px #555;
-}
-span.upload-button img {
-	vertical-align: -3px;
-	margin-right: 6px;
-}
-*/
 ul.resource_control li.view {
 	float: right;
 	padding: 7px 0;
@@ -310,12 +283,10 @@ ul.resource_control li.view {
 	opacity: 0.5;
 }
 ul.resource_control li.view:hover {
-/*	background-color: #555;*/
 	opacity: 1;
 }
 ul.resource_control li.current,
 ul.resource_control li.current:hover {
-/*	background-color: #666;*/
 	opacity: 1;
 }
 span.message {
@@ -346,4 +317,21 @@ div.pane_container {
 
 #bframe_tree_upload_overlay:hover {
 	cursor: wait;
+}
+
+/* not found */
+div.not-found {
+	background-color: #262626;
+	text-align: center;
+	color: #fff;
+	overflow: hidden;
+}
+div.not-found dl dt{
+	margin: 100px 0 20px;
+	font-size: 32px;
+}
+div.not-found dl dd{
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
 }
