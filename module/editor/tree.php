@@ -29,7 +29,9 @@
 			if(!$this->session['sort_key']) $this->session['sort_key'] = 'file_name';
 
 			$this->status = true;
-			if(!file_exists($this->directory)) {
+
+			// project directory does not exist.
+			if($this->session['project'] && !file_exists($this->directory)) {
 				$this->setView('viewError');
 			}
 		}
@@ -74,6 +76,13 @@
 		}
 
 		function getNodeList() {
+			if(!file_exists($this->directory)) {
+				$this->status = false;
+				$this->message = __("Can't open the Project Directory.\nIt might have been moved, renamed, or deleted.");
+				$this->errorResponse();
+				exit;
+			}
+
 			$this->session['selected_node'] = '';
 
 			if($this->request['sort_key']) {
@@ -640,6 +649,15 @@
 				}
 			}
 
+			header('Content-Type: application/x-javascript charset=utf-8');
+			echo json_encode($response);
+		}
+
+		function errorResponse() {
+			$response['status'] = $this->status;
+			if($this->message) {
+				$response['message'] = $this->message;
+			}
 			header('Content-Type: application/x-javascript charset=utf-8');
 			echo json_encode($response);
 		}

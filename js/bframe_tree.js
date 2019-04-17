@@ -780,6 +780,15 @@
 					return;
 				}
 
+				// directory open error or something happened.
+				if(response.status != true) {
+					alert(response.message);
+					target.style.cursor = 'default';
+					if(pane) pane.style.cursor = 'default';
+					response_wait = false;
+					return;
+				}
+
 				// if not set current_node then set current node from server
 				if(!current_node.id() && response.current_node && response.status) {
 					current_node.set('t'+response.current_node);
