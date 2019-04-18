@@ -18,7 +18,7 @@
 			if($this->request['node_id']) {
 				$file_path = __getPath($this->dir, $this->request['node_id']);
 				if(!file_exists(mb_convert_encoding($file_path, B_SYSTEM_FILENAME_ENCODE, 'utf8'))) {
-					$this->message = __("Can't open this file.");
+					$this->message = __("<dt>Can't open this file.</dt><dd>It might have been moved, renamed or deleted.");
 					$this->view_file = './view/view_not_found.php';
 					return;
 				}

@@ -478,4 +478,13 @@
 		'Please set doc root'			=> 'Doc Rootを設定してください',
 		'Directory must be under Doc Root'
 										=> 'ディレクトリはDoc Root配下を指定してください',
+
+		// Editor
+		"<dt>Can't open this file.</dt><dd>It might have been moved, renamed or deleted."
+										=> '<dt>ファイルを開けませんでした</dt><dd>ファイルが移動、リネーム、または削除された可能性があります</dd>',
+		"<dt>Can't open the Directory.</dt><dd>It might have been moved, renamed or deleted."
+										=> '<dt>プロジェクトを開けませんでした</dt><dd>プロジェクトディレクトリが移動、リネーム、または削除された可能性があります</dd>',
+		"Can't open the Project Directory.\nIt might have been moved, renamed or deleted."
+										=> "プロジェクトを開けませんでした\nプロジェクトディレクトリが移動、リネーム、または削除された可能性があります",
+
 	);

@@ -78,7 +78,7 @@
 		function getNodeList() {
 			if(!file_exists($this->directory)) {
 				$this->status = false;
-				$this->message = __("Can't open the Project Directory.\nIt might have been moved, renamed, or deleted.");
+				$this->message = __("Can't open the Project Directory.\nIt might have been moved, renamed or deleted.");
 				$this->errorResponse();
 				exit;
 			}
@@ -734,7 +734,7 @@
 			// Start buffering
 			ob_start();
 
-			$this->message = __("Can't open the Directory.");
+			$this->message = __("<dt>Can't open the Directory.</dt><dd>It might have been moved, renamed or deleted.");
 
 			require_once('./view/view_not_found.php');
 
