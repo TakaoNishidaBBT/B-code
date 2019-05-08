@@ -2597,7 +2597,7 @@
 				iframe.name = 'ed' + node_id;
 				iframe.src = src;
 				iframe.opener = window;
-				iframe.setAttribute('data-param', 'margin:99,offset:0');
+				iframe.setAttribute('data-param', 'margin:96,offset:0');
 				iframe.classList.add('bframe_adjustparent');
 				editor_container.appendChild(iframe);
 

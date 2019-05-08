@@ -553,6 +553,7 @@
 		function _createthumbnail() {
 			if($this->node_type == 'folder') return true;
 			if(!file_exists($this->fullpath)) return;
+			if(!$this->thumbnail_image_path) return;
 			if($this->thumb && file_exists($this->thumb)) return;
 
 			$thumbnail_file_path = B_UPLOAD_THUMBDIR . str_replace('/', '-', $this->thumbnail_image_path);
