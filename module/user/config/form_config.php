@@ -55,7 +55,7 @@ $form_config = array(
 					'filter'			=> 'insert',
 					'name'				=> 'user_id',
 					'class'				=> 'B_InputText',
-					'attr'				=> 'class="textbox ime_off" maxlength="10" ',
+					'attr'				=> 'class="textbox ime_off" maxlength="100" ',
 					'validate'			=>
 					array(
 						array(
@@ -64,8 +64,8 @@ $form_config = array(
 						),
 						array(
 							'type' 			=> 'pattern',
-							'pattern'		=> '^[a-zA-Z0-9\_\-]+$',
-							'error_message'	=> __('Please enter User ID using only alphanumeric, hyphen(-) and underbar(_)'),
+							'pattern'		=> '^[a-zA-Z0-9\_\-@\.]+$',
+							'error_message'	=> __('Please enter User ID using only alphanumeric, atmark(@), period(.), hyphen(-) and underbar(_)'),
 						),
 						array(
 							'type'			=> 'callback',

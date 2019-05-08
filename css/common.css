@@ -401,9 +401,6 @@ table.list tr.alt td {
 	border-bottom: 1px solid #f0f3fc;
 	border-bottom: 1px solid #ddd;
 }
-table.list tr.invalid {
-	opacity: 0.6;
-}
 table.list tr.invalid td {
 	color: #999;
 }
