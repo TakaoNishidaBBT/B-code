@@ -7,7 +7,7 @@
 */
 $list_config = 
 array(
-	'start_html'	=> '<ul class="list" id="entry_list">',
+	'start_html'	=> '<ul class="list" id="project-list">',
 	'end_html'		=> '</ul>',
 
 	'empty_message'	=> '<span class="bold">　' . __('No record found') . '</span>',
