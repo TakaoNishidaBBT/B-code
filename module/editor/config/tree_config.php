@@ -93,6 +93,10 @@ $tree_config = array(
 				array(
 					'url'		=> DISPATCH_URL . '&module=' . $this->module . '&page=tree&method=preview',
 				),
+				'refresh'		=>
+				array(
+					'id'		=> 'reload_tree',
+				),
 			),
 			'key'			=>
 			array(

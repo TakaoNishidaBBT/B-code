@@ -27,6 +27,7 @@
 							</div>
 						</form>
 					</li>
+					<li id="reload_tree" class="view refresh"><a href="#" title="refresh"><img src="images/common/refresh.png" alt="refresh" /></a></li>
 					<li id="display_detail" class="view detail"><a href="#" title="list view"><img src="images/common/view_detail.png" alt="view list" /></a></li>
 					<li id="display_thumbnail" class="view thumbnail"><a href="#" title="thumbnail view"><img src="images/common/view_thumbnail.png" alt="view list" /></a></li>
 				</ul>

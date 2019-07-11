@@ -81,7 +81,8 @@
 		var display_mode;
 		var display_thumbnail;
 		var display_detail;
-		var editor_overlay
+		var editor_overlay;
+		var refresh_button;
 
 		var progress;
 
@@ -214,6 +215,10 @@
 				}
 				if(property.display_mode) {
 					setDispChange();
+				}
+				if(property.relation.refresh) {
+					refresh_button = document.getElementById(property.relation.refresh.id);
+					refresh_button.onclick = reloadTree;
 				}
 			}
 		}

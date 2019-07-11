@@ -189,15 +189,6 @@
 					$this->message = $this->getErrorMessage($source->getErrorNo());
 				}
 
-				if(is_array($data)) {
-					$serializedString = file_get_contents(B_FILE_INFO_THUMB);
-					$info = unserialize($serializedString);
-
-					$fp = fopen(B_FILE_INFO_THUMB, 'w');
-					fwrite($fp, serialize(array_merge($info, $data)));
-					fclose($fp);
-				}
-
 				if($this->show_progress) {
 					if($this->status) {
 						$response['status'] = 'finished';
