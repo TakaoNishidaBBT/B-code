@@ -566,6 +566,12 @@
 			}
 		}
 
+		function removethumbnail() {
+			if($this->thumb && file_exists($this->thumb)) {
+				unlink($this->thumb);
+			}
+		}
+
 		function getThumbnailImgPath($path) {
 			if(substr($path, 0, 1) == '/') $path = substr($path, 1);
 
