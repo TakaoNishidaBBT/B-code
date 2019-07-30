@@ -864,17 +864,6 @@
 				current_node.reload();
 				current_node.setColor('current');
 
-				// set cut status
-				if(paste_mode) {
-					if(clipboard.target) {
-						delete clipboard.target;
-					}
-					paste_mode = false;
-				}
-				else if(clipboard.mode == 'cut') {
-					setCutStatus();
-				}
-
 				// hide upload button in trash
 				if(property.upload) {
 					var node = current_node.object();
@@ -903,7 +892,7 @@
 				scrollToLatest();
 
 				// set tab_control
-				if(property.editor_mode == 'true' && !new_node && !reload_status) {
+				if(property.editor_mode == 'true' && !new_node && !paste_mode && !reload_status) {
 					if(!response.open_node) {
 						tab_control.open();
 						if(!response.open) {
@@ -912,6 +901,17 @@
 					}
 					// select current opened file in tree
 					tab_control.select();
+				}
+
+				// set cut status
+				if(paste_mode) {
+					if(clipboard.target) {
+						delete clipboard.target;
+					}
+					paste_mode = false;
+				}
+				else if(clipboard.mode == 'cut') {
+					setCutStatus();
 				}
 
 				// initialize editor (only reload)
@@ -1015,8 +1015,10 @@
 		}
 
 		function setVisibleCurrentNode() {
+console.log('setVisibleCurrentNode');
 			if(!current_node.object()) return;
 			if(!bframe.isVisible(current_node.object())) {
+console.log('setVisibleCurrentNode2');
 				let obj = current_node.object();
 				while(1) {
 					if(bframe.isVisible(obj)) break;
