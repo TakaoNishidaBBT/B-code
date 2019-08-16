@@ -1,6 +1,3 @@
 # B-code
-online editor
-
-## Overview
-B-code allows you to edit files on server.
+B-code allows you to edit files directly on your server.
 
