@@ -5,7 +5,8 @@ B-code allows you to edit files directly on your server.
 
 Project Manager
 
-![B-code_project](https://user-images.githubusercontent.com/10171284/63216778-a67c2900-c175-11e9-8131-d23b5b2ec585.png)
+![B-code_project](https://user-images.githubusercontent.com/10171284/63217006-759df300-c179-11e9-9e11-101edb52694b.png)
+
 
 ## Installation
 
