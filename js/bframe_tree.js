@@ -85,6 +85,7 @@
 		var refresh_button;
 
 		var progress;
+		var alert_flag;
 
 		var opener = window.opener;
 
@@ -653,6 +654,8 @@
 		function getNodeList(id, mode) {
 			var param;
 
+			alert_flag = false;
+
 			param = 'terminal_id='+terminal_id;
 			if(id) {
 				open_nodes[id.substr(1)] = true;
@@ -765,7 +768,13 @@
 				}
 			}
 			catch(e) {
-				console.log(e);
+				if(!alert_flag) {
+					alert_flag = true;
+					alert(top.bframe.message.getProperty('session_time_out'));
+				}
+				target.style.cursor = 'default';
+				if(pane) pane.style.cursor = 'default';
+				response_wait = false;
 				return;
 			}
 		}
@@ -1015,10 +1024,9 @@
 		}
 
 		function setVisibleCurrentNode() {
-console.log('setVisibleCurrentNode');
 			if(!current_node.object()) return;
+
 			if(!bframe.isVisible(current_node.object())) {
-console.log('setVisibleCurrentNode2');
 				let obj = current_node.object();
 				while(1) {
 					if(bframe.isVisible(obj)) break;

@@ -76,6 +76,12 @@
 		}
 
 		function getNodeList() {
+			if(!$this->directory) {
+				$this->status = false;
+				$this->message = __("Please reload your browser.");
+				$this->errorResponse();
+				exit;
+			}
 			if(!file_exists($this->directory)) {
 				$this->status = false;
 				$this->message = __("Can't open the Project Directory.\nIt might have been moved, renamed or deleted.");
