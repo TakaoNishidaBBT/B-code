@@ -69,7 +69,7 @@
 		}
 
 		function select() {
-			$this->session['selected_node'] = $this->request['node_id'];
+			$this->session['selected_node'][] = $this->request['node_id'];
 			$this->response($this->session['selected_node'], 'select');
 
 			exit;
@@ -83,7 +83,7 @@
 				exit;
 			}
 
-			$this->session['selected_node'] = '';
+			$this->session['selected_node'] = array();
 
 			if($this->request['sort_key']) {
 				if($this->request['node_id'] == $this->session['current_node'] && $this->session['sort_key'] == $this->request['sort_key']) {
@@ -279,7 +279,7 @@
 
 			if($ret) {
 				$this->status = true;
-				$this->session['selected_node'] = '';
+				$this->session['selected_node'] = array();
 				$this->session['open_nodes'][$this->request['destination_node_id']] = true;
 			}
 			else {
@@ -334,7 +334,7 @@
 					}
 					if($ret) {
 						$this->status = true;
-						$this->session['selected_node'] = '';
+						$this->session['selected_node'] = array();
 						$this->session['selected_node'][0] = $new_node_id;
 						if($this->session['current_node'] == $this->request['node_id']) {
 							$this->session['current_node'] = $new_node_id;
