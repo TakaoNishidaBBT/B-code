@@ -269,6 +269,8 @@
 		'Folder is not allowed'			=> 'フォルダはアップロードできません',
 		"Content is not saved yet.\nAre you sure you want to close window?"
 										=> '編集内容は保存されていません。よろしいですか？',
+		"Content is not saved yet.\nAre you sure you want to refresh?"
+										=> '編集内容は保存されていません。よろしいですか？',
 
 		// Version
 		'Keyword'						=> 'キーワード',
