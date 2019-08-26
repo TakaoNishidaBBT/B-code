@@ -548,18 +548,6 @@
 			if($this->_createthumbnail()) {
 				if($callback) $this->callBack($callback);
 			}
-/*
-			if(is_array($this->node)) {
-				foreach(array_keys($this->node) as $key) {
-					$this->node[$key]->createthumbnail($except_array, $callback);
-				}
-			}
-			if($this->node_type != 'root') {
-				if($this->_createthumbnail()) {
-					if($callback) $this->callBack($callback);
-				}
-			}
-*/
 		}
 
 		function _createthumbnail() {
