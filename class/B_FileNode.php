@@ -540,6 +540,17 @@
 
 			if(is_array($this->node)) {
 				foreach(array_keys($this->node) as $key) {
+					if($this->node[$key]->_createthumbnail()) {
+						if($callback) $this->callBack($callback);
+					}
+				}
+			}
+			if($this->_createthumbnail()) {
+				if($callback) $this->callBack($callback);
+			}
+/*
+			if(is_array($this->node)) {
+				foreach(array_keys($this->node) as $key) {
 					$this->node[$key]->createthumbnail($except_array, $callback);
 				}
 			}
@@ -548,10 +559,11 @@
 					if($callback) $this->callBack($callback);
 				}
 			}
+*/
 		}
 
 		function _createthumbnail() {
-			if($this->node_type == 'folder') return true;
+			if($this->node_type == 'folder') return;
 			if(!file_exists($this->fullpath)) return;
 			if(!$this->thumbnail_image_path) return;
 			if($this->thumb && file_exists($this->thumb)) return;

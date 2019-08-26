@@ -683,7 +683,8 @@
 		}
 
 		function createThumbnail_callback($node) {
-			if($node->node_type == 'folder') return true;
+$this->log->write('$node->node_type', $node->node_type);
+//			if($node->node_type == 'folder') return true;
 
 			$this->createTumbnail_files++;
 			$response['status'] = 'progress';
