@@ -85,7 +85,6 @@
 		var refresh_button;
 
 		var progress;
-		var alert_flag;
 
 		var opener = window.opener;
 
@@ -654,8 +653,6 @@
 		function getNodeList(id, mode) {
 			var param;
 
-			alert_flag = false;
-
 			param = 'terminal_id='+terminal_id;
 			if(id) {
 				open_nodes[id.substr(1)] = true;
@@ -768,13 +765,13 @@
 				}
 			}
 			catch(e) {
-				if(!alert_flag) {
-					alert_flag = true;
-					alert(top.bframe.message.getProperty('session_time_out'));
-				}
+				if(httpObj.readyState == 3) return;
+
+				alert(top.bframe.message.getProperty('session_time_out'));
 				target.style.cursor = 'default';
 				if(pane) pane.style.cursor = 'default';
 				response_wait = false;
+
 				return;
 			}
 		}
