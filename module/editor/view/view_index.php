@@ -1,9 +1,7 @@
 <body spellcheck="false" class="fadein">
 	<div class="header"></div>
 	<div id="bframe_tree_container" class="bframe_tree_container bframe_splitter_pane bframe_adjustwindow" data-param="margin:10">
-		<div id="tree_box" class="bframe_adjustparent bframe_scroll" data-param="margin:1">
-			<?php echo $this->tree->getHtml(); ?>
-		</div>
+		<?php echo $this->tree->getHtml(); ?>
 	</div>
 	<div id="splitter" class="splitter bframe_splitter" data-param="margin:10"></div>
 	<div id="filemanager_pane" class="bframe_splitter_pane bframe_adjustwindow" data-param="margin:10">

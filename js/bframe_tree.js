@@ -1428,6 +1428,11 @@
 			}
 		}
 
+		function scrollTree(obj) {
+			var obj_pos = bframe.getElementPosition(obj);
+			target.scrollTop = obj_pos.top - 100;
+		}
+
 		function reloadTree() {
 			reload_status = true;
 			getNodeList(current_node.id());
@@ -1638,6 +1643,7 @@
 			span.firstChild.nodeValue = '';
 			span.className = 'edit';
 			span.appendChild(input);
+			scrollTree(input);
 			input.select();
 			input.focus();
 		}
@@ -2388,6 +2394,7 @@
 			var drag_clone;
 			var start_position;
 			var drag_start_scrollLeft;
+			var current_position;
 			var last_position;
 			var name_changed;
 
@@ -2953,7 +2960,6 @@
 			function dragScroll(direction) {
 				let startScrollLeft = control.scrollLeft;
 				let start = performance.now();
-				if(drag_start) var startStyleLeft = parseInt(drag_clone.style.left);
 
 				requestAnimationFrame(function animate(time) {
 					if(!scroll_out) return;
@@ -3290,6 +3296,13 @@
 			var baseZindex = bframe.getZindex(myFrame);
 			this.onMouseUp = onMouseUp;
 
+			var treeOffsetTop;
+			var treeOffsetBottom
+			var current_position;
+			var last_position;
+			var scroll_out;
+			var momentam = 100;
+
 			if(!baseZindex) baseZindex = 990;
 
 			div_overwrap = parent.document.getElementById('bframe_tree_overwrap_div');
@@ -3398,7 +3411,14 @@
 				frame_offset = bframe.getFrameOffset(window, '');
 				button_status = true;
 				start_position = bframe.getMousePosition(event);
-
+				drag_start_scrollTop = target.scrollTop;
+				treeBox = bframe.getElementPosition(target);
+				treeOffset = {
+					top:	treeBox.top,
+					bottom:	treeBox.top + treeBox.height,
+					left:	treeBox.left,
+					right:	treeBox.left + treeBox.width
+				};
 				var wsize = bframe.getWindowSize();
 
 				if(div_overwrap) {
@@ -3779,9 +3799,41 @@
 			}
 
 			function onMouseMove(event) {
+				var top;
+				var top_org;
+
 				if(!drag_status) return;
 
-				var m = bframe.getMousePosition(event);
+				current_position = bframe.getMousePosition(event);
+				if(!last_position) last_position = current_position;
+
+				deltaY = current_position.y - last_position.y > 0 ? 'down' : current_position.y - last_position.y < 0 ? 'up' : '';
+
+				if(deltaY == 'down') {
+					if(treeOffset.left < current_position.x && current_position.x < treeOffset.right && treeOffset.bottom - 50 < current_position.y) {
+						if(!scroll_out)	{
+							scroll_out = true;
+							dragScroll('down');
+						}
+					}
+					else {
+						scroll_out = false;
+					}
+				}
+				if(deltaY == 'up') {
+					if(treeOffset.left < current_position.x && current_position.x < treeOffset.right && current_position.y < treeOffset.top + 50) {
+						if(!scroll_out)	{
+							scroll_out = true;
+							dragScroll('up');
+						}
+					}
+					else {
+						scroll_out = false;
+					}
+				}
+
+				last_position = current_position;
+
 				setClonePosition(event);
 				clone_node.style.visibility='visible';
 
@@ -3790,6 +3842,7 @@
 
 				drop_forbidden.style.visibility = 'hidden';
 				clearBorder();
+
 			}
 
 			function setClonePosition(event) {
@@ -3809,6 +3862,29 @@
 
 				div.className = 'tree';
 				span.className = 'node-name';
+			}
+
+			function dragScroll(direction) {
+				let startScrollTop = target.scrollTop;
+				let start = performance.now();
+
+				requestAnimationFrame(function animate(time) {
+					if(!scroll_out) return;
+
+					let timeFraction = time - start;
+					let left;
+
+					if(direction == 'down') {
+						target.scrollTop = startScrollTop + Math.round(timeFraction * momentam / 200);
+					}
+					else {
+						target.scrollTop = startScrollTop - Math.round(timeFraction * momentam / 200);
+					}
+					if((direction == 'down' && target.scrollTop < target.scrollHeight - target.clientHeight) ||
+					 (direction == 'up' && target.scrollTop > 0)) {
+						requestAnimationFrame(animate);
+					}
+				});
 			}
 		}
 
