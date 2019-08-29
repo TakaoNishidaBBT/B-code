@@ -604,6 +604,7 @@
 			if(!$current_node) {
 				$current_node = $root_node;
 				$this->session['current_node'] = $this->project_dir;
+				$response['forced_current_node'] = $this->project_dir;
 			}
 
 			if($current_node && $this->session['sort_key']) {

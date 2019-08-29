@@ -800,6 +800,16 @@
 					return;
 				}
 
+				// if not exist current_node then set current node from server
+				if(response.forced_current_node) {
+					current_node.set('t'+response.forced_current_node);
+					selected_node.set('t'+response.forced_current_node);
+
+					// clear open nodes
+					open_nodes = {};
+					open_nodes[response.forced_current_node] = true;
+				}
+
 				// if not set current_node then set current node from server
 				if(!current_node.id() && response.current_node && response.status) {
 					current_node.set('t'+response.current_node);
