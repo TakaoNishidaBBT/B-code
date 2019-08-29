@@ -807,6 +807,25 @@
 					setOpenNodes(current_node.id());
 				}
 
+				// change editor file name
+				if(current_edit_node && property.editor_mode == 'true' && response.status) {
+					if(!response.message) {
+						var input = bframe.searchNodeByName(current_edit_node, 'node_input');
+						tab_control.changeFileName(input.value.trim());
+						tab_control.setFileName();
+
+						var node_id = current_edit_node.id.substr(1);
+						var node_type = document.getElementById('ntt' + node_id);
+						if(node_type && node_type.value == 'folder') {
+							var before = node_id;
+							var arr = before.split('/');
+							arr[arr.length-1] = input.value.trim();
+							after = arr.join('/');
+							replaceOpenNodes(before, after);
+						}
+					}
+				}
+
 				// if current edit node is current node
 				if(current_edit_node && current_edit_node.id == current_node.id() && response.status) {
 					current_node.set('t'+response.current_node);
@@ -1686,19 +1705,6 @@
 				httpObj = createXMLHttpRequest(showNode);
 				eventHandler(httpObj, property.module, property.file, property.method.saveName, 'POST', param);
 				response_wait = true;
-
-				if(property.editor_mode == 'true') {
-					tab_control.changeFileName(input.value.trim());
-				}
-
-				var node_type = document.getElementById('ntt' + node_id);
-				if(node_type && node_type.value == 'folder') {
-					var before = node_id;
-					var arr = before.split('/');
-					arr[arr.length-1] = input.value.trim();
-					after = arr.join('/');
-					replaceOpenNodes(before, after);
-				}
 			}
 		}
 
@@ -2495,6 +2501,7 @@
 					}
 				}
 			}
+			this.setFileName = setFileName;
 
 			function selectTreeNode(node_id) {
 				if(node_id) {
@@ -2559,6 +2566,7 @@
 						for(var i=1; i < tabs.length; i++) {
 							if(tabs[i].node_id.indexOf(node_id) != -1) {
 								tabs[i].node_id = tabs[i].obj.replaceFilePath(node_id.substr(1), new_value.substr(1));
+								tabs[i].obj.setNodeId(tabs[i].node_id);
 							}
 							if(tabs[i].obj.isVisible()) {
 								current_tab = tabs[i];
@@ -3113,6 +3121,14 @@
 
 					control.appendChild(li);
 					open_mode = mode;
+				}
+
+				this.setNodeId = function(node_id) {
+					editor.id = 'ed' + node_id;
+					node_array = node_id.split('/');
+					this.setFileName(node_array[node_array.length-1]);
+					this.setDisplayName(node_array[node_array.length-1]);
+					a.title = fullpath = node_id;
 				}
 
 				this.getFileName = function() {
