@@ -11,7 +11,15 @@ html, body {
 	padding: 0 80px;
 	min-width: 700px;
 }
-
 .control .back-button {
 	visibility: hidden;
+}
+table.form a.selectbox {
+	line-height: 32px;
+	font-size: 14px;
+}
+table.form span.notice {
+	font-size: 14px;
+	line-height: 36px;
+	margin-left: 8px;
 }

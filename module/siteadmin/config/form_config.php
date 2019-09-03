@@ -137,7 +137,7 @@ $form_config = array(
 				'start_html'	=> '<td>',
 				'end_html'		=> '</td>',
 				'value'			=> LANG,
-				'attr'			=> 'class="bframe_selectbox white"',
+				'attr'			=> 'class="bframe_selectbox white" style="width:90px;padding:10px"',
 			),
 	    ),
 
@@ -155,11 +155,6 @@ $form_config = array(
 			array(
 				'start_html'	=> '<td>',
 				'end_html'		=> '</td>',
-				array(
-					'name'				=> 'dummy_pwd',
-					'class'				=> 'B_Password',
-					'attr'				=> 'style="position: absolute; visibility: hidden" ',
-				),
 				array(
 					'name'				=> 'admin_user_pwd',
 					'class'				=> 'B_Password',
