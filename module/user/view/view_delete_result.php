@@ -5,8 +5,7 @@
 
 			<div class="form-header">
 				<ul class="control">
-					<li class="back-button" onclick="bframe.submit('F1', 'user', 'list', 'back', '')">
-						<img src="images/common/left_arrow_white.png" alt="left arow" />
+					<li class="back button" onclick="bframe.submit('F1', 'user', 'list', 'back', '')">
 						<span><?php echo __('Back To List'); ?></span>
 					</li>
 				</ul>

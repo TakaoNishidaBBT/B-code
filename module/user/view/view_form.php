@@ -5,9 +5,12 @@
 
 			<div class="form-header">
 				<ul class="control">
-					<li class="back-button" onclick="bframe.submit('F1', 'user', 'list', 'back', '')">
-						<img src="images/common/left_arrow_white.png" alt="left arow" />
+					<li class="back button" onclick="bframe.submit('F1', 'user', 'list', 'back', '')">
 						<span><?php echo __('Back To List'); ?></span>
+					</li>
+					<li id="submit-button" class="submit button" onclick="bframe.ajaxSubmit.submit('F1', 'user', 'form', 'register', 'update', true)">
+						<span><?php echo __('Register'); ?></span>
+						<img src="images/common/check.png" alt="submit" />
 					</li>
 				</ul>
 				<div class="message-container"><span id="message"></span></div>
@@ -22,11 +25,6 @@
 				<div id="hidden-form">
 					<?php echo $this->form->getHiddenHtml(); ?>
 				</div>
-				<ul class="submit">
-					<li id="submit-button" class="submit-button" onclick="bframe.ajaxSubmit.submit('F1', 'user', 'form', 'register', 'confirm', true)">
-						<span><?php echo __('Register'); ?></span>
-					</li>
-				</ul>
 			</div>
 		</div>
 	</form>

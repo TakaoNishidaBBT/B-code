@@ -34,13 +34,15 @@ $list_header_config = array(
 				),
 				array(
 					'auth_filter'	=> 'super_admin/admin',
-					'start_html'	=> '<li>',
+					'start_html'	=> '<li class="add button" onclick="bframe.submit(\'header_form\', \'' . $this->module . '\', \'form\', \'select\', \'insert\')">',
 					'end_html'		=> '</li>',
 					array(
-						'name'			=> 'add-button',
-						'start_html'	=> '<span id="add-button" class="add-button" onclick="bframe.submit(\'header_form\', \'' . $this->module . '\', \'form\', \'select\', \'insert\')">',
+						'start_html'	=> '<span>',
 						'end_html'		=> '</span>',
 						'value'			=> __('Add'),
+					),
+					array(
+						'value'			=> '<img src="images/common/plus.png" alt="Add" />',
 					),
 				),
 			),

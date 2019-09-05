@@ -5,9 +5,12 @@
 
 			<div class="form-header">
 				<ul class="control">
-					<li class="back-button" onclick="bframe.submit('F1', 'project', 'list', 'back', '')">
-						<img src="images/common/left_arrow_white.png" alt="left arow" />
+					<li class="back button" onclick="bframe.submit('F1', 'project', 'list', 'back', '')">
 						<span><?php echo __('Back To List'); ?></span>
+					</li>
+					<li class="button delete" onclick="bframe.confirmSubmit('<?php echo __('Are you sure you want to delete?'); ?>', 'F1', 'project', 'form', 'delete', '')">
+						<span><?php echo __('Delete'); ?></span>
+						<img src="images/common/del.png" alt="submit" />
 					</li>
 				</ul>
 				<div class="message-container"><span id="message"></span></div>
@@ -22,11 +25,6 @@
 				<div id="hidden-form">
 					<?php echo $this->form->getHiddenHtml(); ?>
 				</div>
-				<ul class="submit">
-					<li class="submit-button delete" onclick="bframe.confirmSubmit('<?php echo __('Are you sure you want to delete?'); ?>', 'F1', 'project', 'form', 'delete', '')">
-						<span><?php echo __('Delete'); ?></span>
-					</li>
-				</ul>
 			</div>
 		</div>
 	</form>
