@@ -265,6 +265,9 @@ li.delete {
 	color: #fff;
 	padding-left: 10px;
 }
+li.dummy {
+	visibility: hidden;
+}
 
 /* search */
 ul.search {
