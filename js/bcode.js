@@ -151,25 +151,6 @@
 		bframe.ajaxSubmit.submit('F1', module, 'property', 'register', '', true);
 	}
 
-	bcode.identicon = function() {
-		var salt = 'bcode';
-		var user_id = document.getElementById('user-id');
-		var big_identicon = document.getElementById('big-identicon');
-		var small_identicon = document.getElementById('small-identicon');
-
-		hash = sha256(user_id.innerHTML + salt);
-
-		options = {
-			background: [255, 255, 255, 255],
-			margin: 0.2,
-			size: 128,
-			format: 'svg'
-		};
-		var data = new Identicon(hash, options).toString(true);
-		if(small_identicon) small_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
-		if(big_identicon) big_identicon.innerHTML = '<img src="data:image/svg+xml;utf8,' + data + '">';
-	}
-
 	bcode.mousedownBody = function() {
 		bframe.fireEvent(document.body, 'mousedown');
 	}
