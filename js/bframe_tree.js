@@ -2402,7 +2402,7 @@
 			var scroll_right = document.getElementById(property.relation.tab_scroll.right);
 			var scrolling;
 			var scroll_out;
-			var momentam = 100;
+			var momentum = 100;
 			var drag_start;
 			var drag_overlay = document.createElement('div');
 			var drag_target;
@@ -2811,10 +2811,10 @@
 					let timeFraction = time - start;
 
 					if(direction == 'right') {
-						control.scrollLeft = startScrollLeft + Math.round(timeFraction * momentam / 200);
+						control.scrollLeft = startScrollLeft + Math.round(timeFraction * momentum / 200);
 					}
 					else {
-						control.scrollLeft = startScrollLeft - Math.round(timeFraction * momentam / 200);
+						control.scrollLeft = startScrollLeft - Math.round(timeFraction * momentum / 200);
 					}
 					if(scrolling) {
 						requestAnimationFrame(animate);
@@ -2831,10 +2831,10 @@
 					},
 					function(progress) {
 						if(direction == 'right') {
-							control.scrollLeft = startScrollLeft + Math.round(progress * momentam);
+							control.scrollLeft = startScrollLeft + Math.round(progress * momentum);
 						}
 						else {
-							control.scrollLeft = startScrollLeft - Math.round(progress * momentam);
+							control.scrollLeft = startScrollLeft - Math.round(progress * momentum);
 						}
 					},
 					400
@@ -2986,7 +2986,7 @@
 					let left;
 
 					if(direction == 'right') {
-						control.scrollLeft = startScrollLeft + Math.round(timeFraction * momentam / 200);
+						control.scrollLeft = startScrollLeft + Math.round(timeFraction * momentum / 200);
 						left = control.scrollLeft + control.offsetWidth - drag_clone.offsetWidth;
 						drag_clone.style.left = left + 'px';
 
@@ -2997,7 +2997,7 @@
 						}
 					}
 					else {
-						left = startScrollLeft - Math.round(timeFraction * momentam / 200);
+						left = startScrollLeft - Math.round(timeFraction * momentum / 200);
 						control.scrollLeft = left;
 
 						if(left < folder.offsetWidth - 10) left = folder.offsetWidth - 10;
@@ -3327,7 +3327,7 @@
 			var current_position;
 			var last_position;
 			var scroll_out;
-			var momentam = 100;
+			var momentum = 100;
 
 			if(!baseZindex) baseZindex = 990;
 
@@ -3901,10 +3901,10 @@
 					let left;
 
 					if(direction == 'down') {
-						target.scrollTop = startScrollTop + Math.round(timeFraction * momentam / 200);
+						target.scrollTop = startScrollTop + Math.round(timeFraction * momentum / 200);
 					}
 					else {
-						target.scrollTop = startScrollTop - Math.round(timeFraction * momentam / 200);
+						target.scrollTop = startScrollTop - Math.round(timeFraction * momentum / 200);
 					}
 					if((direction == 'down' && target.scrollTop < target.scrollHeight - target.clientHeight) ||
 					 (direction == 'up' && target.scrollTop > 0)) {
