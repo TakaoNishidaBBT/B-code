@@ -504,7 +504,7 @@
 					height:Math.round(position.height)};
 		}
 		else {
-			var coords = {left:0, top:0, width: element.offsetWidth, height:element.offsetHeight};
+			var coords = {left: 0, top: 0, width: element.offsetWidth, height:element.offsetHeight};
 			while(element) {
 				coords.left += element.offsetLeft;
 				coords.top += element.offsetTop;
@@ -548,7 +548,7 @@
 			x = element.scrollLeft;
 			y = element.scrollTop;
 		}
-		return {'left': x, 'top': y};
+		return {left: x, top: y};
 
 	}
 

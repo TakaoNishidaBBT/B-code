@@ -64,17 +64,13 @@
 			}
 
 			// sort
-			projects.sort(compare);
+			projects.sort(function(a, b) {return a.getOrder() - b.getOrder()});
 
 			project_width = projects[0].width();
 			project_height = projects[0].height();
 
 			scroll_parent = bframe.getScrollParent(target, true);
 		})();
-
-		function compare(a, b) {
-			if(a.getOrder() > b.getOrder()) return 1;
-		}
 
 		function onMouseDown(event) {
 			drag_target = bframe.getEventSrcElement(event).parentNode;
@@ -168,6 +164,17 @@
 		function onMouseUp(event) {
 			if(!drag_start) return;
 
+			var scroll_offset = bframe.getScrollOffset(drag_target);
+			var from = {
+				x: parseInt(drag_clone.style.left) + scroll_offset.left,
+				y: parseInt(drag_clone.style.top) + scroll_offset.top
+			};
+			var to = {x: drag_target.offsetLeft, y: drag_target.offsetTop};
+			var clone = new project(drag_clone);
+			clone.fromTo(200, from, to, endMouseUp);
+		}
+
+		function endMouseUp() {
 			drag_start = false;
 			drag_overlay.style.display = 'none';
 			drag_target.style.visibility = 'visible';
@@ -343,6 +350,10 @@
 				current_position = {x: element.offsetLeft, y: element.offsetTop};
 			}
 
+			this.getCurrentPosition = function() {
+				return current_position;
+			}
+
 			this.lastPosition = function() {
 				last_position = {x: element.offsetLeft, y: element.offsetTop};
 			}
@@ -358,6 +369,10 @@
 			this.move = function(endCallback=null) {
 				let from = last_position;
 				let to = current_position;
+				this.fromTo(400, last_position, current_position, endCallback);
+			}
+
+			this.fromTo = function(duration, from, to, endCallback=null) {
 				let move_x = to.x - from.x;
 				let move_y = to.y - from.y;
 
@@ -376,7 +391,7 @@
 						element.style.left = from.x + Math.round(move_x * progress) + 'px';
 						element.style.top = from.y + Math.round(move_y * progress) - scroll_parent.scrollTop + 'px';
 					},
-					400,
+					duration,
 					function() {
 						element.removeAttribute('style');
 						element.style.order = order;
