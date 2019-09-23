@@ -498,6 +498,8 @@
 			var position = element.getBoundingClientRect();
 			return {left:Math.round(position.left),
 					top:Math.round(position.top),
+					right:Math.round(position.left + position.width),
+					bottom:Math.round(position.top + position.height),
 					width:Math.round(position.width),
 					height:Math.round(position.height)};
 		}
@@ -510,9 +512,44 @@
 			}
 			return {left:Math.round(coords.left),
 					top:Math.round(coords.top),
+					right:Math.round(coords.left + coords.width),
+					bottom:Math.round(coords.top + coords.height),
 					width:Math.round(coords.width),
 					height:Math.round(coords.height)};
 		}
+	}
+
+	bframe.getScrollParent = function(element, includeHidden=false) {
+		var style = getComputedStyle(element);
+		var excludeStaticParent = style.position === "absolute";
+		var overflowRegex = includeHidden ? /(auto|scroll|hidden)/ : /(auto|scroll)/;
+
+		if (style.position === "fixed") return document.body;
+		for (var parent = element; (parent = parent.parentElement);) {
+			style = getComputedStyle(parent);
+			if (excludeStaticParent && style.position === "static") {
+				continue;
+			}
+			if (overflowRegex.test(style.overflow + style.overflowY + style.overflowX)) return parent;
+		}
+
+		return document.body;
+	}
+
+	bframe.getScrollOffset = function(element) {
+		if(element.parentNode && element != document.body) {
+			var pos = bframe.getScrollOffset(element.parentNode);
+		}
+		if(pos) {
+			x = pos.left + element.scrollLeft;
+			y = pos.top + element.scrollTop;
+		}
+		else {
+			x = element.scrollLeft;
+			y = element.scrollTop;
+		}
+		return {'left': x, 'top': y};
+
 	}
 
 	bframe.getScrollPosition = function() {

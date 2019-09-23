@@ -124,13 +124,17 @@
 		function _list_callback(&$array) {
 			$row = &$array['row'];
 
+			$li = &$row->getElementByName('data_list');
+			$rowid = &$row->getElementByName('rowid');
 			$open = &$row->getElementByName('open');
 			$name = &$row->getElementByName('name');
+
 			if($name->value) {
+				$li->start_html = str_replace('%CLASS_NAME%', 'project', $li->start_html);
+				$li->start_html = str_replace('%ID%', 'project_' . $rowid->value, $li->start_html);
 				$open->link.= $name->value . '/';
 			}
 			else {
-				$li = &$row->getElementByName('data_list');
 				$li->start_html = $li->empty_start_html;
 				unset($li->elements);
 			}
@@ -151,6 +155,7 @@
 			// Set css and javascript
 			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/project.css">');
 			$this->html_header->appendProperty('css', '<link rel="stylesheet" href="css/selectbox.css">');
+			$this->html_header->appendProperty('script', '<script src="js/bcode_project.js"></script>');
 			$this->html_header->appendProperty('script', '<script src="js/bframe_selectbox.js"></script>');
 
 			// Show HTML header
