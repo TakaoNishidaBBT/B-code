@@ -355,10 +355,6 @@
 				return order;
 			}
 
-			this.stop = function() {
-				element.style.position = style_position;
-			}
-
 			this.move = function(endCallback=null) {
 				let from = last_position;
 				let to = current_position;
@@ -366,7 +362,7 @@
 				let move_y = to.y - from.y;
 
 				element.style.left = from.x + 'px';
-				element.style.top = from.y + 'px';
+				element.style.top = from.y  - scroll_parent.scrollTop + 'px';
 				element.style.margin = '0';
 				element.style.position = 'absolute';
 
