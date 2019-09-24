@@ -237,6 +237,8 @@ li.button:hover {
 }
 li.button span {
 	line-height: 1;
+	display: block;
+	height: 14px;
 }
 li.button img {
 	margin-left: 6px;
