@@ -25,6 +25,7 @@
 		var scroll_out;
 		var scroll_parent;
 		var moving = 0;
+		var timer;
 		var storage = 'bcode-project';
 
 		// set drag overlay
@@ -172,7 +173,7 @@
 			var to = projects[target_index].getCurrentPosition();
 
 			clone = new project(drag_clone);
-			clone.fromTo(200, from, to, endMouseUp);
+			clone.fromTo('easeOutCubic', 200, from, to, endMouseUp);
 		}
 
 		function endMouseUp() {
@@ -202,7 +203,8 @@
 
 		function checkProjectCrossover() {
 			if(moving) {
-				setTimeout(checkProjectCrossover, 100);
+				clearTimeout(timer);
+				timer = setTimeout(checkProjectCrossover, 100);
 				return;
 			}
 
@@ -254,12 +256,17 @@
 		}
 
 		function animateMove() {
+			var timing;
 			target.style.height = target.clientHeight + 'px';
 
 			for(let i=0; i < projects.length; i++) {
-//				if(drag_target == projects[i].element()) continue;
-
-				projects[i].move(animateEndCallback);
+				if(drag_target == projects[i].element()) {
+					timing = 'direct';
+				}
+				else {
+					timing = 'easeOutCubic';
+				}
+				projects[i].move(timing, 400, animateEndCallback);
 			}
 		}
 
@@ -373,17 +380,17 @@
 				element.style.visibility = visibility = v;
 			}
 
-			this.move = function(endCallback=null) {
+			this.move = function(timing, duration, endCallback=null) {
 				let from = last_position;
 				let to = current_position;
-				this.fromTo(300, last_position, current_position, endCallback);
+				this.fromTo(timing, duration, last_position, current_position, endCallback);
 			}
 
-			this.fromTo = function(duration, from, to, endCallback=null) {
+			this.fromTo = function(timing, duration, from, to, endCallback=null) {
 				let move_x = to.x - from.x;
 				let move_y = to.y - from.y;
 
-				element.style.left = from.x + 'px';
+				element.style.left = from.x - scroll_parent.scrollLeft + 'px';
 				element.style.top = from.y  - scroll_parent.scrollTop + 'px';
 				element.style.margin = '0';
 				element.style.position = 'absolute';
@@ -392,10 +399,19 @@
 
 				animate(
 					function(t) {
-						return (--t)*t*t+1;
+						switch(timing) {
+						case 'direct':
+							return 1;
+
+						case 'easeOutCubic':
+							return (--t)*t*t+1;
+
+						default:
+							return t;
+						}
 					},
 					function(progress) {
-						element.style.left = from.x + Math.round(move_x * progress) + 'px';
+						element.style.left = from.x + Math.round(move_x * progress) - scroll_parent.scrollLeft + 'px';
 						element.style.top = from.y + Math.round(move_y * progress) - scroll_parent.scrollTop + 'px';
 					},
 					duration,
