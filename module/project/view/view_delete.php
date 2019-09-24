@@ -10,7 +10,7 @@
 					</li>
 					<li class="button delete" onclick="bframe.confirmSubmit('<?php echo __('Are you sure you want to delete?'); ?>', 'F1', 'project', 'form', 'delete', '')">
 						<span><?php echo __('Delete'); ?></span>
-						<img src="images/common/del.png" alt="submit" />
+						<img src="images/common/del.png" alt="delete" />
 					</li>
 				</ul>
 				<div class="message-container"><span id="message"></span></div>

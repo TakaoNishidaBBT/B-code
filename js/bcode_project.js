@@ -115,7 +115,7 @@
 
 			projectOffset = bframe.getElementPosition(scroll_parent);
 
-			drag_target.style.visibility = 'hidden';
+			projects[target_index].setVisibility('hidden');
 		}
 
 		function onMouseMove(event) {
@@ -169,15 +169,16 @@
 				x: parseInt(drag_clone.style.left) + scroll_offset.left,
 				y: parseInt(drag_clone.style.top) + scroll_offset.top
 			};
-			var to = {x: drag_target.offsetLeft, y: drag_target.offsetTop};
-			var clone = new project(drag_clone);
+			var to = projects[target_index].getCurrentPosition();
+
+			clone = new project(drag_clone);
 			clone.fromTo(200, from, to, endMouseUp);
 		}
 
 		function endMouseUp() {
 			drag_start = false;
 			drag_overlay.style.display = 'none';
-			drag_target.style.visibility = 'visible';
+			projects[target_index].setVisibility('visible');
 			document.body.removeChild(drag_clone);
 		}
 
@@ -256,7 +257,7 @@
 			target.style.height = target.clientHeight + 'px';
 
 			for(let i=0; i < projects.length; i++) {
-				if(drag_target == projects[i].element()) continue;
+//				if(drag_target == projects[i].element()) continue;
 
 				projects[i].move(animateEndCallback);
 			}
@@ -319,9 +320,11 @@
 		function project(element) {
 			var id = element.id;
 			var name = element.querySelector('.name');
+			var style = bframe.getStyle(element);
 			var current_position;
 			var last_position;
 			var order;
+			var visibility = style.visibility;
 
 			// set event handler
 			name.addEventListener('mousedown', onMouseDown);
@@ -366,10 +369,14 @@
 				return order;
 			}
 
+			this.setVisibility = function(v) {
+				element.style.visibility = visibility = v;
+			}
+
 			this.move = function(endCallback=null) {
 				let from = last_position;
 				let to = current_position;
-				this.fromTo(400, last_position, current_position, endCallback);
+				this.fromTo(300, last_position, current_position, endCallback);
 			}
 
 			this.fromTo = function(duration, from, to, endCallback=null) {
@@ -395,6 +402,7 @@
 					function() {
 						element.removeAttribute('style');
 						element.style.order = order;
+						element.style.visibility = visibility;
 						moving--;
 						if(endCallback) endCallback();
 					}

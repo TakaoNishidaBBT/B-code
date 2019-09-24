@@ -585,6 +585,9 @@
 				$response['message'] = $this->message;
 			}
 
+			// Set time limit to 5 minutes
+			set_time_limit(300);
+
 			$this->openCurrentNode($this->session['current_node']);
 			if(strstr($this->session['current_node'], $this->doc_root)) {
 				$current_node = new B_DirNode($this->dir, $this->doc_root, $this->session['open_nodes'], null, 1);
