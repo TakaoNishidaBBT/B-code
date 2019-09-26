@@ -18,6 +18,7 @@
 		var drag_start, drag_target, drag_element;
 		var relative_mouse_position;
 		var drag_overlay = document.createElement('div');
+		var target_width;
 		var projectOffset;
 		var project_width, project_height;
 		var target_index;
@@ -51,6 +52,8 @@
 			var p = target.querySelectorAll('li.project');
 
 			for(let i=0; i < p.length; i++) {
+				if(p[i].classList.contains('empty')) continue;
+
 				projects[i] = new project(p[i]);
 				let order = i;
 				if(item) {
@@ -66,6 +69,19 @@
 
 			// sort
 			projects.sort(function(a, b) {return a.getOrder() - b.getOrder()});
+
+			if(project.length) {
+				var container = document.querySelector('.list-container');
+				var style = projects[0].getStyle();
+				var list = projects[0].element();
+				var list_width = parseInt(style.marginLeft) + list.clientWidth + parseInt(style.marginRight) + parseInt(style.borderLeftWidth) + parseInt(style.borderRightWidth);
+				var w = list_width * projects.length;
+
+				if(w < container.clientWidth) {
+					target_width = w;
+					target.style.width = w + 'px';
+				}
+			}
 
 			project_width = projects[0].width();
 			project_height = projects[0].height();
@@ -271,7 +287,10 @@
 		}
 
 		function animateEndCallback() {
-			if(!moving) target.removeAttribute('style');
+			if(!moving) {
+				target.removeAttribute('style');
+				target.style.width = target_width + 'px';
+			}
 		}
 
 		function dragScroll(direction) {
@@ -378,6 +397,10 @@
 
 			this.setVisibility = function(v) {
 				element.style.visibility = visibility = v;
+			}
+
+			this.getStyle = function() {
+				return style;
 			}
 
 			this.move = function(timing, duration, endCallback=null) {

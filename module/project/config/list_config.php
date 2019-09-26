@@ -16,8 +16,8 @@ array(
 	array(
 		'name'				=> 'data_list',
 		'class'				=> 'B_Row',
-		'start_html'		=> '<li id="%ID%" class="%CLASS_NAME%">',
-		'empty_start_html'	=> '<li class="empty">',
+		'start_html'		=> '<li id="%ID%" class="project">',
+		'empty_start_html'	=> '<li class="empty project">',
 		'end_html'			=> '</li>',
 		array(
 			'name'			=> 'rowid',

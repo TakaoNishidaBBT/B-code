@@ -41,7 +41,7 @@ li.project.empty {
 	height: 0;
 	border: none;
 	margin: 22px;
-	order: -1;
+	order: 999999;
 }
 li.project .name {
 	text-align: center;
