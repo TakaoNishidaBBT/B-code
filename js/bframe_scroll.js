@@ -22,7 +22,6 @@
 	// -------------------------------------------------------------------------
 	bframe.scroll = function(target, mode) {
 		var self = target;
-
 		var wrapper;
 		var barX, barY;
 		var barContainerX, barContainerY;
@@ -113,6 +112,7 @@
 		bframe.addEventListener(overlay, 'mousemove', onMouseMoveX);
 		bframe.addEventListener(overlay, 'mouseup', onMouseUpY);
 		bframe.addEventListener(overlay, 'mouseup', onMouseUpX);
+		bframe.addEventListener(window, 'beforeunload', cleanUp);
 
 		// vertical
 		paddingTop = parseInt(style.paddingTop);
@@ -264,6 +264,11 @@
 		}
 
 		onResize();
+
+		function cleanUp() {
+			top.document.body.removeChild(overlay);
+			self.parentNode.removeChild(wrapper);
+		}
 
 		function position() {
 			if(style.position.toLowerCase() == 'absolute' || style.position.toLowerCase() == 'fixed') {
