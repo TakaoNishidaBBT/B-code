@@ -380,6 +380,7 @@
 			}
 
 			this.getCurrentPosition = function() {
+				if(!current_position) this.currentPosition();
 				return current_position;
 			}
 
