@@ -40,7 +40,7 @@ li.project {
 li.project.empty {
 	height: 0;
 	border: none;
-	margin: 22px;
+	margin: 0 22px;
 	order: 999999;
 }
 li.project .name {
