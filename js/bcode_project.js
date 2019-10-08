@@ -202,6 +202,7 @@
 			drag_overlay.style.display = 'none';
 			projects[target_index].setVisibility('visible');
 			document.body.removeChild(drag_clone);
+			animateEndCallback();
 		}
 
 		function setClonePosition(left, top, right, bottom) {
