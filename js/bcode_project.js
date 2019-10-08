@@ -45,6 +45,7 @@
 		bframe.addEventListenerAllFrames(top, 'mousemove', onMouseMove);
 		drag_overlay.addEventListener('mousemove', onMouseMove);
 		bframe.addEventListenerAllFrames(top, 'mouseup', onMouseUp);
+		bframe.addEventListener(window, 'beforeunload', cleanUp);
 
 		// initialize
 		(function() {
@@ -88,6 +89,11 @@
 
 			scroll_parent = bframe.getScrollParent(target, true);
 		})();
+
+		function cleanUp() {
+			bframe.removeEventListenerAllFrames(top, 'mousemove', onMouseMove);
+			bframe.removeEventListenerAllFrames(top, 'mouseup', onMouseUp);
+		}
 
 		function onMouseDown(event) {
 			drag_target = bframe.getEventSrcElement(event).parentNode;
@@ -187,7 +193,6 @@
 				y: parseInt(drag_clone.style.top) + scroll_offset.top
 			};
 			var to = projects[target_index].getCurrentPosition();
-
 			clone = new project(drag_clone);
 			clone.fromTo('easeOutCubic', 200, from, to, endMouseUp);
 		}
@@ -288,6 +293,10 @@
 
 		function animateEndCallback() {
 			if(!moving) {
+				for(let i=0; i < projects.length; i++) {
+					projects[i].resetStyle();
+				}
+
 				target.removeAttribute('style');
 				target.style.width = target_width + 'px';
 			}
@@ -380,7 +389,7 @@
 			}
 
 			this.getCurrentPosition = function() {
-				if(!current_position) this.currentPosition();
+				this.currentPosition();
 				return current_position;
 			}
 
@@ -402,6 +411,12 @@
 
 			this.getStyle = function() {
 				return style;
+			}
+
+			this.resetStyle = function() {
+				element.removeAttribute('style');
+				element.style.order = order;
+				element.style.visibility = visibility;
 			}
 
 			this.move = function(timing, duration, endCallback=null) {
@@ -440,9 +455,6 @@
 					},
 					duration,
 					function() {
-						element.removeAttribute('style');
-						element.style.order = order;
-						element.style.visibility = visibility;
 						moving--;
 						if(endCallback) endCallback();
 					}
@@ -450,7 +462,7 @@
 
 			}
 
-			function animate(timing, callback, duration, endCallBack=null) {
+			function animate(timing, callback, duration, endCallback=null) {
 				let start = performance.now();
 
 				requestAnimationFrame(function animate(time) {
@@ -466,8 +478,8 @@
 					if(timeFraction < 1) {
 						requestAnimationFrame(animate);
 					}
-					else if(endCallBack) {
-						endCallBack();
+					else if(endCallback) {
+						endCallback();
 					}
 				});
 			}
