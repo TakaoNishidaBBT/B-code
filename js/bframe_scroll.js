@@ -959,6 +959,7 @@
 		}
 
 		function isScrollable(obj) {
+			if(!obj) return;
 			if(obj == self || obj == document.body) return false;
 			if(obj.clientHeight < obj.scrollHeight || obj.clientWidth < obj.scrollWidth) return true;
 			if(obj.tagName.toLowerCase() == 'select' && obj.length > 1) return true;

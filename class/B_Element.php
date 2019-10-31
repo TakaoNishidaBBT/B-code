@@ -2068,10 +2068,6 @@
 		function getElementsHtml($mode=null) {
 			return;
 		}
-
-		function getValue(&$param) {
-			return;
-		}
 	}
 
 	// -------------------------------------------------------------------------

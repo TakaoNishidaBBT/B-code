@@ -48,7 +48,7 @@
 			$this->identicon = B_Util::identicon($this->user_id);
 
 			if($_REQUEST['project'] && $this->df->select('name', $_REQUEST['project'])) {
-				$this->title = $_REQUEST['project'] . ' - ' . $this->title;
+				$this->title = $_REQUEST['project'];
 				$this->initial_page = DISPATCH_URL . '&amp;module=editor&amp;page=tree&amp;method=open&amp;project=' . $_REQUEST['project'];
 				$this->view_file = './view/view_index.php';
 			}

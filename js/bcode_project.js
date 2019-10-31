@@ -19,7 +19,7 @@
 		var relative_mouse_position;
 		var drag_overlay = document.createElement('div');
 		var target_width;
-		var projectOffset;
+		var project_offset;
 		var project_width, project_height;
 		var target_index;
 		var last_position;
@@ -136,7 +136,7 @@
 				y: mouse_position.y - parseInt(drag_clone.style.top),
 			}
 
-			projectOffset = bframe.getElementPosition(scroll_parent);
+			project_offset = bframe.getElementPosition(scroll_parent);
 
 			projects[target_index].setVisibility('hidden');
 		}
@@ -155,7 +155,7 @@
 			var bottom = top + project_height;
 
 			if(deltaY == 'down') {
-				if(bottom > projectOffset.bottom) {
+				if(bottom > project_offset.bottom) {
 					if(!scroll_out)	{
 						scroll_out = true;
 						dragScroll('down');
@@ -166,7 +166,7 @@
 				}
 			}
 			if(deltaY == 'up') {
-				if(top < projectOffset.top) {
+				if(top < project_offset.top) {
 					if(!scroll_out)	{
 						scroll_out = true;
 						dragScroll('up');
@@ -206,17 +206,17 @@
 		}
 
 		function setClonePosition(left, top, right, bottom) {
-			if(right > projectOffset.right) {
-				left = projectOffset.right - project_width;
+			if(right > project_offset.right) {
+				left = project_offset.right - project_width;
 			}
-			if(bottom > projectOffset.bottom) {
-				top = projectOffset.bottom - project_height;
+			if(bottom > project_offset.bottom) {
+				top = project_offset.bottom - project_height;
 			}
-			if(left < projectOffset.left) {
-				left = projectOffset.left;
+			if(left < project_offset.left) {
+				left = project_offset.left;
 			}
-			if(top < projectOffset.top) {
-				top = projectOffset.top;
+			if(top < project_offset.top) {
+				top = project_offset.top;
 			}
 
 			drag_clone.style.left = left + 'px';
