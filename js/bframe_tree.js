@@ -396,6 +396,12 @@
 				}
 				break;
 
+			case 87:	// alt+w
+				if(event.altKey || event.metaKey) {
+					closeCurrentTab();
+				}
+				break;
+
 			case 88:	// ctrl+x
 				if(event.ctrlKey || event.metaKey) {
 					if(pane && !current_edit_node) {
@@ -2112,6 +2118,11 @@
 			tab_control.resetEditFlag();
 		}
 
+		closeCurrentTab = function() {
+			if(tab_control) tab_control.closeCurrentTab();
+		}
+		this.closeCurrentTab = closeCurrentTab;
+
 		// -------------------------------------------------------------------------
 		// class currentNodeControl
 		// -------------------------------------------------------------------------
@@ -2654,6 +2665,15 @@
 				if(remove_index) {
 					tabs[remove_index].obj.remove();
 					tabs.splice(remove_index, 1);
+				}
+			}
+
+			this.closeCurrentTab = function() {
+				for(var i=0; i < tabs.length; i++) {
+					if(tabs[i].obj.isVisible()) {
+						closeTab(i);
+						break;
+					}
 				}
 			}
 

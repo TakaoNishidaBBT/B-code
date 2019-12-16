@@ -49,6 +49,17 @@
 			}
 		}
 
+		var close_command = {
+			name: 'close',
+			bindKey: {
+				mac: 'Command-Shift-W',
+				win: 'alt-W'
+			},
+			exec: function() {
+				close()
+			}
+		}
+
 		if(!parent) {
 			var parent = target.parentNode;
 			target.style.display = 'none';
@@ -202,6 +213,7 @@
 			ace_editor.setScrollSpeed(2);
 			ace_editor.commands.addCommand(save_command);
 			ace_editor.commands.addCommand(refresh_command);
+			ace_editor.commands.addCommand(close_command);
 
 			target.style.display = 'none';
 
@@ -343,6 +355,10 @@
 			bcode.updateEditor = updateEditor;
 			message_field.innerHTML = '';
 			bframe.fireEvent(refresh_button, 'click');
+		}
+
+		function close() {
+			bcode.closeCurrentTab();
 		}
 
 		function onFocus() {

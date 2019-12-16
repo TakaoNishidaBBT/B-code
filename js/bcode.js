@@ -116,6 +116,11 @@
 		if(typeof opener.bframe_tree !== 'undefined') opener.bframe_tree.resetEditFlag();
 	}
 
+	bcode.closeCurrentTab = function() {
+		var opener = window.frameElement.opener;
+		if(typeof opener.bframe_tree !== 'undefined') opener.bframe_tree.closeCurrentTab();
+	}
+
 	bcode.changeFileName = function(value) {
 		var node_id = document.getElementsByName('node_id');
 		if(node_id[0]) {
