@@ -110,7 +110,7 @@
 				$contents = str_replace("\r", "", $this->post['contents']);
 				$contents = str_replace("\n", B_SYSTEM_RETURN_CODE, $contents);
 
-				if(file_put_contents($file_path, $this->post['contents'], LOCK_EX) === FALSE) {
+				if(file_put_contents($file_path, $contents, LOCK_EX) === FALSE) {
 					$status = false;
 					$mode = 'alert';
 					$error = error_get_last();
