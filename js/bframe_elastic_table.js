@@ -67,19 +67,21 @@
 		function onDoubleClick(event) {
 			var obj = bframe.getEventSrcElement(event);
 			var p = obj.parentNode;
-			var th = table.rows[0].cells[p.cellIndex -1];
+			for(let i=0; !th; i++) {
+				var th = table.rows[i].cells[p.cellIndex -1];
+			}
 			var maxWidth;
 			var start_width = th.clientWidth;
 			var start_table_width = table.clientWidth;
 
 			for(let i=1; i < table.rows.length; i++) {
 				var scrollWidth = table.rows[i].cells[th.cellIndex].scrollWidth;
-				maxWidth = maxWidth > table.rows[i].cells[th.cellIndex].scrollWidth ? maxWidth : table.rows[i].cells[th.cellIndex].scrollWidth;
+				maxWidth = maxWidth > scrollWidth ? maxWidth : scrollWidth;
 			}
+
 			if(start_width < maxWidth) {
 				th.style.width = maxWidth + padding + 'px';
 				table.style.width = start_table_width + maxWidth - start_width + padding + 'px';
-				bframe.fireEvent(window, 'resize');
 			}
 		}
 
@@ -105,6 +107,7 @@
 			var button_status;
 			var drag_status;
 			var start_x, start_width, start_table_width;
+			var start_table_left;
 			var start_position;
 			var target;
 			var th;
@@ -122,7 +125,10 @@
 
 				target = bframe.getEventSrcElement(event);
 				var p = target.parentNode;
-				th = table.rows[0].cells[p.cellIndex -1];
+				th='';
+				for(let i=0; !th; i++) {
+					th = table.rows[i].cells[p.cellIndex -1];
+				}
 
 				var m = bframe.getMousePosition(event);
 				start_position = m;
@@ -130,6 +136,7 @@
 				start_x = m.screenX;
 				start_width = th.clientWidth;
 				start_table_width = table.clientWidth;
+				start_table_position = bframe.getElementPosition(table);
 
 				if(_isIE) {
 					window.event.returnValue = false;
@@ -177,8 +184,10 @@
 
 			function setWidth(event) {
 				var m = bframe.getMousePosition(event);
-				th.style.width = parseInt(start_width + m.screenX - start_x) + 'px';
-				table.style.width = parseInt(start_table_width + m.screenX - start_x) + 'px';
+				var table_position = bframe.getElementPosition(table);
+				var ext_width = m.screenX - start_x + start_table_position.left - table_position.left;
+				th.style.width = parseInt(start_width + ext_width) + 'px';
+				table.style.width = parseInt(start_table_width + ext_width) + 'px';
 
 				bframe.fireEvent(window, 'resize');
 			}

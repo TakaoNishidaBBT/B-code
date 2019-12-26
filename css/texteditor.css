@@ -49,8 +49,19 @@ div.control ul li a {
 	color: #fff;
 	cursor: pointer;
 }
-div.control ul li img {
+div.control ul li a span {
+	display: block;
+	margin: 0 auto;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+div.control ul li span img {
 	vertical-align: middle;
+	margin-top: 0;
+}
+div.control ul li span img.disabled {
+	margin-top: -16px;
 }
 div.control .message-field {
 	font-weight: 400;

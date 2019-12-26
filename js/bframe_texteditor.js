@@ -110,6 +110,9 @@
 				li = createControlButton('images/editor/goto.png', 'go to line', goto);
 				control1.appendChild(li);
 			}
+			li = createControlButton('images/editor/auto_complete.png', 'auto complete off', autoComplete);
+			control1.appendChild(li);
+
 			widget = bframe.searchNodeByClassName(parent, 'open_widgetmanager');
 			if(widget) {
 				li = createControlButton('images/editor/gear.png', 'widgets', openWidget);
@@ -136,7 +139,6 @@
 
 		function createControlButton(icon_img, title, func) {
 			var li = document.createElement('li');
-			li.style.cssFloat = 'left';
 
 			var a = document.createElement('a');
 			a.title = title;
@@ -144,9 +146,11 @@
 				bframe.addEventListener(a, 'mousedown', func);
 			}
 			li.appendChild(a);
-			img = document.createElement('img');
+			var span = document.createElement('span');
+			a.appendChild(span);
+			var img = document.createElement('img');
 			img.src = icon_img;
-			a.appendChild(img);
+			span.appendChild(img);
 
 			return li;
 		}
@@ -345,6 +349,38 @@
 				var cEditor = split.getCurrentEditor();
 				cEditor.gotoLine(line);
 				cEditor.focus();
+			}
+		}
+
+		function autoComplete(event) {
+			var obj = bframe.getEventSrcElement(event);
+			var a = bframe.searchParentByTagName(obj, 'a');
+			var img = a.querySelector('img');
+
+			var ret = ace_editor.getOptions({
+				enableBasicAutocompletion: false,
+				enableLiveAutocompletion: false,
+				enableSnippets: false,
+			});
+
+			if(ret.enableBasicAutocompletion) {
+				var completion = require('ace/ext/language_tools');
+				ace_editor.setOptions({
+					enableBasicAutocompletion: false,
+					enableLiveAutocompletion: false,
+					enableSnippets: false,
+				});
+				a.title = 'auto complete on';
+				img.classList.add('disabled');
+			}
+			else {
+				ace_editor.setOptions({
+					enableBasicAutocompletion: true,
+					enableLiveAutocompletion: true,
+					enableSnippets: true,
+				});
+				a.title = 'auto complete off';
+				img.classList.remove('disabled');
 			}
 		}
 
