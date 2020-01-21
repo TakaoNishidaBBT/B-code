@@ -583,7 +583,9 @@
 			foreach($current as $value) {
 				if(!$value) continue;
 
-				$dir .= '/' . $value;
+				if($dir) $dir .= '/';
+				$dir .= $value;
+
 				$nodes[$dir] = true;
 			}
 

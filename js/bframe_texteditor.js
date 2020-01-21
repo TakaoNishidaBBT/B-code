@@ -110,7 +110,7 @@
 				li = createControlButton('images/editor/goto.png', 'go to line', goto);
 				control1.appendChild(li);
 			}
-			li = createControlButton('images/editor/auto_complete.png', 'auto complete off', autoComplete);
+			li = createControlButton('images/editor/auto_complete.png', 'auto complete on', autoComplete);
 			control1.appendChild(li);
 
 			widget = bframe.searchNodeByClassName(parent, 'open_widgetmanager');
@@ -370,7 +370,7 @@
 					enableLiveAutocompletion: false,
 					enableSnippets: false,
 				});
-				a.title = 'auto complete on';
+				a.title = 'auto complete off';
 				img.classList.add('disabled');
 			}
 			else {
@@ -379,7 +379,7 @@
 					enableLiveAutocompletion: true,
 					enableSnippets: true,
 				});
-				a.title = 'auto complete off';
+				a.title = 'auto complete on';
 				img.classList.remove('disabled');
 			}
 		}
