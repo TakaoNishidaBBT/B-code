@@ -11,11 +11,17 @@
 	// -------------------------------------------------------------------------
 	class B_Session {
 		function start($limiter, $name, $path, $secure=true) {
-			if(empty($_SERVER['HTTPS']) === true || $_SERVER['HTTPS'] !== 'on') $secure = false;
+			if(preg_match('/localhost/', $_SERVER['SERVER_NAME'])) $secure=false;
 
 			session_cache_limiter($limiter);
-			session_name($name);
-			session_set_cookie_params(0, $path, null, $secure, true);
+			session_name(str_replace('.', '-', $name));
+			session_set_cookie_params([
+				'lifetime'	=> 0,
+				'path'		=> $path,
+				'secure'	=> $secure,
+				'httponly'	=> true,
+				'samesite'	=> 'Strict'
+			]);
 			session_start();
 		}
 
@@ -34,7 +40,7 @@
 
 			if(is_file($session_file)) {
 				$serializedString = file_get_contents($session_file);
-			    $session_array = $this->unserializeSession($serializedString);
+				$session_array = $this->unserializeSession($serializedString);
 			}
 			return $session_array;
 		}
