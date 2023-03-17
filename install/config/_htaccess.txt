@@ -12,7 +12,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} /[^./]+$
 RewriteRule ^(.*) $1/ [L,R]
 
-RewriteCond %{DOCUMENT_ROOT}/bcode/$2 -f
+RewriteCond %{DOCUMENT_ROOT}%REWRITE_BASE%$$2 -f
 RewriteRule ^([^\/]+?)/(.*)$ $2 [L]
 
 RewriteCond %{DOCUMENT_ROOT}%REWRITE_BASE%$2 -d
