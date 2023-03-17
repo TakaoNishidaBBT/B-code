@@ -13,7 +13,7 @@
 	$doc_root = str_replace('\\' , '/', realpath($_SERVER['DOCUMENT_ROOT']));
 	if(substr($doc_root, -1) != '/') $doc_root.= '/';
 
-	$current_dir = dirname(str_replace('\\' , '/', __DIR__));
+	$current_dir = str_replace('\\' , '/', __DIR__);
 	if(substr($current_dir, -1) != '/') $current_dir.= '/';
 
 	$current_path = str_replace(strtolower($doc_root), '', strtolower($current_dir));
