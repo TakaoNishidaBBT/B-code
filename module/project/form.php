@@ -100,7 +100,7 @@
 		}
 
 		function checkAlt($value) {
-			if($this->request['mode'] == 'update') {
+			if($this->session['mode'] == 'update') {
 				$row = $this->df->selectByPk($value['id']);
 				if($this->session['init_value']['update_datetime'] < $row['update_datetime']) {
 					$error_message = __('Another user has updated this record');

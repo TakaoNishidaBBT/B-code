@@ -40,22 +40,7 @@
 	}
 
 	function __getPath() {
-		$path = str_replace('\\', '/', func_get_arg(0));
-
-		for($i=1; $i<func_num_args(); $i++) {
-			if(!$file_name = func_get_arg($i)) continue;
-
-			if(substr($path, -1) == '/') {
-				$path = substr($path, 0, -1);
-			}
-			if(substr($file_name, 0, 1) == '/') {
-				$file_name = substr($file_name, 1);
-			}
-
-			$path.= '/' . $file_name;
-		}
-
-		return $path;
+		return preg_replace('/(?<!:)\/+/', '/', implode('/', array_filter(array_map('trim', func_get_args()), 'strlen')));
 	}
 
 	// class auto loader

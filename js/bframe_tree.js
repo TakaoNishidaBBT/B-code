@@ -602,6 +602,9 @@
 				var suffix = node_name.substring(node_name.lastIndexOf('.')+1, node_name.length);
 				switch(suffix.toLowerCase()) {
 				case 'html':
+				case 'php':
+				case 'css':
+				case 'js':
 				case 'jpg':
 				case 'jpeg':
 				case 'gif':
